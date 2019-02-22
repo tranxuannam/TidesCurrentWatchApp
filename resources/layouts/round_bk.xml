@@ -1,0 +1,15 @@
+<layout id="RoundLayout123">
+	<label id="id_label0" x="65" y="15" text="Dec 12 2018" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL"/>
+    <label id="id_label1" x="35" y="40" text="9:32 AM PST / 2.0 kt" color="Graphics.COLOR_WHITE" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img1" x="15" y="40" filename="../drawables/up.png" />
+    <label id="id_label2" x="35" y="65" text="9:32 AM PST / 2.0 kt" color="Graphics.COLOR_WHITE" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img2" x="15" y="65" filename="../drawables/up.png" />
+    <label id="id_label3" x="35" y="90" text="9:32 AM PST / 2.0 kt" color="Graphics.COLOR_WHITE" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img3" x="15" y="90" filename="../drawables/up.png" />
+    <label id="id_label4" x="35" y="115" text="9:32 AM PST / 2.0 kt" color="Graphics.COLOR_WHITE" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img4" x="15" y="115" filename="../drawables/up.png" />
+    <label id="id_label5" x="35" y="140" text="9:32 AM PST / 2.0 kt" color="Graphics.COLOR_WHITE" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img5" x="15" y="140" filename="../drawables/up.png" />
+    <label id="id_label6" x="35" y="165" text="9:32 AM PST / 2.0 kt" color="Graphics.COLOR_WHITE" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img6" x="15" y="165" filename="../drawables/up.png" />
+</layout>

@@ -1,0 +1,8 @@
+<layout id="MainLayout123" background="Graphics.COLOR_BLACK">
+    <label id="id_label1" x="35" y="20" text="9:32 AM PST / 2.0 kt 123" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img1" x="15" y="20" filename="../drawables/up.png" />
+    <label id="id_label2" x="35" y="40" text="9:32 AM PST / 2.0 kt 456" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img2" x="15" y="40" filename="../drawables/up.png" />
+    <label id="id_label3" x="35" y="60" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img3" x="15" y="60" filename="../drawables/up.png" />
+</layout>

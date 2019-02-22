@@ -1,0 +1,4 @@
+project.manifest = manifest.xml
+# Configure paths based on screen shape
+round.resourcePath = $(base.resourcePath);resource-round
+semiround.resourcePath = $(base.resourcePath);resource-semiround

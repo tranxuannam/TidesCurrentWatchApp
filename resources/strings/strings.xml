@@ -1,0 +1,10 @@
+<strings>
+    <string id="AppName">TidesCurrentWatchApp</string>
+    <string id="prompt">Click the menu button</string>
+    <string id="menu_label_1">Item 1</string>
+    <string id="menu_label_2">Item 2</string>
+    
+    <string id="Location">Location</string>
+    <string id="Month">Month</string>
+    <string id="Year">Year</string>
+</strings>

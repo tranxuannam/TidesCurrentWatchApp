@@ -1,0 +1,18 @@
+<layout id="MainLayout" background="Graphics.COLOR_BLACK">
+	<label id="id_hours" x="110" y="0" text="23:59" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+	<label id="id_date" x="110" y="20" text="Dec 12 2020" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+	<drawable id="id_line2" class="CustomLine" />
+    <label id="id_label1" x="35" y="45" text="9:32 AM PST / 2.0 kt Semi" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img1" x="15" y="45" filename="../drawables/up.png" />
+    <label id="id_label2" x="35" y="60" text="9:32 AM PST / 2.0 kt 456" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img2" x="15" y="60" filename="../drawables/up.png" />
+    <label id="id_label3" x="35" y="75" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img3" x="15" y="75" filename="../drawables/up.png" />
+    <label id="id_label4" x="35" y="90" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img4" x="15" y="90" filename="../drawables/up.png" />
+    <label id="id_label5" x="35" y="105" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img5" x="15" y="105" filename="../drawables/up.png" />
+    <label id="id_label6" x="35" y="120" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <bitmap id="id_img6" x="15" y="120" filename="../drawables/up.png" />
+    <label id="id_country" x="110" y="160" text="Vung Tau" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+</layout>
