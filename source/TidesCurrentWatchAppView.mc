@@ -63,6 +63,8 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        View.findDrawableById("id_label4").setFont(customFont);
        View.findDrawableById("id_label5").setFont(customFont);
        View.findDrawableById("id_label6").setFont(customFont);
+       View.findDrawableById("id_label7").setFont(customFont);
+       View.findDrawableById("id_label8").setFont(customFont);
        View.onUpdate(dc);
     }
 
