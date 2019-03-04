@@ -5,7 +5,7 @@ using Toybox.System;
 
 class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 
-	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/15/15";
+	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/10/11";
 	
     function initialize() {
         BehaviorDelegate.initialize();
@@ -17,8 +17,8 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     }
     
    	function onNextPage() {   		
-        makeRequest();
-        WatchUi.requestUpdate();
+        //makeRequest();
+        //WatchUi.requestUpdate();
         return true;
     } 
        
@@ -27,8 +27,8 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
        if (responseCode == 200) {
            System.println("Second time...");                   // print success
            var app = Application.getApp();
-    	   app.setProperty("jsonData", data);
-    	   System.println("JsonData in onReceive: " + data); 
+    	   app.setProperty("tidesData", data);
+    	   System.println("tidesData in TidesCurrentWatchAppDelegate: " + data); 
        }
        else {
            System.println("Response: " + responseCode);            // print response code

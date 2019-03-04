@@ -1,10 +1,30 @@
 using Toybox.WatchUi;
 using Toybox.AntPlus;
 using Toybox.System;
+using Toybox.Application;
+using Toybox.Time;
+using Toybox.Time.Gregorian;
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 
-    function initialize() {
+	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/0/15";
+	hidden var _message;
+	hidden var dateString;
+
+    function initialize(message) {
+    	System.println( "Init view");
+    	_message = message;
+    	System.println("initialize in TidesCurrentWatchAppView" + message);
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+		dateString = Lang.format(
+						    "$1$-$2$-$3$",
+						    [        
+						        today.year,
+						        today.month,
+						        today.day
+						    ]
+						);
+		System.println("dateString = " + dateString);
         View.initialize();
     }
 
@@ -43,10 +63,13 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout
-        //var app = Application.getApp();
-       //var jsonData = app.getProperty("jsonData");	
-       //System.println( "jsonData = " + jsonData);
+        // Call the parent onUpdate function to redraw the layout     	      
+               
+       if(_message.size() != 0)
+       {       
+       System.println( "_message in TidesCurrentWatchAppView = " + _message);
+       //System.println( "item in TidesCurrentWatchAppView = " + _message[1]);
+       System.println( "date in TidesCurrentWatchAppView = " + _message["2018-01-08"].get("high2"));
        
        //dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
        //dc.clear();
@@ -63,8 +86,15 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        View.findDrawableById("id_label4").setFont(customFont);
        View.findDrawableById("id_label5").setFont(customFont);
        View.findDrawableById("id_label6").setFont(customFont);
-       View.findDrawableById("id_label7").setFont(customFont);
-       View.findDrawableById("id_label8").setFont(customFont);
+       //View.findDrawableById("id_label7").setFont(customFont);
+       //View.findDrawableById("id_label8").setFont(customFont);
+       
+       //View.findDrawableById("id_label1").setText(tidesData[i].get("high1"));
+       //View.findDrawableById("id_label2").setText(tidesData[i].get("low1"));
+       //View.findDrawableById("id_label3").setText(tidesData[2].get("high2"));
+       //View.findDrawableById("id_label4").setText(tidesData[i].get("low2"));
+       
+       }
        View.onUpdate(dc);
     }
 
@@ -72,6 +102,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() {
-    }
+    }  
 
 }
