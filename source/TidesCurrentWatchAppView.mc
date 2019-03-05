@@ -8,13 +8,20 @@ using Toybox.Time.Gregorian;
 class TidesCurrentWatchAppView extends WatchUi.View {
 
 	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/0/15";
-	hidden var _message;
+	hidden var _beginTidesData;
+	hidden var _midleTidesData;
+	hidden var _lastTidesData;
 	hidden var dateString;
 
-    function initialize(message) {
-    	System.println( "Init view");
-    	_message = message;
-    	System.println("initialize in TidesCurrentWatchAppView" + message);
+    function initialize(beginTidesData, midleTidesData, lastTidesData) {
+    	System.println("Init view");
+    	_beginTidesData = beginTidesData;
+    	_midleTidesData = midleTidesData;
+    	_lastTidesData = lastTidesData;
+    	System.println("_beginTidesData = " + _beginTidesData);
+    	System.println("_midleTidesData = " + _midleTidesData);
+    	System.println("_lastTidesData = " + _lastTidesData);
+    	
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
 		dateString = Lang.format(
 						    "$1$-$2$-$3$",
@@ -65,11 +72,12 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout     	      
                
-       if(_message.size() != 0)
+       if(_beginTidesData.size() != 0)
        {       
-       System.println( "_message in TidesCurrentWatchAppView = " + _message);
-       //System.println( "item in TidesCurrentWatchAppView = " + _message[1]);
-       System.println( "date in TidesCurrentWatchAppView = " + _message["2018-01-08"].get("high2"));
+       System.println( "_beginTidesData in TidesCurrentWatchAppView = " + _beginTidesData);
+       System.println( "_midleTidesData in TidesCurrentWatchAppView = " + _midleTidesData);
+       System.println( "_lastTidesData in TidesCurrentWatchAppView = " + _lastTidesData);
+       System.println( "Item in TidesCurrentWatchAppView = " + _beginTidesData["2018-01-08"].get("high2"));
        
        //dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
        //dc.clear();
