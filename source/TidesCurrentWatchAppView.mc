@@ -12,6 +12,8 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	hidden var _midleTidesData;
 	hidden var _lastTidesData;
 	hidden var dateString;
+	var month;
+	var day;
 
     function initialize(beginTidesData, midleTidesData, lastTidesData) {
     	System.println("Init view");
@@ -23,14 +25,23 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     	System.println("_lastTidesData = " + _lastTidesData);
     	
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+    	if(today.month.toString().length() == 1)
+    	{
+    		month = "0" + today.month;
+    	}
+    	if(today.day.toString().length() == 1)
+    	{
+    		day = "0" + today.day;
+    	}
+    	
 		dateString = Lang.format(
 						    "$1$-$2$-$3$",
 						    [        
 						        today.year,
-						        today.month,
-						        today.day
+						        month,
+						        day
 						    ]
-						);
+						);		
 		System.println("dateString = " + dateString);
         View.initialize();
     }
@@ -71,7 +82,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     // Update the view
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout     	      
-               
+              
        if(_beginTidesData.size() != 0)
        {       
        System.println( "_beginTidesData in TidesCurrentWatchAppView = " + _beginTidesData);
