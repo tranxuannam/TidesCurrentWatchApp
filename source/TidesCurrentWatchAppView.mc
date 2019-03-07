@@ -88,7 +88,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        System.println( "_beginTidesData in TidesCurrentWatchAppView = " + _beginTidesData);
        System.println( "_midleTidesData in TidesCurrentWatchAppView = " + _midleTidesData);
        System.println( "_lastTidesData in TidesCurrentWatchAppView = " + _lastTidesData);
-       System.println( "Item in TidesCurrentWatchAppView = " + _beginTidesData["2018-01-08"].get("high2"));
+       System.println( "Item in TidesCurrentWatchAppView = " + _beginTidesData[dateString].get("high2"));
        
        //dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
        //dc.clear();

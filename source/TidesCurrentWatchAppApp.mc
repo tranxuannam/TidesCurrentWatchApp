@@ -4,17 +4,21 @@ using Toybox.Position;
 using Toybox.System;
 using Toybox.Communications;
 using Toybox.Timer;
+using Toybox.Time;
+using Toybox.Time.Gregorian;
 
 class TidesCurrentWatchAppApp extends Application.AppBase {
 
-	const URL1 = "http://localhost/TidesCurrent/public/test/0/2018/01/0/10";
-	const URL2 = "http://localhost/TidesCurrent/public/test/0/2018/01/10/10";
-	const URL3 = "http://localhost/TidesCurrent/public/test/0/2018/01/20/11";
+	var URL1;
+	var URL2;
+	var URL3;
 	const URL_LOCATION = "http://localhost/TidesCurrent/public/location/60.8/-78.2167/5";
 	hidden var beginTidesData = {};
 	hidden var midleTidesData = {};
 	hidden var lastTidesData = {};
-	var notify;
+	hidden var URL;
+	var month;
+	var location = 0;
 	
     function initialize() {
         AppBase.initialize();      
@@ -23,6 +27,18 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     // onStart() is called on application start up
     function onStart(state) {	    
     	System.println("onStart");
+    	
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+    	
+    	if(today.month.toString().length() == 1)
+    	{
+    		month = "0" + today.month;
+    	}
+    	URL = Lang.format("http://localhost/TidesCurrent/public/test/$1$/$2$/$3$/", [location, today.year, month]);
+    	URL1 = URL + "0/10";
+    	URL2 = URL + "10/10";
+    	URL3 = URL + "20/11";
+    	
     	var myTimer1 = new Timer.Timer();
     	var myTimer2 = new Timer.Timer();
     	var myTimer3 = new Timer.Timer();
@@ -99,7 +115,6 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 	}		
     
     function makeBeginRequest() {
-    	//notify.invoke("Executing\nRequest");
        var params = null;
        var options = {
          :method => Communications.HTTP_REQUEST_METHOD_GET,
