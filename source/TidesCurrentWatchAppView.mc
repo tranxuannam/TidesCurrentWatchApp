@@ -83,7 +83,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout     	      
               
-       if(_beginTidesData.size() != 0)
+       if(_beginTidesData != 0)
        {       
        System.println( "_beginTidesData in TidesCurrentWatchAppView = " + _beginTidesData);
        System.println( "_midleTidesData in TidesCurrentWatchAppView = " + _midleTidesData);

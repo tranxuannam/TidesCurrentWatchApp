@@ -9,17 +9,21 @@ using Toybox.Time.Gregorian;
 
 class TidesCurrentWatchAppApp extends Application.AppBase {
 
-	const URL_LOCATION = "http://localhost/TidesCurrent/public/location/60.8/-78.2167/5";
+	//const URL_LOCATION = "http://localhost/TidesCurrent/public/location/60.8/-78.2167/5";
 	hidden var tidesData1 = {};
-	hidden var tidesData2 = {};
-	hidden var tidesData3 = {};
-	hidden var tidesData4 = {};
+	//hidden var tidesData2 = {};
+	//hidden var tidesData3 = {};
+	//hidden var tidesData4 = {};
+	//hidden var tidesData5 = {};
+	//hidden var tidesData6 = {};
 	hidden var url;
-	var month;
-	var location = 0;
-	var count = 0;
-	var myTimer1;
-	var urlDic;
+	hidden var month;
+	hidden var location = 0;
+	hidden var count = 0;
+	hidden var timer;
+	hidden var urlDic;
+	hidden var tidesDic;
+	hidden var requestNum = 6;
 	
     function initialize() {
         AppBase.initialize();      
@@ -36,38 +40,76 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     		month = "0" + today.month;
     	}
     	url = Lang.format("http://localhost/TidesCurrent/public/test/$1$/$2$/$3$/", [location, today.year, month]);
-    	urlDic = {"1"=>url + "0/5", "2"=>url + "5/5", "3"=>url + "10/5", "4"=>url + "15/5"};    	
+    	urlDic = {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5", 4=>url + "15/5", 5=>url + "20/5", 6=>url + "25/6"};
+    	//urlDic = {1=>url + "0/6", 2=>url + "6/6", 3=>url + "12/6", 4=>url + "18/6", 5=>url + "24/7"};     	
+    	//tidesDic = {1=>tidesData1, 2=>tidesData2, 3=>tidesData3, 4=>tidesData4, 5=>tidesData5, 6=>tidesData6};
+    	//tidesDic = {1=>tidesData1, 2=>tidesData2, 3=>tidesData3, 4=>tidesData4, 5=>tidesData5};
     	
-    	myTimer1 = new Timer.Timer();
-		myTimer1.start(method(:callBack), 5000, true);		
+    	timer = new Timer.Timer();
+		//timer.start(method(:callBack), 5000, true);	
 		
+		var str = "{2019-03-01=>{flood2=>10:30 AM PST 1.8 kt, flood3=>11:48 PM PST 4.2 kt, ebb1=>06:16 AM PST âˆ’1.8 kt, ebb2=>05:40 PM PST âˆ’3.4 kt, slack2=>02:42 AM PST, slack3=>08:23 AM PST, slack4=>12:48 PM PST, slack5=>08:38 PM PST, sunset=>05:55 PM PST, moonrise=>04:20 AM PST, moonset=>01:13 PM PST, sunrise=>06:50 AM PST}, 2019-03-02=>{flood2=>11:34 AM PST 1.9 kt, ebb1=>07:12 AM PST âˆ’2.2 kt, ebb2=>06:41 PM PST âˆ’3.5 kt, slack2=>03:40 AM PST, slack3=>09:24 AM PST, slack4=>01:54 PM PST, slack5=>09:31 PM PST, sunset=>05:56 PM PST, moonrise=>05:04 AM PST, moonset=>02:08 PM PST, sunrise=>06:48 AM PST}, 2019-03-03=>{flood1=>12:43 AM PST 4.4 kt, flood2=>12:30 PM PST 2.2 kt, ebb1=>07:59 AM PST âˆ’2.5 kt, ebb2=>07:29 PM PST âˆ’3.7 kt, slack2=>04:25 AM PST, slack3=>10:16 AM PST, slack4=>02:53 PM PST, slack5=>10:19 PM PST, sunset=>05:58 PM PST, moonrise=>05:42 AM PST, moonset=>03:07 PM PST, sunrise=>06:46 AM PST}, 2019-03-04=>{flood1=>01:27 AM PST 4.7 kt, flood2=>01:19 PM PST 2.6 kt, ebb1=>08:38 AM PST âˆ’2.7 kt, ebb2=>08:08 PM PST âˆ’3.9 kt, slack2=>05:00 AM PST, slack3=>10:59 AM PST, slack4=>03:45 PM PST, slack5=>11:02 PM PST, sunset=>05:59 PM PST, moonrise=>06:14 AM PST, moonset=>04:07 PM PST, sunrise=>06:44 AM PST}, 2019-03-05=>{flood1=>02:04 AM PST 4.9 kt, flood2=>02:01 PM PST 3.0 kt, ebb1=>09:12 AM PST âˆ’2.9 kt, ebb2=>08:41 PM PST âˆ’4.0 kt, slack2=>05:31 AM PST, slack3=>11:38 AM PST, slack4=>04:31 PM PST, slack5=>11:41 PM PST, sunset=>06:01 PM PST, moonrise=>06:42 AM PST, moonset=>05:09 PM PST, sunrise=>06:43 AM PST}}";	
+    	str = str.substring(1, str.length()-2);
+    	System.println(str);
+    	
+    	var strSplit = str.substring(0, str.find("}, "));
+    	System.println(strSplit);
+    	
+    	var date = strSplit.substring(0, strSplit.find("=>{"));
+    	strSplit = strSplit.substring(strSplit.find("=>{") + 3, strSplit.length());  
+    	System.println(date);
+    	System.println("strSplit = " + strSplit); 	
+    	
+    	System.println("DIC = " + elements(strSplit));
+    	
+    	var strLeft = str.substring(str.find("}, ") + 3, str.length());
+    	System.println(strLeft);
+    }
+    
+    function element(str)
+    {
+    	var key = str.substring(0, str.find("=>"));  
+    	var value = str.substring(str.find("=>") + 2, str.length());  
+    	return {key=>value};
+    }
+    
+    function elements(str)
+    {
+    	var dic = {};
+    	var isStop = true;
+    	while( isStop )   
+    	{
+    		if(str.find(", ") == null && str.length() > 0)
+    		{
+    			var key = str.substring(0, str.find("=>"));  
+	    		var value = str.substring(str.find("=>") + 2, str.length());  
+	    		dic[key] = value;
+	    		isStop = false;
+    		}
+    		else
+    		{
+	   			var item = str.substring(0, str.find(", "));
+	   			var key = item.substring(0, item.find("=>"));  
+	    		var value = item.substring(item.find("=>") + 2, item.length());  
+	    		dic[key] = value;
+	    		str = str.substring(str.find(", ") + 2, str.length());
+	    		System.println(str);
+    		}
+   		}
+   		return dic;		
     }
     
     function callBack()
     {
     	count++;
     	System.println("count=" + count);
-    	switch (count)
+    	if(count <= requestNum)
     	{
-    		case 1:
-    			makeRequest(urlDic["1"]);
-      		break;
-      		
-      		case 2:
-    			makeRequest(urlDic["2"]);
-      		break;
-      		
-      		case 3:
-    			makeRequest(urlDic["3"]);
-      		break;
-      		
-      		case 4:
-    			makeRequest(urlDic["4"]);
-      		break;
-      		
-      		default:
-      			myTimer1.stop();
-      		break;
+    		makeRequest(urlDic[count]);
+    	}
+    	else
+    	{
+    		timer.stop();
     	}    	
     }
 
@@ -77,7 +119,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new TidesCurrentWatchAppView(tidesData1, tidesData2, tidesData3), new TidesCurrentWatchAppDelegate() ];
+        return [ new TidesCurrentWatchAppView("1","2","3"), new TidesCurrentWatchAppDelegate() ];
     }
     
     function onSettingsChanged() {	
@@ -88,42 +130,28 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		WatchUi.requestUpdate();
 	}	
 	
-	function setTidesData(tideDate, name, data)
+	function setTidesData(name, data)
 	{
 		var app = Application.getApp();
-        var keys = data.keys();
-   		for (var j=0; j<keys.size(); j++)
-   		{
-   			tideDate.put(keys[j], data[keys[j]]);
-   		}    
-   		System.println(name + " = " + tideDate);	       		
-   		app.setProperty(name, tideDate); 	 
+        //var keys = data.keys();
+   		//for (var j=0; j<keys.size(); j++)
+   		//{
+   		//	tideDate.put(keys[j], data[keys[j]]);
+   		//}    
+   		System.println(name + " = " + data);	       		
+   		app.setProperty(name, data.toString()); 
+   		tidesData1 = data.toString();
+   		app.setProperty("TEST", tidesData1["2019-03-01"].get["flood2"]); 
 	}
 	
 	// set up the response callback function
     function onReceive(responseCode, data) {             
        if (responseCode == 200) {
-       		switch (count)
-	    	{
-	    		case 1:
-	    			 setTidesData(tidesData1, "tidesData1", data);
-	      		break;
-	      		
-	      		case 2:
-	    			setTidesData(tidesData2, "tidesData2", data);
-	      		break;
-	      		
-	      		case 3:
-	    			setTidesData(tidesData3, "tidesData3", data);
-	      		break;
-	      		
-	      		case 4:
-	    			setTidesData(tidesData4, "tidesData4", data);
-	      		break;	      	
-	      		
-	      		default:
-	      		break;
-	    	}           
+       		setTidesData("tidesData"+count, data);
+       		if(count == requestNum)
+       		{
+       			WatchUi.requestUpdate();
+       		}
        }
        else {
            System.println("Response: " + responseCode);
