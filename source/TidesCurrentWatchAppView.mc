@@ -30,7 +30,8 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout     	 
+        // Call the parent onUpdate function to redraw the layout  
+       var customFont = WatchUi.loadResource(Rez.Fonts.font_id);
        var app = Application.getApp();
        var tidesData1 = app.getProperty("tidesData1");	     
        var tidesData2 = app.getProperty("tidesData2");
@@ -42,18 +43,70 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        if(tidesData6 != null)
        {       
 		   var tidesDataDic = Utils.convertStringToDictionary(tidesData3)[dateString];
-	       System.println( "tidesData6 in TidesCurrentWatchAppView = " + tidesData6);
+	       System.println( "tidesDataDic in TidesCurrentWatchAppView = " + tidesDataDic);
 	  
-	       var customFont = WatchUi.loadResource(Rez.Fonts.font_id);	      
-	       
 	       var keys = tidesDataDic.keys();
-	       for (var j=0; j<keys.size(); j++)
+	       var view;
+	       var img;
+	       for (var j=0; j<keys.size()-3; j++)
 	   	   {
-	   	   		if((j + 1) == 1)
+	   	   		switch (j + 1)
 	   	   		{
-		   	   		View.findDrawableById("id_label1").setFont(customFont);
-		   			View.findDrawableById("id_label1").setText(keys[j] + ": " + tidesDataDic[keys[j]]);
-	   			}
+	   	   			case 1:
+	   	   				view = View.findDrawableById("id_label1");	
+	   	   				img = View.findDrawableById("id_img1");	   	   				
+	   	   			break;
+	   	   			
+	   	   			case 2:
+	   	   				view = View.findDrawableById("id_label2");
+	   	   				img = View.findDrawableById("id_img2");	
+	   	   			break;
+	   	   			
+	   	   			case 3:
+	   	   				view = View.findDrawableById("id_label3");
+	   	   				img = View.findDrawableById("id_img3");	
+	   	   			break;
+	   	   			
+	   	   			case 4:
+	   	   				view = View.findDrawableById("id_label4");
+	   	   				img = View.findDrawableById("id_img4");	
+	   	   			break;
+	   	   			
+	   	   			case 5:
+	   	   				view = View.findDrawableById("id_label5");
+	   	   				img = View.findDrawableById("id_img5");	
+	   	   			break;
+	   	   			
+	   	   			case 6:
+	   	   				view = View.findDrawableById("id_label6");
+	   	   				img = View.findDrawableById("id_img6");	
+	   	   			break;
+	   	   			
+	   	   			case 7:
+	   	   				view = View.findDrawableById("id_label7");
+	   	   				img = View.findDrawableById("id_img7");	
+	   	   			break;
+	   	   			
+	   	   			case 8:
+	   	   				view = View.findDrawableById("id_label8");
+	   	   				img = View.findDrawableById("id_img8");	
+	   	   			break;
+	   	   		}
+	   	   		view.setFont(customFont);
+	   	   		view.setText(tidesDataDic[keys[j]]);
+	   	   		if(keys[j].toString().find("flood") != null)
+	   	   		{
+	   	   			var imageUp = WatchUi.loadResource( Rez.Drawables.Up );
+	    			dc.drawBitmap( 15, 36, imageUp );
+	   	   			//img.setBitmap("../drawables/up.png");
+	   	   		}
+	   	   		else
+	   	   		{
+	   	   			var imageDown = WatchUi.loadResource( Rez.Drawables.Down );
+	    			dc.drawBitmap( 15, 141, imageDown );
+	   	   		}
+	   	   		var imageDown = WatchUi.loadResource( Rez.Drawables.Down );
+	    			dc.drawBitmap( 15, 141, imageDown );
 	       }       
 	       
        }
