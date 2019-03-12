@@ -30,7 +30,8 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout  
+        // Call the parent onUpdate function to redraw the layout        
+        
        var customFont = WatchUi.loadResource(Rez.Fonts.font_id);
        var app = Application.getApp();
        var tidesData1 = app.getProperty("tidesData1");	     
@@ -48,7 +49,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	       var keys = tidesDataDic.keys();
 	       var view;
 	       var img;
-	       for (var j=0; j<keys.size()-3; j++)
+	       for (var j=0; j<keys.size()-4; j++)
 	   	   {
 	   	   		switch (j + 1)
 	   	   		{
@@ -93,24 +94,37 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	   	   			break;
 	   	   		}
 	   	   		view.setFont(customFont);
-	   	   		view.setText(tidesDataDic[keys[j]]);
-	   	   		if(keys[j].toString().find("flood") != null)
+	   	   		view.setText(tidesDataDic[keys[j]]); 	   		
+	       }
+	       
+	       View.onUpdate(dc);
+	       
+	       for (var j=0; j<keys.size()-4; j++)
+	       {
+	       		//System.println("Key = " + j + " = " + keys[j]);
+	   	   		//System.println("Number = " + keys[j].find("flood"));
+	   	   		if(keys[j].find("flood") != null)
 	   	   		{
 	   	   			var imageUp = WatchUi.loadResource( Rez.Drawables.Up );
-	    			dc.drawBitmap( 15, 36, imageUp );
-	   	   			//img.setBitmap("../drawables/up.png");
+	    			dc.drawBitmap( img.locX, img.locY, imageUp );
+	   	   			System.println("X1=" + img.locX + " Y1=" + img.locY);
 	   	   		}
 	   	   		else
 	   	   		{
 	   	   			var imageDown = WatchUi.loadResource( Rez.Drawables.Down );
-	    			dc.drawBitmap( 15, 141, imageDown );
-	   	   		}
-	   	   		var imageDown = WatchUi.loadResource( Rez.Drawables.Down );
-	    			dc.drawBitmap( 15, 141, imageDown );
-	       }       
+	    			dc.drawBitmap( img.locX, img.locY, imageDown );
+	    			System.println("X2=" + img.locX + " Y2=" + img.locY);
+	   	   		}   	   		
+	       }
 	       
        }
-       View.onUpdate(dc);
+       /*
+       var myBitmap = new WatchUi.Bitmap({
+		            :rezId=>Rez.Drawables.Down,
+		            :locX=>10,
+		            :locY=>30
+		        });       
+	       myBitmap.draw(dc);*/
     }
 
     // Called when this View is removed from the screen. Save the
