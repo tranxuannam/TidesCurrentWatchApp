@@ -51,57 +51,11 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	       var img;
 	       for (var j=0; j<keys.size()-4; j++)
 	   	   {
-	   	   		switch (j + 1)
-	   	   		{
-	   	   			case 1:
-	   	   				view = View.findDrawableById("id_label1");	
-	   	   				img = View.findDrawableById("id_img1");	   	   				
-	   	   			break;
-	   	   			
-	   	   			case 2:
-	   	   				view = View.findDrawableById("id_label2");
-	   	   				img = View.findDrawableById("id_img2");	
-	   	   			break;
-	   	   			
-	   	   			case 3:
-	   	   				view = View.findDrawableById("id_label3");
-	   	   				img = View.findDrawableById("id_img3");	
-	   	   			break;
-	   	   			
-	   	   			case 4:
-	   	   				view = View.findDrawableById("id_label4");
-	   	   				img = View.findDrawableById("id_img4");	
-	   	   			break;
-	   	   			
-	   	   			case 5:
-	   	   				view = View.findDrawableById("id_label5");
-	   	   				img = View.findDrawableById("id_img5");	
-	   	   			break;
-	   	   			
-	   	   			case 6:
-	   	   				view = View.findDrawableById("id_label6");
-	   	   				img = View.findDrawableById("id_img6");	
-	   	   			break;
-	   	   			
-	   	   			case 7:
-	   	   				view = View.findDrawableById("id_label7");
-	   	   				img = View.findDrawableById("id_img7");	
-	   	   			break;
-	   	   			
-	   	   			case 8:
-	   	   				view = View.findDrawableById("id_label8");
-	   	   				img = View.findDrawableById("id_img8");	
-	   	   			break;
-	   	   		}
+	   	   		view = GetViewLabelOnLayout(j+1);
 	   	   		view.setFont(customFont);
-	   	   		view.setText(tidesDataDic[keys[j]]); 	   		
-	       }
-	       
-	       View.onUpdate(dc);
-	       
-	       for (var j=0; j<keys.size()-4; j++)
-	       {
-	       		//System.println("Key = " + j + " = " + keys[j]);
+	   	   		view.setText(tidesDataDic[keys[j]]); 	   	   		
+	   	   		/* 
+	   	   		//System.println("Key = " + j + " = " + keys[j]);
 	   	   		//System.println("Number = " + keys[j].find("flood"));
 	   	   		if(keys[j].find("flood") != null)
 	   	   		{
@@ -114,17 +68,116 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	   	   			var imageDown = WatchUi.loadResource( Rez.Drawables.Down );
 	    			dc.drawBitmap( img.locX, img.locY, imageDown );
 	    			System.println("X2=" + img.locX + " Y2=" + img.locY);
-	   	   		}   	   		
+	   	   		}   	 
+	   	   		*/	   	   		 		
 	       }
+	       View.onUpdate(dc);
 	       
-       }
-       /*
-       var myBitmap = new WatchUi.Bitmap({
-		            :rezId=>Rez.Drawables.Down,
-		            :locX=>10,
-		            :locY=>30
-		        });       
-	       myBitmap.draw(dc);*/
+	       var myBitmap;
+	       for (var j=0; j<keys.size()-4; j++)
+	       {
+		       if(keys[j].find("flood") != null)
+		       {
+		       		img = GetViewImageOnLayout(j+1);
+		       		/*myBitmap = new WatchUi.Bitmap({
+			            :rezId=>Rez.Drawables.Up,
+			            :locX=>img.locX,
+			            :locY=>img.locY
+			        });       
+		       		myBitmap.draw(dc);*/
+		       		img.setBitmap(Rez.Drawables.Up); 
+		       }
+		       else
+		       {
+		       		img = GetViewImageOnLayout(j+1);
+		       		/*myBitmap = new WatchUi.Bitmap({
+			            :rezId=>Rez.Drawables.Down,
+			            :locX=>img.locX,
+			            :locY=>img.locY
+			        });       
+		       		myBitmap.draw(dc);*/
+		       		img.setBitmap(Rez.Drawables.Down); 
+		       }
+		   }
+	       	            
+       }      
+       
+    }
+    
+    function GetViewLabelOnLayout(index)
+    {
+    	switch (index)
+   	   		{
+   	   			case 1:
+   	   				return View.findDrawableById("id_label1");	
+   	   			break;
+   	   			
+   	   			case 2:
+   	   				return View.findDrawableById("id_label2");
+   	   			break;
+   	   			
+   	   			case 3:
+   	   				return View.findDrawableById("id_label3");
+   	   			break;
+   	   			
+   	   			case 4:
+   	   				return View.findDrawableById("id_label4");
+   	   			break;
+   	   			
+   	   			case 5:
+   	   				return View.findDrawableById("id_label5");
+   	   			break;
+   	   			
+   	   			case 6:
+   	   				return View.findDrawableById("id_label6");
+   	   			break;
+   	   			
+   	   			case 7:
+   	   				return View.findDrawableById("id_label7");
+   	   			break;
+   	   			
+   	   			case 8:
+   	   				return View.findDrawableById("id_label8");
+   	   			break;
+   	   		}
+    }
+    
+    function GetViewImageOnLayout(index)
+    {
+    	switch (index)
+   	   		{
+   	   			case 1:
+   	   				return View.findDrawableById("id_img1");	   	   				
+   	   			break;
+   	   			
+   	   			case 2:
+   	   				return View.findDrawableById("id_img2");	
+   	   			break;
+   	   			
+   	   			case 3:
+   	   				return View.findDrawableById("id_img3");	
+   	   			break;
+   	   			
+   	   			case 4:
+   	   				return View.findDrawableById("id_img4");	
+   	   			break;
+   	   			
+   	   			case 5:
+   	   				return View.findDrawableById("id_img5");	
+   	   			break;
+   	   			
+   	   			case 6:
+   	   				return View.findDrawableById("id_img6");	
+   	   			break;
+   	   			
+   	   			case 7:
+   	   				return View.findDrawableById("id_img7");	
+   	   			break;
+   	   			
+   	   			case 8:
+   	   				return View.findDrawableById("id_img8");	
+   	   			break;
+   	   		}
     }
 
     // Called when this View is removed from the screen. Save the
