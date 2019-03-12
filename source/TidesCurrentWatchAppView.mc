@@ -48,60 +48,14 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	  
 	       var keys = tidesDataDic.keys();
 	       var view;
-	       var img;
 	       for (var j=0; j<keys.size()-4; j++)
 	   	   {
 	   	   		view = GetViewLabelOnLayout(j+1);
 	   	   		view.setFont(customFont);
-	   	   		view.setText(tidesDataDic[keys[j]]); 	   	   		
-	   	   		/* 
-	   	   		//System.println("Key = " + j + " = " + keys[j]);
-	   	   		//System.println("Number = " + keys[j].find("flood"));
-	   	   		if(keys[j].find("flood") != null)
-	   	   		{
-	   	   			var imageUp = WatchUi.loadResource( Rez.Drawables.Up );
-	    			dc.drawBitmap( img.locX, img.locY, imageUp );
-	   	   			System.println("X1=" + img.locX + " Y1=" + img.locY);
-	   	   		}
-	   	   		else
-	   	   		{
-	   	   			var imageDown = WatchUi.loadResource( Rez.Drawables.Down );
-	    			dc.drawBitmap( img.locX, img.locY, imageDown );
-	    			System.println("X2=" + img.locX + " Y2=" + img.locY);
-	   	   		}   	 
-	   	   		*/	   	   		 		
+	   	   		view.setText(keys[j].substring(0, keys[j].length() - 1) + ": " + tidesDataDic[keys[j]]);    	   		
 	       }
-	       View.onUpdate(dc);
-	       
-	       var myBitmap;
-	       for (var j=0; j<keys.size()-4; j++)
-	       {
-		       if(keys[j].find("flood") != null)
-		       {
-		       		img = GetViewImageOnLayout(j+1);
-		       		/*myBitmap = new WatchUi.Bitmap({
-			            :rezId=>Rez.Drawables.Up,
-			            :locX=>img.locX,
-			            :locY=>img.locY
-			        });       
-		       		myBitmap.draw(dc);*/
-		       		img.setBitmap(Rez.Drawables.Up); 
-		       }
-		       else
-		       {
-		       		img = GetViewImageOnLayout(j+1);
-		       		/*myBitmap = new WatchUi.Bitmap({
-			            :rezId=>Rez.Drawables.Down,
-			            :locX=>img.locX,
-			            :locY=>img.locY
-			        });       
-		       		myBitmap.draw(dc);*/
-		       		img.setBitmap(Rez.Drawables.Down); 
-		       }
-		   }
-	       	            
-       }      
-       
+	       View.onUpdate(dc);	      
+       }    
     }
     
     function GetViewLabelOnLayout(index)
@@ -142,44 +96,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
    	   		}
     }
     
-    function GetViewImageOnLayout(index)
-    {
-    	switch (index)
-   	   		{
-   	   			case 1:
-   	   				return View.findDrawableById("id_img1");	   	   				
-   	   			break;
-   	   			
-   	   			case 2:
-   	   				return View.findDrawableById("id_img2");	
-   	   			break;
-   	   			
-   	   			case 3:
-   	   				return View.findDrawableById("id_img3");	
-   	   			break;
-   	   			
-   	   			case 4:
-   	   				return View.findDrawableById("id_img4");	
-   	   			break;
-   	   			
-   	   			case 5:
-   	   				return View.findDrawableById("id_img5");	
-   	   			break;
-   	   			
-   	   			case 6:
-   	   				return View.findDrawableById("id_img6");	
-   	   			break;
-   	   			
-   	   			case 7:
-   	   				return View.findDrawableById("id_img7");	
-   	   			break;
-   	   			
-   	   			case 8:
-   	   				return View.findDrawableById("id_img8");	
-   	   			break;
-   	   		}
-    }
-
     // Called when this View is removed from the screen. Save the
     // state of this View here. This includes freeing resources from
     // memory.
