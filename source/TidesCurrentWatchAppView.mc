@@ -46,7 +46,8 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        {       
 		   var tidesDataDic = Utils.convertStringToDictionary(tidesData3)[dateString];
 	       System.println( "tidesDataDic in TidesCurrentWatchAppView = " + tidesDataDic);
-	  
+	  	   //https://forums.garmin.com/forum/developers/connect-iq/122767-
+	  	   System.println("AddOneday = " + Utils.addOneday());
 	       var keys = tidesDataDic.keys();
 	       var view;
 	       var i = 1;
@@ -55,61 +56,27 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	   	   		System.println("statusTide[j] = " + statusTide[j]);
 	   	   		if(tidesDataDic.hasKey(statusTide[j]))
 	   	   		{
-		   	   		view = GetViewLabelOnLayout(i);
+		   	   		view = Utils.GetViewLabelOnLayout(i);
 		   	   		view.setFont(customFont);
-		   	   		view.setText(statusTide[j].substring(0, statusTide[j].length() - 1) + ": " + tidesDataDic[statusTide[j]]);  
+		   	   		view.setText(Utils.upperFirstLetterCase(statusTide[j].substring(0, statusTide[j].length() - 1)) + ": " + tidesDataDic[statusTide[j]]);  
 		   	   		i++;  	   		
 	   	   		}
 	       }
 	       if(i < 9)
 	       {
-		       for (var k=1; k<9-i; k++)
+	       	   System.println("i = " + i);
+		       for (var k=0; k<9-i; k++)
 		       {
-			       view = GetViewLabelOnLayout(i+k);
-			       view.setText(keys[i+k] + ": " + tidesDataDic[keys[i+k]]);
+			       view = Utils.GetViewLabelOnLayout(i+k);
+			       view.setFont(customFont);
+			       view.setText(Utils.upperFirstLetterCase(keys[i+k]) + ": " + tidesDataDic[keys[i+k]]);
 		       }
 	       }
 	       View.onUpdate(dc);	      
        }    
     }
     
-    function GetViewLabelOnLayout(index)
-    {
-    	switch (index)
-   	   		{
-   	   			case 1:
-   	   				return View.findDrawableById("id_label1");	
-   	   			break;
-   	   			
-   	   			case 2:
-   	   				return View.findDrawableById("id_label2");
-   	   			break;
-   	   			
-   	   			case 3:
-   	   				return View.findDrawableById("id_label3");
-   	   			break;
-   	   			
-   	   			case 4:
-   	   				return View.findDrawableById("id_label4");
-   	   			break;
-   	   			
-   	   			case 5:
-   	   				return View.findDrawableById("id_label5");
-   	   			break;
-   	   			
-   	   			case 6:
-   	   				return View.findDrawableById("id_label6");
-   	   			break;
-   	   			
-   	   			case 7:
-   	   				return View.findDrawableById("id_label7");
-   	   			break;
-   	   			
-   	   			case 8:
-   	   				return View.findDrawableById("id_label8");
-   	   			break;
-   	   		}
-    }
+    
     
     // Called when this View is removed from the screen. Save the
     // state of this View here. This includes freeing resources from

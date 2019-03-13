@@ -8,13 +8,13 @@ using Toybox.Time.Gregorian;
 
 class Utils extends Application.AppBase {
     
-    function initialize() {
-        AppBase.initialize();
+    function initialize() {    	
+        AppBase.initialize();        
     }    
    
     static function GetCurrentDate()
     {    	    	
-    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
     	var month = today.month.toString();
 		var day = today.day.toString();
     	
@@ -27,6 +27,61 @@ class Utils extends Application.AppBase {
     		day = "0" + today.day;
     	}    	
 		return Lang.format( "$1$-$2$-$3$", [ today.year, month, day ] );		
+    }
+    
+    static function getCurrentMonth()
+    {
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
+    	var month = today.month.toString();  	
+    	if(month.length() == 1)
+    	{
+    		month = "0" + today.month;
+    	}
+    	return month;
+    }
+    
+    static function getCurrentDay()
+    {
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
+    	var day = today.day.toString();  	
+    	if(day.length() == 1)
+    	{
+    		day = "0" + today.day;
+    	}
+    	return day;
+    }
+    
+    static function getCurrentYear()
+    {
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
+    	return today.year.toString();  
+    }
+    
+    function addOneday()
+    {
+    	//var date = new Time.Moment(Time.today().value());
+		var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY);
+		//return date.add(oneDay);
+		
+		var now = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT);
+		var first_day_of_month = Gregorian.moment({
+            :year => now.year,
+            :month => now.month,
+            :day => now.day,
+            :hour => 0,
+            :minute => 0,
+            :second => 0
+        });
+        first_day_of_month = first_day_of_month.add(oneDay);
+        var info = Gregorian.info(first_day_of_month, Gregorian.FORMAT_SHORT);
+        System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
+            info.year.format("%4d"),
+            info.month.format("%02d"),
+            info.day.format("%02d"),
+            info.hour.format("%02d"),
+            info.min.format("%02d"),
+            info.sec.format("%02d")
+        ]));
     }
     
     static function convertStringToDictionary(str)
@@ -154,4 +209,47 @@ class Utils extends Application.AppBase {
    		return dic;		
     }    
  
+ 	function GetViewLabelOnLayout(index)
+    {
+    	switch (index)
+   	   		{
+   	   			case 1:
+   	   				return View.findDrawableById("id_label1");	
+   	   			break;
+   	   			
+   	   			case 2:
+   	   				return View.findDrawableById("id_label2");
+   	   			break;
+   	   			
+   	   			case 3:
+   	   				return View.findDrawableById("id_label3");
+   	   			break;
+   	   			
+   	   			case 4:
+   	   				return View.findDrawableById("id_label4");
+   	   			break;
+   	   			
+   	   			case 5:
+   	   				return View.findDrawableById("id_label5");
+   	   			break;
+   	   			
+   	   			case 6:
+   	   				return View.findDrawableById("id_label6");
+   	   			break;
+   	   			
+   	   			case 7:
+   	   				return View.findDrawableById("id_label7");
+   	   			break;
+   	   			
+   	   			case 8:
+   	   				return View.findDrawableById("id_label8");
+   	   			break;
+   	   		}
+    }
+    
+    function upperFirstLetterCase(str)
+    {
+    	return str.substring(0, 1).toUpper() + str.substring(1, str.length());
+    }
+    
 }
