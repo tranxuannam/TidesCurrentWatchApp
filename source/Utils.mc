@@ -88,5 +88,70 @@ class Utils extends Application.AppBase {
    		}
    		return dic;		
     }    
+    
+    static function convertJsonStringToDictionary(str)
+    {   
+    	var dic = {}; 
+    	var isStop = true;
+    	var strSplit;
+    	var date;
+    	
+    	str = str.substring(0, str.length()-2);
+    	System.println(str);
+    	
+    	while( isStop )
+    	{
+    		if(str.find("},") == null && str.length() > 0)
+    		{
+	    		strSplit = str;		
+	    		isStop = false;	    	
+	    	}
+	    	else
+	    	{
+	    		strSplit = str.substring(0, str.find("},"));
+	    		str = str.substring(str.find("},") + 2, str.length());
+	    	}
+	    	System.println(strSplit);
+	    	
+	    	date = strSplit.substring(0, strSplit.find(":{"));
+	    	strSplit = strSplit.substring(strSplit.find(":{") + 2, strSplit.length());  
+	    	System.println(date);
+	    	
+	    	System.println("strSplit = " + strSplit); 	
+	    	dic[date.substring(1, date.length() - 1)] = jsonElements(strSplit);   	
+	    	//System.println("DIC = " + dic); 
+    	}    
+    	return dic;
+    }
+    
+    static function jsonElements(str)
+    {
+    	var dic = {};
+    	var isStop = true;
+    	while( isStop )   
+    	{
+    		if(str.find(",") == null && str.length() > 0)
+    		{
+    			var key = str.substring(0, str.find(":"));  
+	    		var value = str.substring(str.find(":") + 1, str.length()); 
+	    		//System.println("key = " + key.substring(1, key.length() - 1));
+	    		//System.println("value = " + value.substring(1, value.length() - 1)); 
+	    		dic[key.substring(1, key.length() - 1)] = value.substring(1, value.length() - 1);
+	    		isStop = false;
+    		}
+    		else
+    		{
+	   			var item = str.substring(0, str.find(","));
+	   			var key = item.substring(0, item.find(":"));  
+	    		var value = item.substring(item.find(":") + 1, item.length());  
+	    		//System.println("key = " + key.substring(1, key.length() - 1));
+	    		//System.println("value = " + value.substring(1, value.length() - 1)); 
+	    		dic[key.substring(1, key.length() - 1)] = value.substring(1, value.length() - 1);
+	    		str = str.substring(str.find(",") + 1, str.length());
+	    		System.println(str);
+    		}
+   		}
+   		return dic;		
+    }    
  
 }

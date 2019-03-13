@@ -40,6 +40,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var tidesData4 = app.getProperty("tidesData4");
        var tidesData5 = app.getProperty("tidesData5");
        var tidesData6 = app.getProperty("tidesData6");
+       var statusTide = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6"];
               
        if(tidesData6 != null)
        {       
@@ -48,11 +49,25 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	  
 	       var keys = tidesDataDic.keys();
 	       var view;
-	       for (var j=0; j<keys.size()-4; j++)
+	       var i = 1;
+	       for (var j=0; j<statusTide.size(); j++)
 	   	   {
-	   	   		view = GetViewLabelOnLayout(j+1);
-	   	   		view.setFont(customFont);
-	   	   		view.setText(keys[j].substring(0, keys[j].length() - 1) + ": " + tidesDataDic[keys[j]]);    	   		
+	   	   		System.println("statusTide[j] = " + statusTide[j]);
+	   	   		if(tidesDataDic.hasKey(statusTide[j]))
+	   	   		{
+		   	   		view = GetViewLabelOnLayout(i);
+		   	   		view.setFont(customFont);
+		   	   		view.setText(statusTide[j].substring(0, statusTide[j].length() - 1) + ": " + tidesDataDic[statusTide[j]]);  
+		   	   		i++;  	   		
+	   	   		}
+	       }
+	       if(i < 9)
+	       {
+		       for (var k=1; k<9-i; k++)
+		       {
+			       view = GetViewLabelOnLayout(i+k);
+			       view.setText(keys[i+k] + ": " + tidesDataDic[keys[i+k]]);
+		       }
 	       }
 	       View.onUpdate(dc);	      
        }    
