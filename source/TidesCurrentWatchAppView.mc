@@ -9,10 +9,12 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 
 	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/0/15";
 	hidden var dateString;
+	hidden var dateDic;
 
     function initialize() {
     	System.println("Init view");    
-		dateString = Utils.GetCurrentDate();
+		dateDic = Utils.getCurrentDate();
+		dateString = Lang.format( "$1$-$2$-$3$", [ dateDic["year"], dateDic["month"], dateDic["day"] ] );
 		System.println("dateString = " + dateString);
         View.initialize();
     }
@@ -26,6 +28,13 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() {
+    }
+    
+    function onClock()
+    {    	
+		var myTime = System.getClockTime(); // ClockTime object	
+		View.findDrawableById("id_hours").setText(Lang.format( "$1$:$2$", [myTime.hour.format("%02d"), myTime.min.format("%02d")]));
+		WatchUi.requestUpdate();
     }
 
     // Update the view
@@ -41,13 +50,16 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var tidesData5 = app.getProperty("tidesData5");
        var tidesData6 = app.getProperty("tidesData6");
        var statusTide = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6"];
+       var displayDate = Lang.format( "$1$, $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month_medium"], dateDic["day"], dateDic["year"] ] );
               
        if(tidesData6 != null)
        {       
 		   var tidesDataDic = Utils.convertStringToDictionary(tidesData3)[dateString];
-	       System.println( "tidesDataDic in TidesCurrentWatchAppView = " + tidesDataDic);
-	  	   //https://forums.garmin.com/forum/developers/connect-iq/122767-
-	  	   System.println("AddOneday = " + Utils.addOneday());
+	       System.println( "tidesDataDic in TidesCurrentWatchAppView = " + tidesDataDic);	  	   
+	  	   System.println("AddOneday = " + Utils.getDateByAddedDay(dateDic, Utils.addOneDay()));	  	   
+	 
+	  	   View.findDrawableById("id_date").setText(displayDate);	  	   
+	  	   
 	       var keys = tidesDataDic.keys();
 	       var view;
 	       var i = 1;

@@ -8,72 +8,65 @@ using Toybox.Time.Gregorian;
 
 class Utils extends Application.AppBase {
     
+    static var URL = "http://localhost/TidesCurrent/public/test/$1$/$2$/$3$/";
+    	
     function initialize() {    	
         AppBase.initialize();        
-    }    
+    }   
+    
+    static function getUrl(location, year, month)
+    {
+    	return Lang.format(URL, [location, year, month]);
+    } 
+    
+    static function getUrls(location, year, month)
+    {
+    	var url = getUrl(location, year, month);
+    	return {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5", 4=>url + "15/5", 5=>url + "20/5", 6=>url + "25/6"};
+    } 
    
-    static function GetCurrentDate()
+    static function getCurrentDate()
     {    	    	
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
-    	var month = today.month.toString();
-		var day = today.day.toString();
-    	
-    	if(month.length() == 1)
-    	{
-    		month = "0" + today.month;
-    	}    	
-    	if(day.length() == 1)
-    	{
-    		day = "0" + today.day;
-    	}    	
-		return Lang.format( "$1$-$2$-$3$", [ today.year, month, day ] );		
+    	var fMedium = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM); 
+		//return Lang.format( "$1$-$2$-$3$", [ today.year, month, day ] );
+		return {"year" => today.year, "month" => today.month.format("%02d"), "month_medium" => fMedium.month, "day" => today.day.format("%02d"), "day_of_week" => fMedium.day_of_week};		
     }
     
     static function getCurrentMonth()
     {
-    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
-    	var month = today.month.toString();  	
-    	if(month.length() == 1)
-    	{
-    		month = "0" + today.month;
-    	}
-    	return month;
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
+    	return today.month.format("%02d"); 	
     }
     
     static function getCurrentDay()
     {
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
-    	var day = today.day.toString();  	
-    	if(day.length() == 1)
-    	{
-    		day = "0" + today.day;
-    	}
-    	return day;
+    	return today.day.format("%02d");  	
     }
     
     static function getCurrentYear()
     {
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
-    	return today.year.toString();  
+    	return today.year.format("%4d");  
     }
     
-    function addOneday()
-    {
-    	//var date = new Time.Moment(Time.today().value());
-		var oneDay = new Time.Duration(Gregorian.SECONDS_PER_DAY);
-		//return date.add(oneDay);
-		
-		var now = Gregorian.info(Time.now(), Gregorian.FORMAT_SHORT);
-		var first_day_of_month = Gregorian.moment({
-            :year => now.year,
-            :month => now.month,
-            :day => now.day,
+    static function getDateByAddedDay(dateDic, addedNumDay)
+    {	
+    	var year = dateDic["year"].toNumber();
+    	var month = dateDic["month"].toNumber();
+    	var day = dateDic["day"].toNumber();
+    	//https://forums.garmin.com/forum/developers/connect-iq/122767-
+		var gMoment = Gregorian.moment({
+            :year => year,
+            :month => month,
+            :day => day,
             :hour => 0,
             :minute => 0,
             :second => 0
         });
-        first_day_of_month = first_day_of_month.add(oneDay);
-        var info = Gregorian.info(first_day_of_month, Gregorian.FORMAT_SHORT);
+        gMoment = gMoment.add(addedNumDay);
+        var info = Gregorian.info(gMoment, Gregorian.FORMAT_SHORT);
         System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
             info.year.format("%4d"),
             info.month.format("%02d"),
@@ -82,6 +75,13 @@ class Utils extends Application.AppBase {
             info.min.format("%02d"),
             info.sec.format("%02d")
         ]));
+        var fMedium = Gregorian.info(gMoment, Gregorian.FORMAT_MEDIUM);
+        return {"year" => info.year.format("%4d"), "month" => info.month.format("%02d"), "day" => info.day.format("%02d"), "day_of_week" => fMedium.day_of_week};
+    }
+    
+    static function addOneDay()
+    {
+    	return new Time.Duration(Gregorian.SECONDS_PER_DAY);
     }
     
     static function convertStringToDictionary(str)
@@ -247,7 +247,7 @@ class Utils extends Application.AppBase {
    	   		}
     }
     
-    function upperFirstLetterCase(str)
+    static function upperFirstLetterCase(str)
     {
     	return str.substring(0, 1).toUpper() + str.substring(1, str.length());
     }
