@@ -17,32 +17,15 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     }
     
    	function onNextPage() {   		
-        //makeRequest();
-        //WatchUi.requestUpdate();
+        var app = Application.getApp();
+        var displayedDate = app.getProperty("displayedDate");	
+        var dateDic = {"year" => displayedDate.substring(0, 4), "month" => displayedDate.substring(5, 2), "day" => displayedDate.substring(7, 2)};
+        System.println("dateDic = " + dateDic);
+        var newDate = Utils.getDateByAddedDay(dateDic, Utils.addOneDay());
+        System.println("newDate = " + newDate);
+        app.setProperty("displayedDate", Lang.format("$1$-$2$-$3$", [newDate["year"], newDate["month"], newDate["day"]]));
+        WatchUi.requestUpdate();
         return true;
     } 
-       
-    // set up the response callback function
-    function onReceive(responseCode, data) {             
-       if (responseCode == 200) {
-           System.println("Second time...");                   // print success
-           var app = Application.getApp();
-    	   app.setProperty("tidesData", data);
-    	   System.println("tidesData in TidesCurrentWatchAppDelegate: " + data); 
-       }
-       else {
-           System.println("Response: " + responseCode);            // print response code
-       }
-	}	
-	
-	function makeRequest() {
-       var url = URL;
-       var params = null;
-       var options = {
-         :method => Communications.HTTP_REQUEST_METHOD_GET,
-         :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-       };
-       Communications.makeWebRequest(url, params, options, method(:onReceive));
-    }
-
+   
 }

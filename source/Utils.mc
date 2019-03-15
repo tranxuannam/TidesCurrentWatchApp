@@ -8,29 +8,37 @@ using Toybox.Time.Gregorian;
 
 class Utils extends Application.AppBase {
     
-    static var URL = "http://localhost/TidesCurrent/public/test/$1$/$2$/$3$/";
+    //static var URL = "http://localhost/TidesCurrent/public/test/$1$/$2$/";
+    static var URL = "http://localhost/TidesCurrent/public/test/$1$/$2$/";
     	
     function initialize() {    	
         AppBase.initialize();        
     }   
     
-    static function getUrl(location, year, month)
+    static function getUrl(location, date)
     {
-    	return Lang.format(URL, [location, year, month]);
+    	return Lang.format(URL, [location, date]);
     } 
     
-    static function getUrls(location, year, month)
+    static function getUrls(location, date)
     {
-    	var url = getUrl(location, year, month);
-    	return {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5", 4=>url + "15/5", 5=>url + "20/5", 6=>url + "25/6"};
+    	var url = getUrl(location, date);
+    	return {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5"};
+    	//return {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5", 4=>url + "15/5", 5=>url + "20/5", 6=>url + "25/6"};
     } 
    
-    static function getCurrentDate()
+    static function getCurrentFullDate()
     {    	    	
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
     	var fMedium = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM); 
 		//return Lang.format( "$1$-$2$-$3$", [ today.year, month, day ] );
 		return {"year" => today.year, "month" => today.month.format("%02d"), "month_medium" => fMedium.month, "day" => today.day.format("%02d"), "day_of_week" => fMedium.day_of_week};		
+    }
+    
+    static function getCurrentDate()
+    {    	    	
+    	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
+		return Lang.format( "$1$-$2$-$3$", [ today.year, today.month.format("%02d"), today.day.format("%02d") ] );
     }
     
     static function getCurrentMonth()
@@ -106,13 +114,13 @@ class Utils extends Application.AppBase {
 	    		strSplit = str.substring(0, str.find("}, "));
 	    		str = str.substring(str.find("}, ") + 3, str.length());
 	    	}
-	    	System.println(strSplit);
+	    	//System.println(strSplit);
 	    	
 	    	date = strSplit.substring(0, strSplit.find("=>{"));
 	    	strSplit = strSplit.substring(strSplit.find("=>{") + 3, strSplit.length());  
-	    	System.println(date);
+	    	//System.println(date);
 	    	
-	    	System.println("strSplit = " + strSplit); 	
+	    	//System.println("strSplit = " + strSplit); 	
 	    	dic[date] = elements(strSplit);   	
     	}    
     	return dic;
@@ -138,7 +146,7 @@ class Utils extends Application.AppBase {
 	    		var value = item.substring(item.find("=>") + 2, item.length());  
 	    		dic[key] = value;
 	    		str = str.substring(str.find(", ") + 2, str.length());
-	    		System.println(str);
+	    		//System.println(str);
     		}
    		}
    		return dic;		
