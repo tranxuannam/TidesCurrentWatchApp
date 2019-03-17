@@ -59,8 +59,9 @@ class Utils extends Application.AppBase {
     	return today.year.format("%4d");  
     }
     
-    static function getDateByAddedDay(dateDic, addedNumDay)
+    static function getDisplayDate(dateString, addedNumDay, isNext)
     {	
+    	var dateDic = convertDateToDictionary(dateString);
     	var year = dateDic["year"].toNumber();
     	var month = dateDic["month"].toNumber();
     	var day = dateDic["day"].toNumber();
@@ -73,7 +74,14 @@ class Utils extends Application.AppBase {
             :minute => 0,
             :second => 0
         });
-        gMoment = gMoment.add(addedNumDay);
+        if(isNext == true)
+        {
+        	gMoment = gMoment.add(addedNumDay);
+        }
+        else
+        {
+        	gMoment = gMoment.subtract(addedNumDay);
+        }
         var info = Gregorian.info(gMoment, Gregorian.FORMAT_SHORT);
         System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
             info.year.format("%4d"),
@@ -83,13 +91,34 @@ class Utils extends Application.AppBase {
             info.min.format("%02d"),
             info.sec.format("%02d")
         ]));
-        var fMedium = Gregorian.info(gMoment, Gregorian.FORMAT_MEDIUM);
-        return {"year" => info.year.format("%4d"), "month" => info.month.format("%02d"), "day" => info.day.format("%02d"), "day_of_week" => fMedium.day_of_week};
+        //var fMedium = Gregorian.info(gMoment, Gregorian.FORMAT_MEDIUM);
+        //return {"year" => info.year.format("%4d"), "month" => info.month.format("%02d"), "day" => info.day.format("%02d"), "day_of_week" => fMedium.day_of_week};
+    	return Lang.format("$1$-$2$-$3$", [info.year.format("%4d"), info.month.format("%02d"), info.day.format("%02d")]);
     }
-    
+     
     static function addOneDay()
     {
     	return new Time.Duration(Gregorian.SECONDS_PER_DAY);
+    }
+    
+    static function convertDateToFullDate(dateString)
+    {	
+    	var dateDic = convertDateToDictionary(dateString);
+    	var year = dateDic["year"].toNumber();
+    	var month = dateDic["month"].toNumber();
+    	var day = dateDic["day"].toNumber();
+		var gMoment = Gregorian.moment({
+            :year => year,
+            :month => month,
+            :day => day           
+        });     
+        var info = Gregorian.info(gMoment, Gregorian.FORMAT_MEDIUM);  
+        return {"year" => info.year.format("%4d"), "month" => info.month, "day" => info.day.format("%02d"), "day_of_week" => info.day_of_week};
+    }
+    
+    static function convertDateToDictionary(date)
+    {
+    	return {"year" => date.substring(0, 4), "month" => date.substring(5, 7).toString(), "day" => date.substring(8, 10).toString()};
     }
     
     static function convertStringToDictionary(str)

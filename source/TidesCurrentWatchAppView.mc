@@ -12,7 +12,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 
     function initialize() {
     	System.println("Init view");    
-		dateDic = Utils.getCurrentFullDate();
+		//dateDic = Utils.getCurrentFullDate();
         View.initialize();
     }
 
@@ -40,17 +40,20 @@ class TidesCurrentWatchAppView extends WatchUi.View {
         
        var customFont = WatchUi.loadResource(Rez.Fonts.font_id);
        var app = Application.getApp();
-       var displayedDate = app.getProperty("displayedDate");
+       var displayedDate = app.getProperty("displayedDate");       
+       System.println("displayedDate = " + displayedDate);
        
        if(displayedDate != null)
        {       
+       	   dateDic = Utils.convertDateToFullDate(displayedDate);
+       	   System.println("dateDic = " + dateDic);
 	       var tidesData = app.getProperty(displayedDate);       
 	       var statusTide = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6"];
-	       var displayDate = Lang.format( "$1$, $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month_medium"], dateDic["day"], dateDic["year"] ] );
+	       var displayDate = Lang.format( "$1$, $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month"], dateDic["day"], dateDic["year"] ] );
               
 		   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate];
 	       System.println( "tidesDataDic in TidesCurrentWatchAppView = " + tidesDataDic);	  	   
-	  	   System.println("AddOneday = " + Utils.getDateByAddedDay(dateDic, Utils.addOneDay()));	  	   
+	  	   //System.println("AddOneday = " + Utils.getDisplayDate(dateDic, Utils.addOneDay(), true));	  	   
 	 
 	  	   View.findDrawableById("id_date").setText(displayDate);	  	   
 	  	   
