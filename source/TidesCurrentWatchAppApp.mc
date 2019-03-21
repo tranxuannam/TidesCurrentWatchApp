@@ -11,7 +11,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 
 	//const URL_LOCATION = "http://localhost/TidesCurrent/public/location/60.8/-78.2167/5";	
 	hidden var location = 0;
-	hidden var count = 0;
+	hidden var count = 1;
 	hidden var timer;
 	hidden var urlDic;
 	hidden var requestNum;
@@ -38,16 +38,20 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     
     function callBack()
     {
-    	count++;
     	System.println("count=" + count);
     	if(count <= requestNum)
     	{
-    		makeRequest(urlDic[count]);
+    		var delegate = new WebResponseDelegate(1);
+    		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
     	}
     	else
     	{
+    		var app = Application.getApp();
+    		app.setProperty("displayedDate", Utils.getCurrentDate());
+   			WatchUi.requestUpdate();
     		timer.stop();    		
-    	}    	
+    	}    
+    	count++;	
     }
 
     // onStop() is called when your application is exiting
@@ -67,41 +71,14 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		WatchUi.requestUpdate();
 	}	
 	
-	function setTidesData(data)
-	{
-		var app = Application.getApp();      
-   		var keys = data.keys();
-   		for(var i = 0; i< keys.size(); i++)
-   		{
-   			app.setProperty(keys[i], {keys[i] => data[keys[i]]}.toString()); 
-   		}
-   		System.println("TideDate = " + data); 		
-	}
-	
 	// set up the response callback function
-    function onReceive(responseCode, data) {             
-       if (responseCode == 200) {
-       		setTidesData(data);
-       		if(count == requestNum)
-       		{
-       			var app = Application.getApp();
-        		app.setProperty("displayedDate", Utils.getCurrentDate());
-       			WatchUi.requestUpdate();
-       		}
-       }
-       else {
-           System.println("Response: " + responseCode);
-       }
+    function onReceive(responseCode, data, param) {   
+		if (responseCode == 200) {
+			Utils.setTidesData(data);       		
+		}
+		else {
+			System.println("Response: " + responseCode);
+		}
 	}		
 	
-	//https://forums.garmin.com/forum/developers/connect-iq/143937-
-    function makeRequest(url) {
-       var params = null;
-       var options = {
-         :method => Communications.HTTP_REQUEST_METHOD_GET,
-         :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-       };
-       Communications.makeWebRequest(url, params, options, method(:onReceive));
-    }    
-   
 }

@@ -289,4 +289,15 @@ class Utils extends Application.AppBase {
     	return str.substring(0, 1).toUpper() + str.substring(1, str.length());
     }
     
+    function setTidesData(data)
+	{
+		var app = Application.getApp();      
+   		var keys = data.keys();
+   		for(var i = 0; i< keys.size(); i++)
+   		{
+   			app.setProperty(keys[i], {keys[i] => data[keys[i]]}.toString()); 
+   		}
+   		System.println("TideDate = " + data); 		
+	}
+    
 }
