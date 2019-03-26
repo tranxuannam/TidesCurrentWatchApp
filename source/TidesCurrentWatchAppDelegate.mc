@@ -6,21 +6,22 @@ using Toybox.Timer;
 
 class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 
-	var ppTimer;
-	var mPressedTime;
-	var mTimer;
-	
     function initialize() {
         BehaviorDelegate.initialize();
     }
 
     function onMenu() {
-    //    WatchUi.pushView(new Rez.Menus.MainMenu(), new TidesCurrentWatchAppMenuDelegate(), WatchUi.SLIDE_UP);
-        ppTimer.stop();	
+        //WatchUi.pushView(new Rez.Menus.MainMenu(), new TidesCurrentWatchAppMenuDelegate(), WatchUi.SLIDE_UP);        
+        var device = WatchUi.loadResource(Rez.Strings.Device);
+
+        if ("fr235".equals(device)) {
+           System.println("fr235");
+           onPreviousPage();
+        }
         return true;
     }
     
-   	function onNextPage() {  
+   	function onPreviousPage() {  
         var app = Application.getApp();
         var displayedDate = app.getProperty("displayedDate");
         System.println("displayedDate = " + displayedDate);
@@ -47,14 +48,8 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
         return true;
     } 
     
-    function onPreviousPage() {   	
-    	ppTimer = new Timer.Timer();	
-    	ppTimer.start( method(:onPrePage), 100, false );
-        return false;
-    }  
-    
-    function onPrePage() {   		
-        var app = Application.getApp();
+    function onNextPage() {    	
+    	var app = Application.getApp();
         var displayedDate = app.getProperty("displayedDate");
         System.println("displayedDate = " + displayedDate);
         var nextDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), false);	
@@ -66,5 +61,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 	        app.setProperty("displayedDate", nextDate);
 	        WatchUi.requestUpdate();
         }
-    }  
+        return false;
+    }     
+    
 }

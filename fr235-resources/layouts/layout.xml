@@ -1,0 +1,14 @@
+<layout id="MainLayout" background="Graphics.COLOR_BLACK">
+	<label id="id_hours" x="110" y="0" text="23:59" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+	<label id="id_date" x="110" y="15" text="Dec 12 2020" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+	<drawable id="id_line2" class="CustomLine" />
+    <label id="id_label1" x="25" y="36" text="9:32 AM PST / 2.0 kt Semi" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label2" x="25" y="51" text="9:32 AM PST / 2.0 kt 456" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label3" x="25" y="66" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label4" x="25" y="81" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label5" x="25" y="96" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label6" x="25" y="111" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label7" x="25" y="126" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label8" x="25" y="141" text="9:32 AM PST / 2.0 kt 789" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_country" x="110" y="160" text="Vung Tau" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+</layout>
