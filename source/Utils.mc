@@ -293,11 +293,27 @@ class Utils extends Application.AppBase {
 	{
 		var app = Application.getApp();      
    		var keys = data.keys();
-   		for(var i = 0; i< keys.size(); i++)
+   		for(var i = 0; i < keys.size(); i++)
    		{
    			app.setProperty(keys[i], {keys[i] => data[keys[i]]}.toString()); 
    		}
    		System.println("TideDate = " + data); 		
+	}
+	
+	function saveTidesDataToDictionary(data, tmpDic)
+	{
+   		var keys = data.keys();
+   		for(var i = 0; i< keys.size(); i++)
+   		{
+   			tmpDic.put(keys[i], data[keys[i]].toString());
+   		}
+	}
+	
+	function saveTidesData(data, i)
+	{
+		var app = Application.getApp(); 
+		app.setProperty("tidedata"+i, data.toString());     
+   		System.println("tidedata" + i + " = " + data); 		
 	}
     
 }

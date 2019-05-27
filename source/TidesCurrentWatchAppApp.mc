@@ -15,14 +15,22 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 	hidden var timer;
 	hidden var urlDic;
 	hidden var requestNum;
+	hidden var message;
+	hidden var view = null;
 	
     function initialize() {
+    	message = "";
         AppBase.initialize();      
     }
 
     // onStart() is called on application start up
     function onStart(state) {	    
-    	System.println("onStart");    	
+    	//run();	
+    } 
+    
+    function run()
+    {
+    	System.println("run()");    	
     	urlDic = Utils.getUrls(location, Utils.getCurrentDate());
     	requestNum = urlDic.size();
     	
@@ -34,7 +42,11 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 	    	timer = new Timer.Timer();
 			timer.start(method(:callBack), 5000, true);
 		}		
-    }        
+		else
+		{
+			WatchUi.switchToView(new TidesCurrentWatchAppView2(), new TidesCurrentWatchAppDelegate2(), WatchUi.SLIDE_UP); 
+		}
+    }       
     
     function callBack()
     {
@@ -47,9 +59,11 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	else
     	{
     		var app = Application.getApp();
-    		app.setProperty("displayedDate", Utils.getCurrentDate());
-   			WatchUi.requestUpdate();
-    		timer.stop();    		
+    		app.setProperty("displayedDate", Utils.getCurrentDate());  			
+   			//WatchUi.requestUpdate();	
+    		WatchUi.switchToView(new TidesCurrentWatchAppView2(), new TidesCurrentWatchAppDelegate2(), WatchUi.SLIDE_UP); 
+    		timer.stop();    	
+    		
     	}    
     	count++;	
     }
@@ -64,11 +78,8 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     }
     
     function onSettingsChanged() {	
-		var app = Application.getApp();
-		//var json = app.getProperty("jsonData");	
-		//app.setProperty("myNumber", app.getProperty("myNumber"));		
-		//System.println( "myNumber = " + app.getProperty("myNumber"));
-		WatchUi.requestUpdate();
+		settingsChanged(); 
+		run();
 	}	
 	
 	// set up the response callback function

@@ -15,31 +15,40 @@ class ProgressBarView extends WatchUi.View
 
 class ProgressDelegate extends WatchUi.BehaviorDelegate
 {
-    function initialize() {
+	hidden var _timer;
+    function initialize(timer) {
+    	_timer = timer;
         BehaviorDelegate.initialize();
     }
 
     function onBack() {
-        return true;
+    	if( _timer != null )
+        {
+        	System.println("onBack");
+            _timer.stop();
+        }
+        return true;        
     }
 }
 
 class ProgressBarDelegate extends WatchUi.BehaviorDelegate
 {
     hidden var location = 0;
-    hidden var count = 1;
-	hidden var timer;
+    hidden var count = 1;	
 	hidden var urlDic;
 	hidden var timeForCheckConnect = 2;
 	hidden var displayedDate;
 	hidden var progressBar;
+	hidden var timer;
+	hidden var tmpDic = {};
 
     function initialize() {
         BehaviorDelegate.initialize();        
         loadNextTidesCurrent();
     }
     
-    function onBack() {
+    function onBack() {  
+    	System.println("onBack in bar");  	
         return true;
     }
 
@@ -53,9 +62,8 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
 		var app = Application.getApp();
     	displayedDate = app.getProperty("displayedDate");	
         urlDic = Utils.getUrls(location, displayedDate);
-        app.clearProperties();
         progressBar = new WatchUi.ProgressBar( "Processing", null );
-        WatchUi.pushView( progressBar, new ProgressDelegate(), WatchUi.SLIDE_DOWN );
+        WatchUi.pushView( progressBar, new ProgressDelegate(timer), WatchUi.SLIDE_DOWN );
         timer.start( method(:tideCurrentCallback), 2000, true );
     }
 
@@ -66,6 +74,8 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
         {
             timer.stop();
             var app = Application.getApp();
+            app.clearProperties();
+            Utils.setTidesData(tmpDic);
             app.setProperty("displayedDate", displayedDate);
             WatchUi.popView( WatchUi.SLIDE_UP );
         }
@@ -84,8 +94,9 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
    
     function onReceive(responseCode, data, param) 
     {   
-		if (responseCode == 200) {
-			Utils.setTidesData(data);       		
+		if (responseCode == 200) {			
+			Utils.saveTidesDataToDictionary(data, tmpDic);       	
+			System.println("TideDate in tmpDic = " + tmpDic); 		
 		}
 		else {
 			System.println("Response: " + responseCode);
