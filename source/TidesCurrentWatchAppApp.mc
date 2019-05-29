@@ -6,7 +6,17 @@ using Toybox.Communications;
 using Toybox.Timer;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
+using Toybox.Background;
 
+// info about whats happening with the background process
+var counter=0;
+var bgdata="none";
+var canDoBG=false;
+// keys to the object store data
+var OSCOUNTER="oscounter";
+var OSDATA="osdata";
+
+(:background)
 class TidesCurrentWatchAppApp extends Application.AppBase {
 
 	//const URL_LOCATION = "http://localhost/TidesCurrent/public/location/60.8/-78.2167/5";	
@@ -15,12 +25,13 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 	hidden var timer;
 	hidden var urlDic;
 	hidden var requestNum;
-	hidden var message;
-	hidden var view = null;
 	
     function initialize() {
-    	message = "";
-        AppBase.initialize();      
+    	AppBase.initialize(); 
+    	var now=System.getClockTime();
+    	var ts=now.hour+":"+now.min.format("%02d");
+    	//you'll see this gets called in both the foreground and background        
+        System.println("App initialize "+ts);             
     }
 
     // onStart() is called on application start up
@@ -74,6 +85,13 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
+    	//register for temporal events if they are supported
+    	if(Toybox.System has :ServiceDelegate) {
+    		canDoBG=true;
+    		Background.registerForTemporalEvent(new Time.Duration(5 * 60));
+    	} else {
+    		System.println("****background not available on this device****");
+    	}
         return [ new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate() ];
     }
     
@@ -90,6 +108,23 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		else {
 			System.println("Response: " + responseCode);
 		}
-	}		
+	}	
+	
+	function onBackgroundData(data) {
+    	counter++;
+    	var now=System.getClockTime();
+    	var ts=now.hour+":"+now.min.format("%02d");
+        System.println("onBackgroundData="+data+" "+counter+" at "+ts);
+        bgdata=data;
+        Application.getApp().setProperty(OSDATA,bgdata);
+        WatchUi.requestUpdate();
+    }    
+
+    function getServiceDelegate(){
+    	var now=System.getClockTime();
+    	var ts=now.hour+":"+now.min.format("%02d");    
+    	System.println("getServiceDelegate: "+ts);
+        return [new BgbgServiceDelegate()];
+    }	
 	
 }

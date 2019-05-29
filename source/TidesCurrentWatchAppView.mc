@@ -5,7 +5,7 @@ using Toybox.Application;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-hidden var _message = "App settings required";
+var _message = "App settings required";
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 

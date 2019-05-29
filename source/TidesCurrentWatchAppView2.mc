@@ -11,9 +11,19 @@ class TidesCurrentWatchAppView2 extends WatchUi.View {
 	hidden var dateDic;
 
     function initialize() {
-    	System.println("Init view 2");    
-		//dateDic = Utils.getCurrentFullDate();
+    	System.println("Init view 2");   
         View.initialize();
+        
+        //read last values from the Object Store
+        var temp=Application.getApp().getProperty(OSCOUNTER);
+        if(temp!=null && temp instanceof Number) {counter=temp;}
+        
+        temp=Application.getApp().getProperty(OSDATA);
+        if(temp!=null && temp instanceof String) {bgdata=temp;}
+        
+        var now=System.getClockTime();
+    	var ts=now.hour+":"+now.min.format("%02d");
+        System.println("From OS: data="+bgdata+" "+counter+" at "+ts);  
     }
 
     // Load your resources here
@@ -28,7 +38,7 @@ class TidesCurrentWatchAppView2 extends WatchUi.View {
     function onShow() {
     }
     
-    function onClock()
+    function onClock123()
     {    	
 		var myTime = System.getClockTime(); // ClockTime object	
 		View.findDrawableById("id_hours").setText(Lang.format( "$1$:$2$", [myTime.hour.format("%02d"), myTime.min.format("%02d")]));
@@ -37,7 +47,12 @@ class TidesCurrentWatchAppView2 extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout        
+        // Call the parent onUpdate function to redraw the layout   
+        
+        // Get and show the current time
+        var clockTime = System.getClockTime();
+        var timeString = Lang.format("$1$:$2$", [clockTime.hour, clockTime.min.format("%02d")]);
+        View.findDrawableById("id_hours").setText(timeString);     
         
        var customFont = WatchUi.loadResource(Rez.Fonts.font_id);
        var app = Application.getApp();
@@ -90,6 +105,10 @@ class TidesCurrentWatchAppView2 extends WatchUi.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() {
+    	var now=System.getClockTime();
+    	var ts=now.hour+":"+now.min.format("%02d");        
+        System.println("onHide counter="+counter+" "+ts);    
+    	Application.getApp().setProperty(OSCOUNTER, counter);    
     }  
 
 }
