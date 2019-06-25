@@ -8,8 +8,8 @@ using Toybox.Time.Gregorian;
 
 class Utils extends Application.AppBase {
     
-    //static var URL = "http://localhost/TidesCurrent/public/test/$1$/$2$/";
-    static var URL = "http://localhost/TidesCurrent/public/test/$1$/$2$/";
+    static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
+    static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
     	
     function initialize() {    	
         AppBase.initialize();        
@@ -23,8 +23,7 @@ class Utils extends Application.AppBase {
     static function getUrls(location, date)
     {
     	var url = getUrl(location, date);
-    	return {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5"};
-    	//return {1=>url + "0/5", 2=>url + "5/5", 3=>url + "10/5", 4=>url + "15/5", 5=>url + "20/5", 6=>url + "25/6"};
+    	return {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=5"};
     } 
    
     static function getCurrentFullDate()
@@ -309,11 +308,11 @@ class Utils extends Application.AppBase {
    		}
 	}
 	
-	function saveTidesData(data, i)
+	function saveLocationInfo(data)
 	{
 		var app = Application.getApp(); 
-		app.setProperty("tidedata"+i, data.toString());     
-   		System.println("tidedata" + i + " = " + data); 		
+		app.setProperty("locationInfo", data.toString());     
+   		System.println("locationInfo = " + data); 		
 	}
     
 }

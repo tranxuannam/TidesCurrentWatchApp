@@ -1,6 +1,4 @@
 <properties>
     <property id="appVersion" type="string">1.0.0</property>
-    <property id="month" type="number">1</property>
-    <property id="year" type="number">2018</property>
-    <property id="location" type="number">101</property>
+    <property id="code" type="string"></property>    
 </properties>

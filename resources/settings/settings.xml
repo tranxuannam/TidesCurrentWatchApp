@@ -4,34 +4,8 @@
         <settingConfig type="alphaNumeric" readonly="true" />
     </setting>
 
-    <setting propertyKey="@Properties.month" title="@Strings.Month" prompt="@Strings.Month">
-        <settingConfig type="list">
-            <listEntry value="1">@Strings.Month</listEntry>
-            <listEntry value="2">@Strings.Month</listEntry>
-            <listEntry value="3">@Strings.Month</listEntry>
-            <listEntry value="4">@Strings.Month</listEntry>
-            <listEntry value="5">@Strings.Month</listEntry>
-            <listEntry value="6">@Strings.Month</listEntry>
-            <listEntry value="7">@Strings.Month</listEntry>
-            <listEntry value="8">@Strings.Month</listEntry>
-            <listEntry value="9">@Strings.Month</listEntry>
-            <listEntry value="10">@Strings.Month</listEntry>
-            <listEntry value="11">@Strings.Month</listEntry>
-            <listEntry value="12">@Strings.Month</listEntry>            
-        </settingConfig>
-    </setting>
-    
-    <setting propertyKey="@Properties.year" title="@Strings.Year" prompt="@Strings.Year">
-        <settingConfig type="list">
-            <listEntry value="2018">@Strings.Year</listEntry>
-            <listEntry value="2019">@Strings.Year</listEntry>
-            <listEntry value="2020">@Strings.Year</listEntry>
-            <listEntry value="2021">@Strings.Year</listEntry>           
-        </settingConfig>
-    </setting>
-
-    <setting propertyKey="@Properties.location" title="@Strings.Location" prompt="@Strings.Location">
-        <settingConfig type="numeric" errorMessage="@Strings.Location" />
+    <setting propertyKey="@Properties.code" title="@Strings.Code" prompt="@Strings.Code">
+        <settingConfig type="alphaNumeric" errorMessage="@Strings.Code" />
     </setting>  
 
 </settings>

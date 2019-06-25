@@ -7,7 +7,6 @@ using Toybox.Time.Gregorian;
 
 class TidesCurrentWatchAppView2 extends WatchUi.View {
 
-	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/0/15";
 	hidden var dateDic;
 
     function initialize() {

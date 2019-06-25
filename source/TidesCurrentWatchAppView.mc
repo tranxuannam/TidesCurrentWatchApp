@@ -9,7 +9,6 @@ var _message = "App settings required";
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 
-	const URL = "http://localhost/TidesCurrent/public/test/0/2018/01/0/15";
 	hidden var dateDic;
 
     function initialize() {

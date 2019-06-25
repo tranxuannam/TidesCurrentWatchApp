@@ -21,6 +21,14 @@ class TidesCurrentWatchAppDelegate2 extends WatchUi.BehaviorDelegate {
         return true;
     }
     
+    function onSelect()
+    {
+    	System.println("onSelect");
+    	var app = Application.getApp();
+		var location = app.getProperty("location");
+    	return true;
+    }
+    
    	function onPreviousPage() {  
         var app = Application.getApp();
         var displayedDate = app.getProperty("displayedDate");

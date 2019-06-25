@@ -61,6 +61,7 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
         }
 		var app = Application.getApp();
     	displayedDate = app.getProperty("displayedDate");	
+    	location = app.getProperty("code");
         urlDic = Utils.getUrls(location, displayedDate);
         progressBar = new WatchUi.ProgressBar( "Processing", null );
         WatchUi.pushView( progressBar, new ProgressDelegate(timer), WatchUi.SLIDE_DOWN );
