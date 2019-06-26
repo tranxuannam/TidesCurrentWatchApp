@@ -75,9 +75,17 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
         {
             timer.stop();
             var app = Application.getApp();
+       		var name = app.getProperty("location"); 
+       		var code = app.getProperty("code"); 
+       		var latitude = app.getProperty("latitude"); 
+       		var longitude = app.getProperty("longitude");       
             app.clearProperties();
             Utils.setTidesData(tmpDic);
             app.setProperty("displayedDate", displayedDate);
+            app.setProperty("location", name); 
+            app.setProperty("code", code); 
+            app.setProperty("latitude", latitude); 
+            app.setProperty("longitude", longitude); 
             WatchUi.popView( WatchUi.SLIDE_UP );
         }
         else if( count > 5 )

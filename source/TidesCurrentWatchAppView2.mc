@@ -16,7 +16,6 @@ class TidesCurrentWatchAppView2 extends WatchUi.View {
 
     // Load your resources here
     function onLayout(dc) {     
-        //setLayout(Rez.Layouts.MainLayout(dc));
         setLayout(Rez.Layouts.MainLayout(dc));       
     }
 
@@ -47,7 +46,11 @@ class TidesCurrentWatchAppView2 extends WatchUi.View {
 	       System.println( "tidesDataDic in TidesCurrentWatchAppView = " + tidesDataDic);	  	   
 	  	   //System.println("AddOneday = " + Utils.getDisplayDate(dateDic, Utils.addOneDay(), true));	  	   
 	 
-	  	   View.findDrawableById("id_date").setText(displayDate);	  	   
+	  	   View.findDrawableById("id_date").setText(displayDate);	 
+	  	   var currDateString = WatchUi.loadResource( Rez.Strings.CurrDate ); 	
+	  	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
+	  	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
+	  	   View.findDrawableById("id_currDate").setText(currDateString + ": " + currDateFormat);	     
 	  	   
 	       var keys = tidesDataDic.keys();
 	       var view;

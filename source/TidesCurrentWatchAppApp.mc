@@ -99,7 +99,6 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 	// set up the response onReceiveLocationInfo function
     function onReceiveLocationInfo(responseCode, data, param) {   
 		if (responseCode == 200) {
-			//Utils.saveLocationInfo(data);   
 			var app = Application.getApp();
 			app.setProperty("location", data["name"]);   
 			app.setProperty("latitude", data["latitude"]);

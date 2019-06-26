@@ -26,6 +26,7 @@ class TidesCurrentWatchAppDelegate2 extends WatchUi.BehaviorDelegate {
     	System.println("onSelect");
     	var app = Application.getApp();
 		var location = app.getProperty("location");
+		WatchUi.pushView(new LocationInfoView(), new LocationInfoDelegate(), WatchUi.SLIDE_UP); 
     	return true;
     }
     

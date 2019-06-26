@@ -313,6 +313,63 @@ class Utils extends Application.AppBase {
 		var app = Application.getApp(); 
 		app.setProperty("locationInfo", data.toString());     
    		System.println("locationInfo = " + data); 		
+	}		
+	
+	static function convertTextToMultiline(dc, text, font){
+		var extraRoom = 0.8;
+		var oneCharWidth = dc.getTextWidthInPixels("EtaoiNshrd", font)/10;
+		var charPerLine = extraRoom * dc.getWidth()/oneCharWidth;
+		return convertTextToMultilineHelper(text, charPerLine);
 	}
+	
+	static function convertTextToMultilineHelper(text, charPerLine) {		
+	    if (text.length() <= charPerLine) {
+	        return text;
+	    } else {
+	        var i = charPerLine + 1;
+	        for (; i >= 0; i--) {
+	            if (text.substring(i, i + 1).equals("\n")) {
+	                break;
+	            }
+	        }
+	        if (i >= 0) {
+	            var line = text.substring(0, i);
+	            var textLeft = text.substring(i + 1, text.length());
+	            var otherLines = convertTextToMultilineHelper(textLeft, charPerLine);
+	            return line + "\n" + otherLines;
+	        } else {
+	            var lastChar = charPerLine + 1;
+	            while (!(text.substring(lastChar, lastChar + 1).equals(" ") || text.substring(lastChar, lastChar + 1).equals("\n"))&& lastChar >= charPerLine/2) {
+	                lastChar--;
+	            }
+	            if (lastChar >= charPerLine/2) {
+	                var line = text.substring(0, lastChar + 1);
+	                var textLeft = text.substring(lastChar + 1, text.length());
+	                var otherLines = convertTextToMultilineHelper(textLeft, charPerLine);
+	                return line + "\n" + otherLines;
+	            } else {
+	                var line = text.substring(0, charPerLine) + "-";
+	                var textLeft = text.substring(charPerLine, text.length());
+	                var otherLines = convertTextToMultilineHelper(textLeft, charPerLine);
+	                return line + "\n" + otherLines;
+	            }
+	        }
+	    }
+	}
+	
+	function countChars(text, pattern)
+	{
+		var arrChars = text.toCharArray();
+		var count = 0;
+		
+		for(var i = 0; i < arrChars.size(); i++)
+		{
+			if (text.substring(i, i + 1).equals(pattern))
+			{
+				count++;
+			}
+		}		
+		return count;
+	}	
     
 }
