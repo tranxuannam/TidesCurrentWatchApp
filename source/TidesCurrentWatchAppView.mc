@@ -5,20 +5,16 @@ using Toybox.Application;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-var _message = "App settings required";
+var _message = WatchUi.loadResource( Rez.Strings.AppSettingRequired );
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 
-	hidden var dateDic;
-
     function initialize() {
-    	System.println("Init view");
         View.initialize();
     }
 
     // Load your resources here
     function onLayout(dc) {     
-        //setLayout(Rez.Layouts.MainLayout(dc));
         setLayout(Rez.Layouts.SetUpLayout(dc));
     }
 
@@ -35,7 +31,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
         var displayedDate = app.getProperty("displayedDate");
         if(displayedDate != null)
         {
-			WatchUi.switchToView(new TidesCurrentWatchAppView2(), new TidesCurrentWatchAppDelegate2(), WatchUi.SLIDE_UP); 
+			WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
         }
         else
         {
@@ -48,6 +44,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 function settingsChanged()
 {
 	System.println("onSettingsChanged");
-	_message = "Processing...";
+	_message = WatchUi.loadResource( Rez.Strings.Processing );
 	WatchUi.requestUpdate();
 }

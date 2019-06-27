@@ -5,3 +5,4 @@ round.resourcePath = $(base.resourcePath);resource-round
 fr235.resourcePath = $(base.resourcePath);fr235-resources
 fr230.resourcePath = $(base.resourcePath);fr235-resources
 fr735xt.resourcePath = $(base.resourcePath);fr235-resources
+#fenix5s.resourcePath = $(base.resourcePath);fr235-resources

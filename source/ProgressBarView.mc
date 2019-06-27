@@ -48,7 +48,6 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
     }
     
     function onBack() {  
-    	System.println("onBack in bar");  	
         return true;
     }
 
@@ -63,9 +62,9 @@ class ProgressBarDelegate extends WatchUi.BehaviorDelegate
     	displayedDate = app.getProperty("displayedDate");	
     	location = app.getProperty("code");
         urlDic = Utils.getUrls(location, displayedDate);
-        progressBar = new WatchUi.ProgressBar( "Processing", null );
+        progressBar = new WatchUi.ProgressBar( WatchUi.loadResource( Rez.Strings.Processing ), null );
         WatchUi.pushView( progressBar, new ProgressDelegate(timer), WatchUi.SLIDE_DOWN );
-        timer.start( method(:tideCurrentCallback), 2000, true );
+        timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
     }
 
     function tideCurrentCallback()

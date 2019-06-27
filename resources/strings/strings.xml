@@ -2,9 +2,13 @@
     <string id="AppName">TidesCurrentWatchApp</string>
     <string id="prompt">Click the menu button</string>
     <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>    
+    <string id="menu_label_2">Item 2</string>
+    <string id="Location">Location</string>    
     <string id="Code">Code</string>  
     <string id="Lati">Latitude</string>
     <string id="Longi">Longitude</string>
     <string id="CurrDate">Cur.Date</string>
+    <string id="AppSettingRequired">App settings required. \nPlease input code!</string>
+    <string id="Processing">Processing...</string>
+    <string id="LoadNextData">Load next 2 weeks data?</string>
 </strings>

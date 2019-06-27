@@ -4,20 +4,20 @@ using Toybox.Application;
 using Toybox.System;
 using Toybox.Timer;
 
-class TidesCurrentWatchAppDelegate2 extends WatchUi.BehaviorDelegate {
+class MainDelegate extends WatchUi.BehaviorDelegate {
 
     function initialize() {
         BehaviorDelegate.initialize();
     }
 
     function onMenu() {
-        //WatchUi.pushView(new Rez.Menus.MainMenu(), new TidesCurrentWatchAppMenuDelegate(), WatchUi.SLIDE_UP);        
         var device = WatchUi.loadResource(Rez.Strings.Device);
 
         if ("fr235".equals(device)) {
            System.println("fr235");
            onPreviousPage();
         }
+        
         return true;
     }
     
@@ -45,7 +45,7 @@ class TidesCurrentWatchAppDelegate2 extends WatchUi.BehaviorDelegate {
         }
         else
         {
-        	var message = "Load next 2 weeks data?";
+        	var message = WatchUi.loadResource( Rez.Strings.LoadNextData );
 			var dialog = new WatchUi.Confirmation(message);
 			WatchUi.pushView(
 			    dialog,

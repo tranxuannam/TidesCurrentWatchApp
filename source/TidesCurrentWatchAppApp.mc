@@ -9,7 +9,6 @@ using Toybox.Time.Gregorian;
 
 class TidesCurrentWatchAppApp extends Application.AppBase {
 
-	//const URL_LOCATION = "http://localhost/TidesCurrent/public/location/60.8/-78.2167/5";	
 	hidden var location = "";
 	hidden var count = 1;
 	hidden var timer;
@@ -24,9 +23,8 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     function onStart(state) {	    
     } 
     
-    function run()
+    function loadTidesCurrentData()
     {
-    	System.println("run()");    	
     	urlDic = Utils.getUrls(location, Utils.getCurrentDate());
     	requestNum = urlDic.size();
     	
@@ -36,15 +34,15 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
         if(displayedDate == null)
         {
 	    	timer = new Timer.Timer();
-			timer.start(method(:callBack), 5000, true);
+			timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
 		}		
 		else
 		{
-			WatchUi.switchToView(new TidesCurrentWatchAppView2(), new TidesCurrentWatchAppDelegate2(), WatchUi.SLIDE_UP); 
+			WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
 		}
     }       
     
-    function callBack()
+    function tidesCurrentCallBack()
     {
     	System.println("count=" + count);
     	if(count <= requestNum)
@@ -56,7 +54,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	{
     		var app = Application.getApp();
     		app.setProperty("displayedDate", Utils.getCurrentDate());  			
-    		WatchUi.switchToView(new TidesCurrentWatchAppView2(), new TidesCurrentWatchAppDelegate2(), WatchUi.SLIDE_UP); 
+    		WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
     		timer.stop();    	
     		
     	}    
@@ -83,7 +81,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		var app = Application.getApp();
 		location = app.getProperty("code");
 		getInfoLocation();
-		run();
+		loadTidesCurrentData();
 	}	
 	
 	// set up the response callback function
