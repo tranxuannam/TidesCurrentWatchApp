@@ -24,7 +24,12 @@ class LocationInfoView extends WatchUi.View {
        var code = WatchUi.loadResource( Rez.Strings.Code );    
        var loactionYPos = 36;
        var xPos = 25;
-       var distance2Line = 20;       
+       var distance2Line = 20; 
+       
+       // Location info
+       var largeCustomFont = WatchUi.loadResource(Rez.Fonts.large_font);
+       var viewLocationInfo = View.findDrawableById("id_location_info");
+       viewLocationInfo.setFont(largeCustomFont);       
        
        // Display location
        var viewLocation = View.findDrawableById("id_name");

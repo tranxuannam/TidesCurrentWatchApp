@@ -42,18 +42,20 @@ class MainView extends WatchUi.View {
 	 
 	 	   var appNameView = View.findDrawableById("id_app_name");
 	 	   appNameView.setFont(largeCustomFont);
-	 	   appNameView.setColor(Graphics.COLOR_ORANGE);
+	 	   //appNameView.setColor(Graphics.COLOR_ORANGE);
 	  	   var dateView = View.findDrawableById("id_date");	
 	  	   dateView.setFont(font12);
-	  	   dateView.setColor(Graphics.COLOR_BLUE);
+	  	   //dateView.setBackgroundColor(Graphics.COLOR_ORANGE);
+	  	   //dateView.setColor(Graphics.COLOR_BLUE);
 	  	   dateView.setText(displayDate);
 	  	   var currDateString = WatchUi.loadResource( Rez.Strings.CurrDate ); 	
 	  	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
 	  	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
 	  	   var currDateView = View.findDrawableById("id_currDate");	
 	  	   currDateView.setFont(font12);
-	  	   currDateView.setColor(Graphics.COLOR_BLUE);
-	  	   currDateView.setText(currDateString + ": " + currDateFormat);    
+	  	   //currDateView.setColor(Graphics.COLOR_BLUE);
+	  	   currDateView.setText(currDateString + ": " + currDateFormat);  
+	  	   //currDateView.setBackgroundColor(Graphics.COLOR_ORANGE);  
 	  	   
 	       var keys = tidesDataDic.keys();
 	       var view;

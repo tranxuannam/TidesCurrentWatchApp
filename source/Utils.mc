@@ -317,7 +317,7 @@ class Utils extends Application.AppBase {
 	}		
 	
 	static function convertTextToMultiline(dc, text, font){
-		var extraRoom = 0.8;
+		var extraRoom = 1; //0.8 735xt
 		var oneCharWidth = dc.getTextWidthInPixels("EtaoiNshrd", font)/10;
 		var charPerLine = extraRoom * dc.getWidth()/oneCharWidth;
 		return convertTextToMultilineHelper(text, charPerLine);

@@ -9,7 +9,13 @@ class CustomLine extends Ui.Drawable {
         // Draw the move bar here
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.setPenWidth(1);
-        dc.drawLine(50, 34, 160, 34);
-        dc.drawLine(50, 160, 160, 160);
+        //dc.drawLine(50, 34, 160, 34);
+        //dc.drawLine(50, 160, 160, 160);
+        
+        //dc.drawLine(20, 34, 200, 34);
+        //dc.drawLine(20, 160, 200, 160);
+        
+        dc.drawLine(50, 34, 170, 34);
+        dc.drawLine(50, 160, 170, 160);
     }
 }
