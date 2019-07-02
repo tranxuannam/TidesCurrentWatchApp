@@ -316,14 +316,14 @@ class Utils extends Application.AppBase {
    		System.println("locationInfo = " + data); 		
 	}		
 	
-	static function convertTextToMultiline(dc, text, font){
+	static function displayMultilineOnScreen(dc, text, font){
 		var extraRoom = 1; //0.8 735xt
 		var oneCharWidth = dc.getTextWidthInPixels("EtaoiNshrd", font)/10;
 		var charPerLine = extraRoom * dc.getWidth()/oneCharWidth;
-		return convertTextToMultilineHelper(text, charPerLine);
+		return convertTextToMultiline(text, charPerLine);
 	}
 	
-	static function convertTextToMultilineHelper(text, charPerLine) {		
+	static function convertTextToMultiline(text, charPerLine) {		
 	    if (text.length() <= charPerLine) {
 	        return text;
 	    } else {
@@ -336,7 +336,7 @@ class Utils extends Application.AppBase {
 	        if (i >= 0) {
 	            var line = text.substring(0, i);
 	            var textLeft = text.substring(i + 1, text.length());
-	            var otherLines = convertTextToMultilineHelper(textLeft, charPerLine);
+	            var otherLines = convertTextToMultiline(textLeft, charPerLine);
 	            return line + "\n" + otherLines;
 	        } else {
 	            var lastChar = charPerLine + 1;
@@ -346,12 +346,12 @@ class Utils extends Application.AppBase {
 	            if (lastChar >= charPerLine/2) {
 	                var line = text.substring(0, lastChar + 1);
 	                var textLeft = text.substring(lastChar + 1, text.length());
-	                var otherLines = convertTextToMultilineHelper(textLeft, charPerLine);
+	                var otherLines = convertTextToMultiline(textLeft, charPerLine);
 	                return line + "\n" + otherLines;
 	            } else {
 	                var line = text.substring(0, charPerLine) + "-";
 	                var textLeft = text.substring(charPerLine, text.length());
-	                var otherLines = convertTextToMultilineHelper(textLeft, charPerLine);
+	                var otherLines = convertTextToMultiline(textLeft, charPerLine);
 	                return line + "\n" + otherLines;
 	            }
 	        }
@@ -372,5 +372,10 @@ class Utils extends Application.AppBase {
 		}		
 		return count;
 	}	
+	
+	function checkPhoneConnected()
+	{
+		return System.getDeviceSettings().phoneConnected;
+	}
     
 }

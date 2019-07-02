@@ -49,11 +49,12 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	{
     		var delegate = new WebResponseDelegate(1);
     		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
+    		setProgressBar(count);
     	}
     	else
     	{
     		var app = Application.getApp();
-    		app.setProperty("displayedDate", Utils.getCurrentDate());  			
+    		app.setProperty("displayedDate", Utils.getCurrentDate());  		
     		WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
     		timer.stop();    	
     		
@@ -77,11 +78,18 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     }
     
     function onSettingsChanged() {	
-		settingsChanged(); 
-		var app = Application.getApp();
-		location = app.getProperty("code");
-		getInfoLocation();
-		loadTidesCurrentData();
+    	if(Utils.checkPhoneConnected())
+    	{
+			settingsChanged(); 
+			var app = Application.getApp();
+			location = app.getProperty("code");
+			getInfoLocation();
+			loadTidesCurrentData();
+		}
+		else
+		{
+			setInstallMessagePhoneConnected();
+		}
 	}	
 	
 	// set up the response callback function

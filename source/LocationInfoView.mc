@@ -16,7 +16,7 @@ class LocationInfoView extends WatchUi.View {
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout  
     
-       var customFont = WatchUi.loadResource(Rez.Fonts.small_font);
+       var smallCustomFont = WatchUi.loadResource(Rez.Fonts.small_font);
        var app = Application.getApp();
        var location = WatchUi.loadResource( Rez.Strings.Location );
        var lat = WatchUi.loadResource( Rez.Strings.Lati );
@@ -33,9 +33,9 @@ class LocationInfoView extends WatchUi.View {
        
        // Display location
        var viewLocation = View.findDrawableById("id_name");
-       viewLocation.setFont(customFont);      
+       viewLocation.setFont(smallCustomFont);      
        var name = app.getProperty("location");        
-       var newText = Utils.convertTextToMultiline(dc, name, Graphics.FONT_SMALL);
+       var newText = Utils.displayMultilineOnScreen(dc, name, smallCustomFont);
        viewLocation.setText(newText);      
        
        // Calculate lines
@@ -45,19 +45,19 @@ class LocationInfoView extends WatchUi.View {
        // Display latitude
        var viewLat = View.findDrawableById("id_lat");
        viewLat.setLocation(xPos, nextLine);
-       viewLat.setFont(customFont);
+       viewLat.setFont(smallCustomFont);
        viewLat.setText(lat + ": " + app.getProperty("latitude"));
        
        // Display longitude
        var viewLong = View.findDrawableById("id_long");
        viewLong.setLocation(xPos, nextLine + distance2Line);
-       viewLong.setFont(customFont);
+       viewLong.setFont(smallCustomFont);
        viewLong.setText(long + ": " + app.getProperty("longitude"));
        
        //Display code
        var viewCode = View.findDrawableById("id_code");
        viewCode.setLocation(xPos, nextLine + distance2Line*2);
-       viewCode.setFont(customFont);
+       viewCode.setFont(smallCustomFont);
        viewCode.setText(code + ": " + app.getProperty("code"));
        
        View.onUpdate(dc);    

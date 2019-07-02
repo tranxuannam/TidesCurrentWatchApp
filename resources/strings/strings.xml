@@ -10,5 +10,6 @@
     <string id="CurrDate">Cur.Date</string>
     <string id="AppSettingRequired">App settings required. \nPlease input code!</string>
     <string id="Processing">Processing...</string>
-    <string id="LoadNextData">Load next 2 weeks data?</string>
+    <string id="LoadNextData">Press select button to download next data. Press back button to cancel.</string>
+    <string id="phoneConnected">The connection is not ready. Please make sure your device connected to phone.</string>
 </strings>

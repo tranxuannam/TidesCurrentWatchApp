@@ -46,13 +46,13 @@ class MainDelegate extends WatchUi.BehaviorDelegate {
         else
         {
         	var message = WatchUi.loadResource( Rez.Strings.LoadNextData );
-			var dialog = new WatchUi.Confirmation(message);
+			var dialog = new ConfirmDialogView();
 			WatchUi.pushView(
 			    dialog,
-			    new ComfirmationLoadNextTidesCurrent(),
+			    new ConfirmDialogDelegate(),
 			    WatchUi.SLIDE_IMMEDIATE
 			);
-			System.println("ComfirmationLoadNextTidesCurrent called");
+			System.println("Comfirmation called");
         }
         return true;
     } 

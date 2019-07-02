@@ -1,7 +1,8 @@
 <layout id="LocationInfoLayout" background="Graphics.COLOR_BLACK">	
-	<label id="id_location_info" x="110" y="0" text="Location Info" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
-    <label id="id_name" x="25" y="36" text="Location: Teague Creek, Manokin River, Chesapeake Bay, Maryland" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_lat" x="25" y="51" text="Lat: 38.1083" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_long" x="25" y="66" text="Long: -75.8383" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />  
-    <label id="id_code" x="25" y="88" text="Long: -75.8383" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />  
+	<label id="id_location_info" x="125" y="15" text="Location Info" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+    <label id="id_name" x="25" y="51" text="Location: Teague Creek, Manokin River, Chesapeake Bay, Maryland" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_lat" x="25" y="66" text="Lat: 38.1083" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_long" x="25" y="88" text="Long: -75.8383" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" />  
+    <label id="id_code" x="25" y="103" text="Long: -75.8383" color="Graphics.COLOR_WHITE" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_LEFT" /> 
+    <drawable id="id_line2" class="CustomLineRoundFace" /> 
 </layout>
