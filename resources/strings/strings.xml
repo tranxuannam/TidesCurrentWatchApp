@@ -1,8 +1,6 @@
 <strings>
-    <string id="AppName">TidesCurrentWatchApp</string>
-    <string id="prompt">Click the menu button</string>
-    <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>
+    <string id="AppName">Tides Current</string>
+    <string id="LocationInfo">Location Info</string>
     <string id="Location">Location</string>    
     <string id="Code">Code</string>  
     <string id="Lati">Latitude</string>
@@ -12,4 +10,5 @@
     <string id="Processing">Processing...</string>
     <string id="LoadNextData">Press select button to download next data. Press back button to cancel.</string>
     <string id="phoneConnected">The connection is not ready. Please make sure your device connected to phone.</string>
+    <string id="requestFailed">Connection failed. You make sure the device connected to phone application. Please try again!</string>
 </strings>

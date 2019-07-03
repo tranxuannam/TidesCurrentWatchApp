@@ -15,7 +15,8 @@ class ConfirmDialogView extends WatchUi.View {
     // Update the view
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout        
-        
+        var urlDic = Utils.getUrls("", "");
+        var progressAngle = Utils.ANGLE / urlDic.size();       
 		var customFont = WatchUi.loadResource(Rez.Fonts.large_font);      
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
@@ -29,7 +30,7 @@ class ConfirmDialogView extends WatchUi.View {
    		{
 	       	dc.setPenWidth(3);
 		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-		   	dc.drawArc(cx, cy + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, 120*_counterConfirmDialog);
+		   	dc.drawArc(cx, cy + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle*_counterConfirmDialog);
 	   	}	
     }  
 }
@@ -57,7 +58,7 @@ function setProgressBarToDefault()
 
 function setMessageFailed()
 {
-	_messageConfirmDialog = "Connection failed. You make sure the device connected to phone application. Please try again!";	
+	_messageConfirmDialog = WatchUi.loadResource( Rez.Strings.requestFailed );	
 	_counterConfirmDialog = 0;
 	WatchUi.requestUpdate();
 }

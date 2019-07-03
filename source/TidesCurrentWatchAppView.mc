@@ -17,47 +17,46 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     // Update the view
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout   
+        var urlDic = Utils.getUrls("", "");
+        var progressAngle = Utils.ANGLE / urlDic.size();
         var customFont = WatchUi.loadResource(Rez.Fonts.large_font);
-        var app = Application.getApp();
-        var displayedDate = app.getProperty("displayedDate");
-        if(displayedDate != null)
-        {
-			WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
-        }
-        else
-        {
-        	dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-			dc.clear();		
-			var cx = dc.getWidth() / 2;
-			var cy = dc.getHeight() / 3;		
-			dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-			var text = Utils.displayMultilineOnScreen(dc, _message, customFont);
-	       	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER); 
-	       		
-       		if(_counter > 0)
-       		{
-		       	dc.setPenWidth(3);
-			   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-			   	dc.drawArc(cx, cy + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, 120*_counter);
-		   	}	     
-        }     
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+		dc.clear();		
+		var cx = dc.getWidth() / 2;
+		var cy = dc.getHeight() / 3;		
+		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+		var text = Utils.displayMultilineOnScreen(dc, _message, customFont);
+       	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER); 
+       		
+   		if(_counter > 0)
+   		{
+	       	dc.setPenWidth(3);
+		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
+		   	dc.drawArc(cx, cy + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle*_counter);
+	   	}	 
     }   
 }
 
-function settingsChanged()
+function setUpProcessing()
 {
-	System.println("onSettingsChanged");	
 	_message = WatchUi.loadResource( Rez.Strings.Processing );
 	WatchUi.requestUpdate();
 }
 
-function setInstallMessagePhoneConnected()
+function setUpMessagePhoneConnected()
 {
 	_message = WatchUi.loadResource( Rez.Strings.phoneConnected );	
 	WatchUi.requestUpdate();
 }
 
-function setProgressBar(counter)
+function setUpMessageFailed()
+{
+	_messageConfirmDialog = WatchUi.loadResource( Rez.Strings.requestFailed );	
+	_counterConfirmDialog = 0;
+	WatchUi.requestUpdate();
+}
+
+function setUpProgressBar(counter)
 {
 	System.println("setProgressBar");	
    	_counter = counter;   	

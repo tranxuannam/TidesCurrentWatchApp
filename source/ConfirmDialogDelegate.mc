@@ -49,6 +49,8 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 		var app = Application.getApp();
     	displayedDate = app.getProperty("displayedDate");	
     	location = app.getProperty("code");
+    	displayedDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), true);
+        app.setProperty("displayedDate", displayedDate);
         urlDic = Utils.getUrls(location, displayedDate);
         timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
     }
@@ -56,7 +58,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     function tideCurrentCallback()
     {
     	System.println("count=" + count);
-        if( count > 3 )
+        if( count > urlDic.size() )
         {
             timer.stop();
             var app = Application.getApp();

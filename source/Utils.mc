@@ -11,6 +11,9 @@ class Utils extends Application.AppBase {
     static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
     static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
     static var TIME_REQUEST_API = 2000;
+    static var ANGLE = 360;
+    static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
+    static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3"];
     	
     function initialize() {    	
         AppBase.initialize();        
@@ -24,7 +27,15 @@ class Utils extends Application.AppBase {
     static function getUrls(location, date)
     {
     	var url = getUrl(location, date);
-    	return {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=5"};
+    	var device = WatchUi.loadResource(Rez.Strings.Device);
+    	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
+    	{    	
+    		return {1=>url + "&begin=0&end=2", 2=>url + "&begin=2&end=2", 3=>url + "&begin=4&end=2", 4=>url + "&begin=6&end=1"};
+    	}
+    	else
+    	{
+    		return {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"};
+    	}
     } 
    
     static function getCurrentFullDate()
@@ -297,7 +308,7 @@ class Utils extends Application.AppBase {
    		{
    			app.setProperty(keys[i], {keys[i] => data[keys[i]]}.toString()); 
    		}
-   		System.println("TideDate = " + data); 		
+   		System.println("TideDate = " + data); 	
 	}
 	
 	function saveTidesDataToDictionary(data, tmpDic)
@@ -317,7 +328,7 @@ class Utils extends Application.AppBase {
 	}		
 	
 	static function displayMultilineOnScreen(dc, text, font){
-		var extraRoom = 1; //0.8 735xt
+		var extraRoom = 0.8; //0.8 735xt
 		var oneCharWidth = dc.getTextWidthInPixels("EtaoiNshrd", font)/10;
 		var charPerLine = extraRoom * dc.getWidth()/oneCharWidth;
 		return convertTextToMultiline(text, charPerLine);

@@ -79,7 +79,7 @@ class MainView extends WatchUi.View {
 			       view.setText(Utils.upperFirstLetterCase(keys[i+k]) + ": " + tidesDataDic[keys[i+k]]);
 		       }
 	       }
-       }
+       }       
        View.onUpdate(dc);    
     }
   

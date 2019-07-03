@@ -12,9 +12,8 @@ class MainDelegate extends WatchUi.BehaviorDelegate {
 
     function onMenu() {
         var device = WatchUi.loadResource(Rez.Strings.Device);
-
-        if ("fr235".equals(device)) {
-           System.println("fr235");
+        if (Utils.FIX_PREVIOUS_PAGE_PER_DEVICE.toString().find(device) != null)
+        {
            onPreviousPage();
         }
         

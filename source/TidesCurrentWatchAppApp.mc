@@ -20,7 +20,13 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     }
 
     // onStart() is called on application start up
-    function onStart(state) {	    
+    function onStart(state) {	
+    	var app = Application.getApp();
+        var displayedDate = app.getProperty("displayedDate");        
+    	if(displayedDate != null)
+        {
+			WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
+        }    
     } 
     
     function loadTidesCurrentData()
@@ -49,7 +55,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	{
     		var delegate = new WebResponseDelegate(1);
     		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
-    		setProgressBar(count);
+    		setUpProgressBar(count);
     	}
     	else
     	{
@@ -80,7 +86,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     function onSettingsChanged() {	
     	if(Utils.checkPhoneConnected())
     	{
-			settingsChanged(); 
+			setUpProcessing(); 
 			var app = Application.getApp();
 			location = app.getProperty("code");
 			getInfoLocation();
@@ -88,7 +94,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		}
 		else
 		{
-			setInstallMessagePhoneConnected();
+			setUpMessagePhoneConnected();
 		}
 	}	
 	
@@ -112,6 +118,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		}
 		else {
 			System.println("Response: " + responseCode);
+			setUpMessageFailed();
 		}
 	}	
 	
