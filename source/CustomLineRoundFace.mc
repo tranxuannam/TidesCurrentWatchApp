@@ -10,7 +10,7 @@ class CustomLineRoundFace extends Ui.Drawable {
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.setPenWidth(1);      
         
-        dc.drawLine(65, 50, 185, 50);
-        dc.drawLine(65, 175, 185, 175);
+        dc.drawLine(50, 50, 170, 50);
+        dc.drawLine(50, 175, 170, 175);
     }
 }

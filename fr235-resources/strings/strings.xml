@@ -1,3 +1,7 @@
 <strings>
-    <string id="Device">fr235</string>    
+    <string id="Device">fr235</string>
+    <string id="Xpos">29</string>
+    <string id="Ypos">36</string>
+    <string id="XposLocationInfo">110</string>
+    <string id="YposLocationInfo">0</string>    
 </strings>

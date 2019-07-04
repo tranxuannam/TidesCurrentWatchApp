@@ -1,7 +1,6 @@
 <layout id="MainLayout" background="Graphics.COLOR_BLACK">
-	<label id="id_app_name" x="125" y="20" text="@Strings.AppName" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
-	<label id="id_date" x="125" y="35" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
-	<drawable id="id_line2" class="CustomLineRoundFace" />
+	<label id="id_app_name" x="110" y="15" text="@Strings.AppName" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+	<label id="id_date" x="110" y="35" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>	
     <label id="id_label1" x="25" y="51" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_label2" x="25" y="66" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_label3" x="25" y="81" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
@@ -10,5 +9,5 @@
     <label id="id_label6" x="25" y="126" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_label7" x="25" y="141" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_label8" x="25" y="156" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_currDate" x="125" y="175" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+    <label id="id_currDate" x="110" y="175" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
 </layout>

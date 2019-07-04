@@ -13,7 +13,7 @@ class Utils extends Application.AppBase {
     static var TIME_REQUEST_API = 2000;
     static var ANGLE = 360;
     static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
-    static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3"];
+    static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr"]; //64kb mem
     	
     function initialize() {    	
         AppBase.initialize();        

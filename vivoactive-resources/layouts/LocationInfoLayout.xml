@@ -1,5 +1,5 @@
 <layout id="LocationInfoLayout" background="Graphics.COLOR_BLACK">	
-	<label id="id_location_info" text="@Strings.LocationInfo" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+	<label id="id_location_info" x="110" y="0" text="@Strings.LocationInfo" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
     <label id="id_name" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_lat" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_long" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />  
