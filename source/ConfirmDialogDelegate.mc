@@ -17,7 +17,12 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         BehaviorDelegate.initialize();
     }
 
-    function onMenu() {        
+    function onMenu() {  
+    	var device = WatchUi.loadResource(Rez.Strings.Device);
+        if (Utils.FIX_PREVIOUS_PAGE_PER_DEVICE.toString().find(device) == null)
+        {
+    		onSelect();
+    	}      
     }   
     
     function onSelect() {  

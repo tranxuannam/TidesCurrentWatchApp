@@ -6,7 +6,7 @@
     <string id="Lati">Latitude</string>
     <string id="Longi">Longitude</string>
     <string id="CurrDate">Cur.Date</string>
-    <string id="AppSettingRequired">App settings required. \nPlease input code!</string>
+    <string id="AppSettingRequired">App settings required. Please input code!</string>
     <string id="Processing">Processing...</string>
     <string id="LoadNextData">Press select button to download next data. Press back button to cancel.</string>
     <string id="phoneConnected">The connection is not ready. Please make sure your device connected to phone.</string>

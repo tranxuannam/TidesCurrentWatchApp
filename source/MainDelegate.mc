@@ -16,7 +16,11 @@ class MainDelegate extends WatchUi.BehaviorDelegate {
         {
            onPreviousPage();
         }
-        
+        else
+        {
+        	System.println("onMenu");
+        	onSelect();
+        }
         return true;
     }
     
@@ -71,5 +75,9 @@ class MainDelegate extends WatchUi.BehaviorDelegate {
         }
         return false;
     }     
+    
+    function onSettingsChanged() {	
+    	System.println("onSettingsChanged in MainView");
+    }
     
 }

@@ -118,6 +118,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 		}
 		else {
 			System.println("Response: " + responseCode);
+			timer.stop();
 			setUpMessageFailed();
 		}
 	}	

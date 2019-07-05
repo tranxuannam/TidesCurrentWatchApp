@@ -51,8 +51,8 @@ function setUpMessagePhoneConnected()
 
 function setUpMessageFailed()
 {
-	_messageConfirmDialog = WatchUi.loadResource( Rez.Strings.requestFailed );	
-	_counterConfirmDialog = 0;
+	_message = WatchUi.loadResource( Rez.Strings.requestFailed );	
+	_counter = 0;
 	WatchUi.requestUpdate();
 }
 
