@@ -36,8 +36,9 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	
     	var app = Application.getApp();
         var displayedDate = app.getProperty("displayedDate");	
+        var oldCode = app.getProperty("code");	
         
-        if(displayedDate == null)
+        if(displayedDate == null && checkCodeExisted(oldCode))
         {
 	    	timer = new Timer.Timer();
 			timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
@@ -84,6 +85,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     }
     
     function onSettingsChanged() {	
+    	System.println("onSettingsChanged");
     	if(Utils.checkPhoneConnected())
     	{
 			setUpProcessing(); 
@@ -122,5 +124,20 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 			setUpMessageFailed();
 		}
 	}	
+	
+	function checkCodeExisted(newCode)
+	{
+		var app = Application.getApp();
+		var code = app.getProperty("code");
+		if(code == newCode)
+		{
+			app.setProperty("code", newCode);
+			return true;
+		}
+		else
+		{
+			return false;
+		}		
+	}
 	
 }
