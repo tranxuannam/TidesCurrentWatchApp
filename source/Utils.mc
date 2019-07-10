@@ -388,5 +388,17 @@ class Utils extends Application.AppBase {
 	{
 		return System.getDeviceSettings().phoneConnected;
 	}
+	
+	function setProperty(propName, propValue)
+	{
+		var app = Application.getApp();
+		app.setProperty(propName, propValue);
+	}
+	
+	function getProperty(propName)
+	{
+		var app = Application.getApp();
+		return app.getProperty(propName);
+	}
     
 }

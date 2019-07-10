@@ -56,6 +56,12 @@ function setUpMessageFailed()
 	WatchUi.requestUpdate();
 }
 
+function setUpInvalidCode()
+{
+	_message = WatchUi.loadResource( Rez.Strings.InvalidCode );	
+	WatchUi.requestUpdate();
+}
+
 function setUpProgressBar(counter)
 {
 	System.println("setProgressBar");	

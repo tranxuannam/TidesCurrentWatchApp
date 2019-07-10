@@ -1,29 +1,23 @@
 using Toybox.Application;
 using Toybox.WatchUi;
-using Toybox.Position;
 using Toybox.System;
 using Toybox.Communications;
 using Toybox.Timer;
-using Toybox.Time;
-using Toybox.Time.Gregorian;
 
 class TidesCurrentWatchAppApp extends Application.AppBase {
 
-	hidden var location = "";
 	hidden var count = 1;
 	hidden var timer;
 	hidden var urlDic;
 	hidden var requestNum;
 	
     function initialize() {
-    	AppBase.initialize();     	     
+    	AppBase.initialize();
     }
 
     // onStart() is called on application start up
-    function onStart(state) {	
-    	var app = Application.getApp();
-        var displayedDate = app.getProperty("displayedDate");        
-    	if(displayedDate != null)
+    function onStart(state) {
+    	if(Utils.getProperty("displayedDate") != null)
         {
 			WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
         }    
@@ -31,22 +25,10 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     
     function loadTidesCurrentData()
     {
-    	urlDic = Utils.getUrls(location, Utils.getCurrentDate());
-    	requestNum = urlDic.size();
-    	
-    	var app = Application.getApp();
-        var displayedDate = app.getProperty("displayedDate");	
-        var oldCode = app.getProperty("code");	
-        
-        if(displayedDate == null && checkCodeExisted(oldCode))
-        {
-	    	timer = new Timer.Timer();
-			timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
-		}		
-		else
-		{
-			WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
-		}
+    	urlDic = Utils.getUrls(Utils.getProperty("code"), Utils.getCurrentDate());
+    	requestNum = urlDic.size();    	
+        timer = new Timer.Timer();
+		timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
     }       
     
     function tidesCurrentCallBack()
@@ -60,19 +42,18 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	}
     	else
     	{
-    		var app = Application.getApp();
-    		app.setProperty("displayedDate", Utils.getCurrentDate());  		
-    		WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP); 
-    		timer.stop();    	
-    		
+    		Utils.setProperty("displayedDate", Utils.getCurrentDate());
+    		timer.stop();
+    		count = 0;
+    		WatchUi.switchToView(new MainView(), new MainDelegate(), WatchUi.SLIDE_UP);
     	}    
     	count++;	
     }
     
-    function getInfoLocation()
+    function getInfoLocation(code)
     {
     	var delegate = new WebResponseDelegate(1);
-    	delegate.makeWebRequest(Utils.INFO_LOCATION_ENDPOINT + location, self.method(:onReceiveLocationInfo));	
+    	delegate.makeWebRequest(Utils.INFO_LOCATION_ENDPOINT + code, self.method(:onReceiveLocationInfo));	
     }
 
     // onStop() is called when your application is exiting
@@ -89,9 +70,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	if(Utils.checkPhoneConnected())
     	{
 			setUpProcessing(); 
-			var app = Application.getApp();
-			location = app.getProperty("code");
-			getInfoLocation();
+			getInfoLocation(Utils.getProperty("code"));
 			loadTidesCurrentData();
 		}
 		else
@@ -106,38 +85,42 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 			Utils.setTidesData(data);       		
 		}
 		else {
-			System.println("Response: " + responseCode);
+			System.println("Response123: " + responseCode);
+			if(timer != null)
+			{
+				timer.stop();				
+			}
+			setUpInvalidCode();
 		}
 	}	
 	
 	// set up the response onReceiveLocationInfo function
     function onReceiveLocationInfo(responseCode, data, param) {   
 		if (responseCode == 200) {
-			var app = Application.getApp();
-			app.setProperty("location", data["name"]);   
-			app.setProperty("latitude", data["latitude"]);
-			app.setProperty("longitude", data["longitude"]);		
+			Utils.setProperty("location", data["name"]);   
+			Utils.setProperty("latitude", data["latitude"]);
+			Utils.setProperty("longitude", data["longitude"]);	
 		}
 		else {
-			System.println("Response: " + responseCode);
-			timer.stop();
-			setUpMessageFailed();
+			System.println("Response456: " + responseCode);
+			if(timer != null)
+			{
+				timer.stop();
+			}
+			
+			if (responseCode == 404)
+			{
+				WatchUi.pushView(
+				    new DialogMessageView(WatchUi.loadResource( Rez.Strings.InvalidCode )),
+				    new DialogMessageDelegate(),
+				    WatchUi.SLIDE_UP
+				);
+			}
+			else 
+			{
+				setUpMessageFailed();
+			}
 		}
 	}	
-	
-	function checkCodeExisted(newCode)
-	{
-		var app = Application.getApp();
-		var code = app.getProperty("code");
-		if(code == newCode)
-		{
-			app.setProperty("code", newCode);
-			return true;
-		}
-		else
-		{
-			return false;
-		}		
-	}
 	
 }
