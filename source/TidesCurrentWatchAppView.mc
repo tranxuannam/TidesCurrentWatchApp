@@ -5,66 +5,88 @@ using Toybox.Application;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-var _message = WatchUi.loadResource( Rez.Strings.AppSettingRequired );
-var _counter = 0;
-
 class TidesCurrentWatchAppView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
     }
+    
+    // Load your resources here
+    function onLayout(dc) {     
+        setLayout(Rez.Layouts.MainLayout(dc));       
+    }
    
     // Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout   
-        var urlDic = Utils.getUrls("", "");
-        var progressAngle = Utils.ANGLE / urlDic.size();
-        var customFont = WatchUi.loadResource(Rez.Fonts.large_font);
+        // Call the parent onUpdate function to redraw the layout  
+        if(Utils.getProperty("displayedDate") != null)
+        {
+        	System.println("onUpdate in TidesCurrentWatchAppView");
+			onDisplayMainView(dc, Utils.getProperty("displayedDate")); 
+        } 
+        else
+        {
+	        onDisplayMessageInitApp(dc);
+       	}
+    } 
+    
+    function onDisplayMessageInitApp(dc)
+    {
+    	var customFont = WatchUi.loadResource(Rez.Fonts.large_font);
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
 		var cx = dc.getWidth() / 2;
 		var cy = dc.getHeight() / 3;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-		var text = Utils.displayMultilineOnScreen(dc, _message, customFont);
-       	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER); 
-       		
-   		if(_counter > 0)
-   		{
-	       	dc.setPenWidth(3);
-		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-		   	dc.drawArc(cx, cy + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle*_counter);
-	   	}	 
-    }   
-}
-
-function setUpProcessing()
-{
-	_message = WatchUi.loadResource( Rez.Strings.Processing );
-	WatchUi.requestUpdate();
-}
-
-function setUpMessagePhoneConnected()
-{
-	_message = WatchUi.loadResource( Rez.Strings.phoneConnected );	
-	WatchUi.requestUpdate();
-}
-
-function setUpMessageFailed()
-{
-	_message = WatchUi.loadResource( Rez.Strings.requestFailed );	
-	_counter = 0;
-	WatchUi.requestUpdate();
-}
-
-function setUpInvalidCode()
-{
-	_message = WatchUi.loadResource( Rez.Strings.InvalidCode );	
-	WatchUi.requestUpdate();
-}
-
-function setUpProgressBar(counter)
-{
-	System.println("setProgressBar");	
-   	_counter = counter;   	
-	WatchUi.requestUpdate();
+		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.AppSettingRequired ), customFont);
+       	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER);
+    }  
+    
+    function onDisplayMainView(dc, displayedDate) {    
+       var smallCustomFont = WatchUi.loadResource(Rez.Fonts.small_font);
+       var largeCustomFont = WatchUi.loadResource(Rez.Fonts.large_font);
+       var font12 = WatchUi.loadResource(Rez.Fonts.font_12);
+       
+       var dateDic = Utils.convertDateToFullDate(displayedDate);
+       var tidesData = Utils.getProperty(displayedDate);       
+       var statusTide = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6"];
+       var displayDate = Lang.format( "$1$, $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month"], dateDic["day"], dateDic["year"] ] );
+	   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate];
+ 
+ 	   var appNameView = View.findDrawableById("id_app_name");
+ 	   appNameView.setFont(largeCustomFont);
+  	   var dateView = View.findDrawableById("id_date");	
+  	   dateView.setFont(font12);
+  	   dateView.setText(displayDate);
+  	   var currDateString = WatchUi.loadResource( Rez.Strings.CurrDate ); 	
+  	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
+  	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
+  	   var currDateView = View.findDrawableById("id_currDate");	
+  	   currDateView.setFont(font12);
+  	   currDateView.setText(currDateString + ": " + currDateFormat);  
+  	   
+       var keys = tidesDataDic.keys();
+       var view;
+       var i = 1;
+       for (var j=0; j<statusTide.size(); j++)
+   	   {
+   	   		if(tidesDataDic.hasKey(statusTide[j]))
+   	   		{
+	   	   		view = Utils.GetViewLabelOnLayout(i);
+	   	   		view.setFont(smallCustomFont);
+	   	   		view.setText(Utils.upperFirstLetterCase(statusTide[j].substring(0, statusTide[j].length() - 1)) + ": " + tidesDataDic[statusTide[j]]);  
+	   	   		i++;  	   		
+   	   		}
+       }
+       if(i < 9)
+       {
+	       for (var k=0; k<9-i; k++)
+	       {
+		       view = Utils.GetViewLabelOnLayout(i+k);
+		       view.setFont(smallCustomFont);
+		       view.setText(Utils.upperFirstLetterCase(keys[i+k]) + ": " + tidesDataDic[keys[i+k]]);
+	       }
+       }      
+       View.onUpdate(dc);    
+    }
 }

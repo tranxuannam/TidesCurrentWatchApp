@@ -10,6 +10,8 @@ class LocationInfoDelegate extends WatchUi.BehaviorDelegate {
         BehaviorDelegate.initialize();
     }
 
-    function onMenu() {        
+    function onBack() {        
+        WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+        return true;
     }     	
 }

@@ -16,7 +16,7 @@ class Utils extends Application.AppBase {
     static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr", "d2-face"]; //64kb mem
     	
     function initialize() {    	
-        AppBase.initialize();        
+        AppBase.initialize();  
     }   
     
     static function getUrl(location, date)
@@ -30,7 +30,8 @@ class Utils extends Application.AppBase {
     	var device = WatchUi.loadResource(Rez.Strings.Device);
     	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
     	{    	
-    		return {1=>url + "&begin=0&end=2", 2=>url + "&begin=2&end=2", 3=>url + "&begin=4&end=2", 4=>url + "&begin=6&end=1"};
+    		//return {1=>url + "&begin=0&end=2", 2=>url + "&begin=2&end=2", 3=>url + "&begin=4&end=2", 4=>url + "&begin=6&end=1"};
+    		return {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"};
     	}
     	else
     	{
@@ -154,13 +155,9 @@ class Utils extends Application.AppBase {
 	    		strSplit = str.substring(0, str.find("}, "));
 	    		str = str.substring(str.find("}, ") + 3, str.length());
 	    	}
-	    	//System.println(strSplit);
 	    	
 	    	date = strSplit.substring(0, strSplit.find("=>{"));
 	    	strSplit = strSplit.substring(strSplit.find("=>{") + 3, strSplit.length());  
-	    	//System.println(date);
-	    	
-	    	//System.println("strSplit = " + strSplit); 	
 	    	dic[date] = elements(strSplit);   	
     	}    
     	return dic;
@@ -186,7 +183,6 @@ class Utils extends Application.AppBase {
 	    		var value = item.substring(item.find("=>") + 2, item.length());  
 	    		dic[key] = value;
 	    		str = str.substring(str.find(", ") + 2, str.length());
-	    		//System.println(str);
     		}
    		}
    		return dic;		
@@ -222,7 +218,6 @@ class Utils extends Application.AppBase {
 	    	
 	    	System.println("strSplit = " + strSplit); 	
 	    	dic[date.substring(1, date.length() - 1)] = jsonElements(strSplit);   	
-	    	//System.println("DIC = " + dic); 
     	}    
     	return dic;
     }
@@ -237,8 +232,6 @@ class Utils extends Application.AppBase {
     		{
     			var key = str.substring(0, str.find(":"));  
 	    		var value = str.substring(str.find(":") + 1, str.length()); 
-	    		//System.println("key = " + key.substring(1, key.length() - 1));
-	    		//System.println("value = " + value.substring(1, value.length() - 1)); 
 	    		dic[key.substring(1, key.length() - 1)] = value.substring(1, value.length() - 1);
 	    		isStop = false;
     		}
@@ -247,8 +240,6 @@ class Utils extends Application.AppBase {
 	   			var item = str.substring(0, str.find(","));
 	   			var key = item.substring(0, item.find(":"));  
 	    		var value = item.substring(item.find(":") + 1, item.length());  
-	    		//System.println("key = " + key.substring(1, key.length() - 1));
-	    		//System.println("value = " + value.substring(1, value.length() - 1)); 
 	    		dic[key.substring(1, key.length() - 1)] = value.substring(1, value.length() - 1);
 	    		str = str.substring(str.find(",") + 1, str.length());
 	    		System.println(str);
@@ -391,14 +382,17 @@ class Utils extends Application.AppBase {
 	
 	function setProperty(propName, propValue)
 	{
-		var app = Application.getApp();
-		app.setProperty(propName, propValue);
+		return Application.getApp().setProperty(propName, propValue);
 	}
 	
 	function getProperty(propName)
 	{
-		var app = Application.getApp();
-		return app.getProperty(propName);
+		return Application.getApp().getProperty(propName);
+	}
+	
+	function clearProperties()
+	{
+		Application.getApp().clearProperties();
 	}
     
 }

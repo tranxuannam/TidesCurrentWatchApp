@@ -10,11 +10,11 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     hidden var count = 1;	
 	hidden var urlDic;
 	hidden var displayedDate;
-	hidden var timer;
+	hidden var pressedSelectButton = true;
 	hidden var tmpDic = {};
 	
     function initialize() {
-        BehaviorDelegate.initialize();
+        BehaviorDelegate.initialize();        
     }
 
     function onMenu() {  
@@ -32,8 +32,12 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         }  
         else
         {
-	    	setProgressBarConfirmDialog(0);
-	    	loadNextTidesCurrent();  
+        	if( pressedSelectButton )
+        	{
+	    		setProgressBarConfirmDialog(0);
+	    		loadNextTidesCurrent();
+	    		pressedSelectButton = false;
+	    	}  
     	}
     }  
     
@@ -43,6 +47,8 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	    	timer.stop();
 	    }
 	    setProgressBarToDefault();
+	    WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+	    return true;
     }	
     
     function loadNextTidesCurrent()
@@ -51,11 +57,9 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         {
             timer = new Timer.Timer();
         }
-		var app = Application.getApp();
-    	displayedDate = app.getProperty("displayedDate");	
-    	location = app.getProperty("code");
+    	displayedDate = Utils.getProperty("displayedDate");	
+    	location = Utils.getProperty("code");
     	displayedDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), true);
-        app.setProperty("displayedDate", displayedDate);
         urlDic = Utils.getUrls(location, displayedDate);
         timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
     }
@@ -66,20 +70,19 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         if( count > urlDic.size() )
         {
             timer.stop();
-            var app = Application.getApp();
-       		var name = app.getProperty("location"); 
-       		var code = app.getProperty("code"); 
-       		var latitude = app.getProperty("latitude"); 
-       		var longitude = app.getProperty("longitude");       
-            app.clearProperties();
+       		var name = Utils.getProperty("location"); 
+       		var code = Utils.getProperty("code"); 
+       		var latitude = Utils.getProperty("latitude"); 
+       		var longitude = Utils.getProperty("longitude");       
+            Utils.clearProperties();
             Utils.setTidesData(tmpDic);
-            app.setProperty("displayedDate", displayedDate);
-            app.setProperty("location", name); 
-            app.setProperty("code", code); 
-            app.setProperty("latitude", latitude); 
-            app.setProperty("longitude", longitude); 
-            setProgressBarConfirmDialog(count);
-            WatchUi.popView( WatchUi.SLIDE_UP );
+            Utils.setProperty("displayedDate", displayedDate);
+            Utils.setProperty("location", name); 
+            Utils.setProperty("code", code); 
+            Utils.setProperty("latitude", latitude); 
+            Utils.setProperty("longitude", longitude); 
+            setProgressBarConfirmDialog(count);            
+            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
         }     
         else
         {

@@ -11,9 +11,9 @@
     <string id="LoadNextData">Press select button to download next data. Press back button to cancel.</string>
     <string id="phoneConnected">The connection is not ready. Please make sure your device connected to phone.</string>
     <string id="requestFailed">Connection failed. You make sure the device connected to phone application. Please try again!</string>
-    <string id="InvalidCode">Invalid Code.</string>
-    <string id="Xpos"></string>
-    <string id="Ypos"></string>
-    <string id="XposLocationInfo"></string>
-    <string id="YposLocationInfo"></string>    
+    <string id="InvalidCode">Invalid Code. Please try again!</string>
+    <string id="Xpos">0</string>
+    <string id="Ypos">0</string>
+    <string id="XposLocationInfo">0</string>
+    <string id="YposLocationInfo">0</string>    
 </strings>

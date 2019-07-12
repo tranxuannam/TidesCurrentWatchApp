@@ -3,13 +3,15 @@ using Toybox.Application;
 using Toybox.Graphics;
 using Toybox.System;
 
-var _messageConfirmDialog = WatchUi.loadResource( Rez.Strings.LoadNextData );
+var _messageConfirmDialog;
 var _counterConfirmDialog = 0;
 
 class ConfirmDialogView extends WatchUi.View {
 
-    function initialize() {
-        View.initialize();    
+    function initialize(message, count) {
+        View.initialize(); 
+        _messageConfirmDialog = message;
+        _counterConfirmDialog = count;   
     }   
   
     // Update the view
@@ -37,7 +39,6 @@ class ConfirmDialogView extends WatchUi.View {
 
 function setProgressBarConfirmDialog(counter)
 {
-	System.println("setProgressBar");
 	var urlDic = Utils.getUrls("", "");
 	if(counter > urlDic.size())
 	{
