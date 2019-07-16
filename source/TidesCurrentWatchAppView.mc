@@ -19,10 +19,10 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     // Update the view
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout  
-        if(Utils.getProperty("displayedDate") != null)
+        if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
         {
         	System.println("onUpdate in TidesCurrentWatchAppView");
-			onDisplayMainView(dc, Utils.getProperty("displayedDate")); 
+			onDisplayMainView(dc, Utils.getProperty(Utils.DISPLAYED_DATE)); 
         } 
         else
         {
@@ -58,6 +58,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
   	   var dateView = View.findDrawableById("id_date");	
   	   dateView.setFont(font12);
   	   dateView.setText(displayDate);
+  	 
   	   var currDateString = WatchUi.loadResource( Rez.Strings.CurrDate ); 	
   	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
   	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
@@ -68,13 +69,15 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var keys = tidesDataDic.keys();
        var view;
        var i = 1;
+       var data = {};
        for (var j=0; j<statusTide.size(); j++)
    	   {
    	   		if(tidesDataDic.hasKey(statusTide[j]))
    	   		{
 	   	   		view = Utils.GetViewLabelOnLayout(i);
 	   	   		view.setFont(smallCustomFont);
-	   	   		view.setText(Utils.upperFirstLetterCase(statusTide[j].substring(0, statusTide[j].length() - 1)) + ": " + tidesDataDic[statusTide[j]]);  
+	   	   		//data = Utils.convertTimeFormatBySettings(Utils.displayFirstLine(tidesDataDic[statusTide[j]]));
+	   	   		view.setText(Utils.upperFirstLetterCase(statusTide[j].substring(0, statusTide[j].length() - 1)) + ": " + Utils.displayFirstLine(tidesDataDic[statusTide[j]]));  
 	   	   		i++;  	   		
    	   		}
        }
@@ -84,9 +87,38 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	       {
 		       view = Utils.GetViewLabelOnLayout(i+k);
 		       view.setFont(smallCustomFont);
-		       view.setText(Utils.upperFirstLetterCase(keys[i+k]) + ": " + tidesDataDic[keys[i+k]]);
+		       //data = Utils.convertTimeFormatBySettings(Utils.displayFirstLine(tidesDataDic[keys[i+k]]));
+		       System.println("keys[i+k] = " + (i+k));
+		       view.setText(Utils.upperFirstLetterCase(keys[i+k]) + ": " + Utils.displayFirstLine(tidesDataDic[keys[i+k]]));
 	       }
        }      
-       View.onUpdate(dc);    
-    }
+       View.onUpdate(dc);
+       
+       if(WatchUi.loadResource( Rez.Strings.IsTime24Format ).toNumber() == 1)
+       {
+       		//onDisPlayTime24HFormat(dc, font12, WatchUi.loadResource( Rez.Strings.XTimeFormat ).toNumber(), WatchUi.loadResource( Rez.Strings.YTimeFormat ).toNumber());
+       }
+       
+       if(WatchUi.loadResource( Rez.Strings.SplitLocalTime ).toNumber() == 1)
+       {
+       		//System.println("data[0] = " + data[0]);
+       		//onLocalTime(dc, font12, WatchUi.loadResource( Rez.Strings.XTimeFormat ).toNumber(), WatchUi.loadResource( Rez.Strings.YTimeFormat ).toNumber(), data[0]);
+       }
+    }  
+    
+    function onDisPlayTime24HFormat(dc, font, x, y)
+    {    	
+    	dc.setPenWidth(1);
+    	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
+    	dc.drawText(x, y, font, WatchUi.loadResource( Rez.Strings.TimeFormat ), Graphics.Graphics.TEXT_JUSTIFY_LEFT);
+		dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+		dc.drawArc(x + 5, y + 7, 9, Graphics.ARC_COUNTER_CLOCKWISE, 0, 360);
+    }  
+    
+    function onLocalTime(dc, font, x, y, message)
+    {    	
+    	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
+    	dc.drawText(x + 20, y, font, message, Graphics.Graphics.TEXT_JUSTIFY_LEFT);
+    } 
+    
 }

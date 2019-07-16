@@ -3,5 +3,9 @@
     <string id="Xpos">2</string>
     <string id="Ypos">36</string>
     <string id="XposLocationInfo">15</string>
-    <string id="YposLocationInfo">12</string>   
+    <string id="YposLocationInfo">12</string>
+    <string id="IsTime24Format">1</string>
+    <string id="SplitLocalTime">1</string>
+    <string id="XTimeFormat">20</string>
+    <string id="YTimeFormat">186</string>   
 </strings>

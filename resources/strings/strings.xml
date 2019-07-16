@@ -9,11 +9,17 @@
     <string id="AppSettingRequired">App settings required. Please input code!</string>
     <string id="Processing">Processing...</string>
     <string id="LoadNextData">Press select button to download next data. Press back button to cancel.</string>
-    <string id="phoneConnected">The connection is not ready. Please make sure your device connected to phone.</string>
-    <string id="requestFailed">Connection failed. You make sure the device connected to phone application. Please try again!</string>
+    <string id="PhoneConnected">The connection is not ready. Please make sure your device connected to phone.</string>
+    <string id="RequestFailed">Connection failed. You make sure the device connected to phone application. Please try again!</string>
+    <string id="ServerError">Server error. Please try again!</string>
     <string id="InvalidCode">Invalid Code. Please try again!</string>
     <string id="Xpos">0</string>
     <string id="Ypos">0</string>
     <string id="XposLocationInfo">0</string>
-    <string id="YposLocationInfo">0</string>    
+    <string id="YposLocationInfo">0</string>
+    <string id="TimeFormat">24</string>
+    <string id="IsTime24Format">0</string>
+    <string id="SplitLocalTime">0</string>
+    <string id="XTimeFormat">0</string>
+    <string id="YTimeFormat">0</string>    
 </strings>

@@ -11,7 +11,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     }
   
     function onMenu() {
-    	if(Utils.getProperty("displayedDate") != null)
+    	if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
     	{
 	        var device = WatchUi.loadResource(Rez.Strings.Device);
 	        if (Utils.FIX_PREVIOUS_PAGE_PER_DEVICE.toString().find(device) != null)
@@ -32,16 +32,16 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
   
     function onSelect()
     {
-    	if(Utils.getProperty("displayedDate") != null)
+    	if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
     	{
-			var location = Utils.getProperty("location");
+			var location = Utils.getProperty(Utils.LOCATION);
 			WatchUi.switchToView(new LocationInfoView(), new LocationInfoDelegate(), WatchUi.SLIDE_UP);
     	}
     	return true;
     }
     
    	function onPreviousPage() {  
-        var displayedDate = Utils.getProperty("displayedDate");
+        var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);
         if(displayedDate != null)
         {
 	        System.println("displayedDate = " + displayedDate);
@@ -51,7 +51,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 	        
 	        if(displayedDate != null)
 	        {
-		        Utils.setProperty("displayedDate", nextDate);
+		        Utils.setProperty(Utils.DISPLAYED_DATE, nextDate);
 		        WatchUi.requestUpdate();
 	        }
 	        else
@@ -69,7 +69,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     } 
     
     function onNextPage() {    	
-        var displayedDate = Utils.getProperty("displayedDate");
+        var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);
         if(displayedDate != null)
         {
 	        System.println("displayedDate = " + displayedDate);
@@ -79,7 +79,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 	        
 	        if(displayedDate != null)
 	        {
-		        Utils.setProperty("displayedDate", nextDate);
+		        Utils.setProperty(Utils.DISPLAYED_DATE, nextDate);
 		        WatchUi.requestUpdate();
 	        }
         }

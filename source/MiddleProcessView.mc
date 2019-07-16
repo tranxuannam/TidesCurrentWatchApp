@@ -45,23 +45,9 @@ function setUpProcessing()
 	WatchUi.requestUpdate();
 }
 
-function setUpMessagePhoneConnected()
+function setUpMessageFailed(message)
 {
-	_message = WatchUi.loadResource( Rez.Strings.phoneConnected );
-	_counter = 0;	
-	WatchUi.requestUpdate();
-}
-
-function setUpMessageFailed()
-{
-	_message = WatchUi.loadResource( Rez.Strings.requestFailed );	
-	_counter = 0;
-	WatchUi.requestUpdate();
-}
-
-function setUpInvalidCode()
-{
-	_message = WatchUi.loadResource( Rez.Strings.InvalidCode );	
+	_message = message;	
 	_counter = 0;
 	WatchUi.requestUpdate();
 }

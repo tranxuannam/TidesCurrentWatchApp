@@ -8,18 +8,11 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	
 	hidden var count = 1;	
 	hidden var urlDic;
-	//hidden var timer;
-	hidden var requestNum;
 	hidden var tmpDic = {};
 	
     function initialize(action) {
-        BehaviorDelegate.initialize();
-        
-        if(timer != null)
-        {
-        	timer.stop();
-        }
-        
+        BehaviorDelegate.initialize();        
+        onStopTimer();        
         if(action)
         {
         	onProcessingData();
@@ -29,50 +22,55 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function onMenu() {   
     }     	
  
-    function onBack() {        
-    	if(timer != null)
-		{
-			timer.stop();				
-		}	
+    function onBack() {      
+		onStopTimer();
         WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
         return true;
     }
     
     function loadTidesCurrentData()
     {
-    	urlDic = Utils.getUrls(Utils.getProperty("code"), Utils.getCurrentDate());
-    	requestNum = urlDic.size();    	
-        timer = new Timer.Timer();
-		timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
+    	urlDic = Utils.getUrls(Utils.getProperty(Utils.CODE), Utils.getCurrentDate());
+    	if(timer == null)
+    	{    	
+	        timer = new Timer.Timer();
+        }	
+        timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);	
     }       
     
     function tidesCurrentCallBack()
     {
     	System.println("count=" + count);
-    	if(count <= requestNum)
+    	if(count <= urlDic.size())
     	{
     		var delegate = new WebResponseDelegate(1);
     		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
     		setUpProgressBar(count);
+    		count++;    		
     	}
     	else
     	{
-    		timer.stop();
-    		count = 0;    		
-    		var name = Utils.getProperty("location"); 
-       		var code = Utils.getProperty("code"); 
-       		var latitude = Utils.getProperty("latitude"); 
-       		var longitude = Utils.getProperty("longitude");       
-            Utils.clearProperties();
-            Utils.setTidesData(tmpDic);
-            Utils.setProperty("displayedDate", Utils.getCurrentDate());
-            Utils.setProperty("location", name); 
-            Utils.setProperty("code", code); 
-            Utils.setProperty("latitude", latitude); 
-            Utils.setProperty("longitude", longitude);            
-    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+    		onStopTimer();
+    		if(tmpDic.isEmpty())
+			{
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));				
+			}
+			else
+			{
+	    		var name = Utils.getProperty(Utils.LOCATION); 
+	       		var code = Utils.getProperty(Utils.CODE); 
+	       		var latitude = Utils.getProperty(Utils.LAT); 
+	       		var longitude = Utils.getProperty(Utils.LONG);       
+	            Utils.clearProperties();
+	            Utils.setTidesData(tmpDic);
+	            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
+	            Utils.setProperty(Utils.LOCATION, name); 
+	            Utils.setProperty(Utils.CODE, code); 
+	            Utils.setProperty(Utils.LAT, latitude); 
+	            Utils.setProperty(Utils.LONG, longitude);            
+	    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+    		}
     	}    
-    	count++;	
     }
     
     function getInfoLocation(code)
@@ -85,34 +83,38 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     	if(Utils.checkPhoneConnected())
     	{
 			setUpProcessing(); 
-			getInfoLocation(Utils.getProperty("code"));
+			getInfoLocation(Utils.getProperty(Utils.CODE));
 			loadTidesCurrentData();
 		}
 		else
 		{
-			setUpMessagePhoneConnected();
+			setUpMessageFailed(WatchUi.loadResource( Rez.Strings.PhoneConnected ));
 		}
 	}	
 	
 	// set up the response callback function
-    function onReceive(responseCode, data, param) {   
+    function onReceive(responseCode, data, param) {  
 		if (responseCode == 200) {
-			Utils.saveTidesDataToDictionary(data, tmpDic);   		
-		}
-		else {
-			System.println("Response: " + responseCode);
-			if(timer != null)
+			if(data.isEmpty())
 			{
-				timer.stop();				
-			}
-			
-			if (responseCode == 404)
-			{
-				setUpInvalidCode();
+				onStopTimer();
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));				
 			}
 			else
 			{
-				setUpMessageFailed();
+				Utils.saveTidesDataToDictionary(data, tmpDic);
+			}
+		}
+		else {
+			System.println("Response: " + responseCode);
+			onStopTimer();
+			if (responseCode == 404)
+			{
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.InvalidCode ));
+			}
+			else
+			{
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.RequestFailed ));
 			}
 		}
 	}	
@@ -120,27 +122,31 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	// set up the response onReceiveLocationInfo function
     function onReceiveLocationInfo(responseCode, data, param) {   
 		if (responseCode == 200) {
-			Utils.setProperty("location", data["name"]);   
-			Utils.setProperty("latitude", data["latitude"]);
-			Utils.setProperty("longitude", data["longitude"]);	
-			Utils.setProperty("oldCode", Utils.getProperty("code"));
+			Utils.setProperty(Utils.LOCATION, data[Utils.NAME]);   
+			Utils.setProperty(Utils.LAT, data[Utils.LAT]);
+			Utils.setProperty(Utils.LONG, data[Utils.LONG]);	
+			Utils.setProperty(Utils.OLD_CODE, Utils.getProperty(Utils.CODE));
 		}
 		else {
 			System.println("Response: " + responseCode);
-			if(timer != null)
-			{
-				timer.stop();
-			}
-			
 			if (responseCode == 404)
 			{
-				Utils.setProperty("code", Utils.getProperty("oldCode"));				
-				setUpInvalidCode();
+				Utils.setProperty(Utils.CODE, Utils.getProperty(Utils.OLD_CODE));				
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.InvalidCode ));
 			}
 			else 
 			{
-				setUpMessageFailed();
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.RequestFailed ));
 			}
 		}
 	}	
+	
+	function onStopTimer()
+	{
+		if( timer != null )
+	    {	    	
+	    	timer.stop();
+	    	count = 1;
+	    }
+	}
 }

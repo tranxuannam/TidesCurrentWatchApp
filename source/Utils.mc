@@ -10,10 +10,17 @@ class Utils extends Application.AppBase {
     
     static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
     static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
-    static var TIME_REQUEST_API = 2000;
+    static var TIME_REQUEST_API = 4000;
     static var ANGLE = 360;
     static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
     static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr", "d2-face"]; //64kb mem
+    static var LAT = "latitude";
+    static var LONG = "longitude";
+    static var LOCATION = "location";
+    static var CODE = "code";
+    static var DISPLAYED_DATE = "displayedDate";
+    static var OLD_CODE = "oldCode";
+    static var NAME = "name";
     	
     function initialize() {    	
         AppBase.initialize();  
@@ -141,7 +148,7 @@ class Utils extends Application.AppBase {
     	var date;
     	
     	str = str.substring(1, str.length()-2);
-    	System.println(str);
+    	System.println("current date = " + str);
     	
     	while( isStop )
     	{
@@ -374,6 +381,114 @@ class Utils extends Application.AppBase {
 		}		
 		return count;
 	}	
+	
+	function displayFirstLine(text)
+    {
+    	var specialCharNum = text.find("\n");
+    	if(specialCharNum != null)
+    	{
+    		return text.substring(0, specialCharNum);
+    	}
+    	else
+    	{
+    		return text;
+    	}
+    }
+    
+    static function convertTimeFormatBySettings(text)
+    {
+    	if(WatchUi.loadResource( Rez.Strings.IsTime24Format ).toNumber() == 1)
+    	{
+	    	var am = text.find("AM");    	
+	    	
+	    	if(am != null)
+	    	{
+	    		System.println("string = " + text.substring(0, am - 1) + text.substring(am + 2, text.length()));
+	    		return splitLocalTime(text.substring(0, am - 1) + text.substring(am + 2, text.length()), true);
+	    	}
+	    	else
+	    	{
+	    		var pm = text.find("PM");
+	    		if(pm != null)
+	    		{
+	    			var time = text.substring(0, pm - 1); //02:34
+	    			var hour = time.find(":");
+	    			if(hour != null)
+	    			{
+	    				var h = time.substring(0, hour).toNumber() + 12;
+	    				time = h.toString() + ":" + time.substring(hour + 1, time.length());
+	    			}
+	    			return splitLocalTime(time + text.substring(pm + 2, text.length()), true);
+	    		}
+	    		else
+	    		{
+	    			return splitLocalTime(text, false);
+	    		}
+	    	}
+    	} else {
+    		return splitLocalTime(text, false);
+    	}
+    }
+    
+    static function splitLocalTime(text, isFormat24H)
+    {
+    	if(WatchUi.loadResource( Rez.Strings.SplitLocalTime ).toNumber() == 1)
+    	{
+	    	if(isFormat24H)
+	    	{
+	    		var space = text.find(" ");
+	    		var time = text.substring(0, space);
+	    		var leftTime = text.substring(space + 1, text.length());
+	    		System.println("leftTime = " + leftTime);
+	    		space = leftTime.find(" ");	
+	    		var localTime = "";    		
+	    			
+	    		if(space != null)
+	    		{
+	    			localTime = leftTime.substring(0, space);
+		    		var leftPart = leftTime.substring(space + 1, leftTime.length());
+		    		return { 0 => localTime, 1 => time + " " + leftPart };
+	    		}
+	    		else
+	    		{
+	    			return { 0 => leftTime, 1 => time };
+	    		}
+	    	}
+	    	else
+	    	{
+	    		var am = text.find("AM");
+	    		var pm = text.find("PM");
+	    		var pos;
+	    		
+	    		if(am != null)
+	    		{
+	    			pos = am;
+	    		}
+	    		else
+	    		{
+	    			pos = pm;
+	    		}
+	    		
+	    		if(pos != null)
+	    		{
+		    		var time = text.substring(0, pos + 1);
+		    		var leftTime = text.substring(pos + 2, text.length());
+		    		var space = leftTime.find(" ");
+		    		var localTime = leftTime.substring(0, space);
+		    		var leftPart = leftTime.substring(space + 1, leftTime.length());
+		    		return { 0 => localTime, 1 => time + " " + leftPart }; 
+	    		}
+	    		else
+	    		{
+	    			return { 0 => "", 1 => text };
+	    		}
+	    	}
+    	}
+    	else
+    	{
+    		return { 0 => "", 1 => text };
+    	}
+    }
 	
 	function checkPhoneConnected()
 	{

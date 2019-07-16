@@ -28,7 +28,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     function onSelect() {  
     	if(!Utils.checkPhoneConnected())
         {
-        	setMessagePhoneConnected();
+        	setMessageFailed(WatchUi.loadResource( Rez.Strings.PhoneConnected ));
         }  
         else
         {
@@ -42,10 +42,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     }  
     
     function onBack() {    
-	    if( timer != null )
-	    {	    	
-	    	timer.stop();
-	    }
+	    onStopTimer();
 	    setProgressBarToDefault();
 	    WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 	    return true;
@@ -58,7 +55,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
             timer = new Timer.Timer();
         }
     	displayedDate = Utils.getProperty("displayedDate");	
-    	location = Utils.getProperty("code");
+    	location = Utils.getProperty(Utils.CODE);
     	displayedDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), true);
         urlDic = Utils.getUrls(location, displayedDate);
         timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
@@ -67,43 +64,65 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     function tideCurrentCallback()
     {
     	System.println("count=" + count);
-        if( count > urlDic.size() )
+        if( count <= urlDic.size() )
         {
-            timer.stop();
-       		var name = Utils.getProperty("location"); 
-       		var code = Utils.getProperty("code"); 
-       		var latitude = Utils.getProperty("latitude"); 
-       		var longitude = Utils.getProperty("longitude");       
-            Utils.clearProperties();
-            Utils.setTidesData(tmpDic);
-            Utils.setProperty("displayedDate", displayedDate);
-            Utils.setProperty("location", name); 
-            Utils.setProperty("code", code); 
-            Utils.setProperty("latitude", latitude); 
-            Utils.setProperty("longitude", longitude); 
-            setProgressBarConfirmDialog(count);            
-            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+        	var delegate = new WebResponseDelegate(1);
+    		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
+    		setProgressBarConfirmDialog(count);
+    		count++;            
         }     
         else
         {
-            var delegate = new WebResponseDelegate(1);
-    		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
-    		setProgressBarConfirmDialog(count);
-        }
-        count++;
+            onStopTimer();
+            if(tmpDic.isEmpty())
+			{
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));				
+			}
+			else
+			{
+	            var name = Utils.getProperty(Utils.LOCATION); 
+	       		var code = Utils.getProperty(Utils.CODE); 
+	       		var latitude = Utils.getProperty(Utils.LAT); 
+	       		var longitude = Utils.getProperty(Utils.LONG);       
+	            Utils.clearProperties();
+	            Utils.setTidesData(tmpDic);
+	            Utils.setProperty(Utils.DISPLAYED_DATE, displayedDate);
+	            Utils.setProperty(Utils.LOCATION, name); 
+	            Utils.setProperty(Utils.CODE, code); 
+	            Utils.setProperty(Utils.LAT, latitude); 
+	            Utils.setProperty(Utils.LONG, longitude); 
+	            setProgressBarConfirmDialog(count);            
+	            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+	        }
+        }        
     }   
    
     function onReceive(responseCode, data, param) 
     {   
-		if (responseCode == 200) {			
-			Utils.saveTidesDataToDictionary(data, tmpDic);       	
-			System.println("TideDate in tmpDic = " + tmpDic); 		
+		if (responseCode == 200) {	
+			if(data.isEmpty())
+			{
+				onStopTimer();
+				setMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));
+			}
+			else
+			{
+				Utils.saveTidesDataToDictionary(data, tmpDic);
+			} 		
 		}
 		else {
 			System.println("Response: " + responseCode);
-			setMessageFailed();
-			count = 1;
-			timer.stop();
+			setMessageFailed(WatchUi.loadResource( Rez.Strings.RequestFailed ));
+			onStopTimer();
 		}
+	}
+	
+	function onStopTimer()
+	{
+		if( timer != null )
+	    {	    	
+	    	timer.stop();
+	    	count = 1;
+	    }
 	}
 }

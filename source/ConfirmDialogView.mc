@@ -57,16 +57,9 @@ function setProgressBarToDefault()
 	_counterConfirmDialog = 0;
 }
 
-function setMessageFailed()
+function setMessageFailed(message)
 {
-	_messageConfirmDialog = WatchUi.loadResource( Rez.Strings.requestFailed );	
-	_counterConfirmDialog = 0;
-	WatchUi.requestUpdate();
-}
-
-function setMessagePhoneConnected()
-{
-	_messageConfirmDialog = WatchUi.loadResource( Rez.Strings.phoneConnected );	
+	_messageConfirmDialog = message;	
 	_counterConfirmDialog = 0;
 	WatchUi.requestUpdate();
 }
