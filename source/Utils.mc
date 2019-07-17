@@ -289,9 +289,24 @@ class Utils extends Application.AppBase {
    	   			
    	   			case 8:
    	   				return View.findDrawableById("id_label8");
+   	   				
+   	   			case 9:
+   	   				return View.findDrawableById("id_label9");
+   	   				
+   	   			case 10:
+   	   				return View.findDrawableById("id_label10");
+   	   				
+   	   			case 11:
+   	   				return View.findDrawableById("id_label11");
+   	   				
+   	   			case 12:
+   	   				return View.findDrawableById("id_label12");
+   	   				
+   	   			case 13:
+   	   				return View.findDrawableById("id_label13");
    	   			break;
    	   		}
-    }
+    }   
     
     static function upperFirstLetterCase(str)
     {
@@ -325,8 +340,8 @@ class Utils extends Application.AppBase {
    		System.println("locationInfo = " + data); 		
 	}		
 	
-	static function displayMultilineOnScreen(dc, text, font){
-		var extraRoom = 0.8; //0.8 735xt
+	static function displayMultilineOnScreen(dc, text, font, extraRoom){
+		//var extraRoom = 0.1; //0.8 735xt
 		var oneCharWidth = dc.getTextWidthInPixels("EtaoiNshrd", font)/10;
 		var charPerLine = extraRoom * dc.getWidth()/oneCharWidth;
 		return convertTextToMultiline(text, charPerLine);

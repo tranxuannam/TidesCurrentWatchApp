@@ -5,6 +5,7 @@
     <string id="XposLocationInfo">125</string>
     <string id="YposLocationInfo">15</string>
     <string id="IsTime24Format">1</string>
-    <string id="XTimeFormat">45</string>
-    <string id="YTimeFormat">32</string>
+    <string id="SplitLocalTime">1</string>
+    <string id="XTimeFormat">100</string>
+    <string id="YTimeFormat">220</string>
 </strings>

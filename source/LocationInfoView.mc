@@ -3,6 +3,8 @@ using Toybox.Application;
 
 class LocationInfoView extends WatchUi.View {
 
+	hidden var extraRoom = 0.8;
+	
     function initialize() {
         View.initialize();       
     }
@@ -38,7 +40,7 @@ class LocationInfoView extends WatchUi.View {
        var viewLocation = View.findDrawableById("id_name");
        viewLocation.setFont(smallCustomFont);      
        var name = app.getProperty("location");        
-       var newText = Utils.displayMultilineOnScreen(dc, location + ": " + name, smallCustomFont);
+       var newText = Utils.displayMultilineOnScreen(dc, location + ": " + name, smallCustomFont, extraRoom);
        viewLocation.setText(newText);   
        viewLocation.setLocation(xPos, YPos);   
        

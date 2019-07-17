@@ -8,6 +8,8 @@ var _counterConfirmDialog = 0;
 
 class ConfirmDialogView extends WatchUi.View {
 
+	hidden var extraRoom = 0.8;
+	
     function initialize(message, count) {
         View.initialize(); 
         _messageConfirmDialog = message;
@@ -25,7 +27,7 @@ class ConfirmDialogView extends WatchUi.View {
 		var cx = dc.getWidth() / 2;
 		var cy = dc.getHeight() / 3;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-		var text = Utils.displayMultilineOnScreen(dc, _messageConfirmDialog, customFont);
+		var text = Utils.displayMultilineOnScreen(dc, _messageConfirmDialog, customFont, extraRoom);
        	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER);
        	
        	if(_counterConfirmDialog > 0)

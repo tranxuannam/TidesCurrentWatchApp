@@ -9,7 +9,9 @@ var _message;
 var _counter = 0;
 
 class MiddleProcessView extends WatchUi.View {
-
+	
+	hidden var extraRoom = 0.8;
+	
     function initialize(message) {
         View.initialize();
         _message = message;
@@ -26,7 +28,7 @@ class MiddleProcessView extends WatchUi.View {
 		var cx = dc.getWidth() / 2;
 		var cy = dc.getHeight() / 3;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-		var text = Utils.displayMultilineOnScreen(dc, _message, customFont);
+		var text = Utils.displayMultilineOnScreen(dc, _message, customFont, extraRoom);
        	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER); 
        		
    		if(_counter > 0)

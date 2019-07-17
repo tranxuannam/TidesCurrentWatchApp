@@ -22,4 +22,9 @@
     <string id="SplitLocalTime">0</string>
     <string id="XTimeFormat">0</string>
     <string id="YTimeFormat">0</string>    
+    <string id="Slack">Slack</string>
+    <string id="Flood">Flood</string>
+    <string id="Ebb">Ebb</string>
+    <string id="High">High</string>
+    <string id="Low">Low</string>
 </strings>

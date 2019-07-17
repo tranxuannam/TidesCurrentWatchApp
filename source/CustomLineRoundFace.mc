@@ -7,10 +7,10 @@ class CustomLineRoundFace extends Ui.Drawable {
 	
     function draw(dc) {
         // Draw the move bar here
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-        dc.setPenWidth(1);      
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+        dc.setPenWidth(2);      
         
-        dc.drawLine(50, 50, 170, 50);
-        dc.drawLine(50, 175, 170, 175);
+        //dc.drawLine(43, 41, 43, 186);
+        dc.drawLine(43, 20, 43, 220);
     }
 }
