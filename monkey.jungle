@@ -10,6 +10,7 @@ fenix3_hr.resourcePath = $(base.resourcePath);fenix3-resources
 fenixchronos.resourcePath = $(base.resourcePath);fenix3-resources
 d2bravo_titanium.resourcePath = $(base.resourcePath);d2-resources
 d2bravo.resourcePath = $(base.resourcePath);d2-resources
+fenix5s.resourcePath = $(base.resourcePath);fenix5s-resources
 round.resourcePath = $(base.resourcePath);resource-round
 vivoactive_hr.resourcePath = $(base.resourcePath);vivoactive-hr-resources
 vivoactive.resourcePath = $(base.resourcePath);vivoactive-resources

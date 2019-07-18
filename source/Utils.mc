@@ -12,6 +12,8 @@ class Utils extends Application.AppBase {
     static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
     static var TIME_REQUEST_API = 4000;
     static var ANGLE = 360;
+    static var NUMBER_RECORD_GREATER_64K = 14;
+    static var NUMBER_RECORD_LESS_64K = 7;
     static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
     static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr", "d2-face"]; //64kb mem
     static var LAT = "latitude";
@@ -21,6 +23,8 @@ class Utils extends Application.AppBase {
     static var DISPLAYED_DATE = "displayedDate";
     static var OLD_CODE = "oldCode";
     static var NAME = "name";
+    static var STATUS_TIDE_1 = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6", "moon", "sunrise", "sunset", "moonrise", "moonset"];       					
+    static var STATUS_TIDE_2 = ["high1" , "low1" , "high2", "low2", "high3", "low3", "high4", "low4", "moon", "sunrise", "sunset", "moonrise", "moonset"];  
     	
     function initialize() {    	
         AppBase.initialize();  
@@ -38,11 +42,12 @@ class Utils extends Application.AppBase {
     	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
     	{    	
     		//return {1=>url + "&begin=0&end=2", 2=>url + "&begin=2&end=2", 3=>url + "&begin=4&end=2", 4=>url + "&begin=6&end=1"};
-    		return {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"};
+    		//return { "number" => NUMBER_RECORD_LESS_64K, "url" => {1=>url + "&begin=0&end=3", 2=>url + "&begin=3&end=2", 3=>url + "&begin=5&end=2"} };
+    		return { "number" => NUMBER_RECORD_GREATER_64K, "url" => {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"} };
     	}
     	else
     	{
-    		return {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"};
+    		return { "number" => NUMBER_RECORD_GREATER_64K, "url" => {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"} };
     	}
     } 
    
@@ -418,7 +423,7 @@ class Utils extends Application.AppBase {
 	    	
 	    	if(am != null)
 	    	{
-	    		System.println("string = " + text.substring(0, am - 1) + text.substring(am + 2, text.length()));
+	    		//System.println("string = " + text.substring(0, am - 1) + text.substring(am + 2, text.length()));
 	    		return splitLocalTime(text.substring(0, am - 1) + text.substring(am + 2, text.length()), true);
 	    	}
 	    	else
@@ -454,7 +459,7 @@ class Utils extends Application.AppBase {
 	    		var space = text.find(" ");
 	    		var time = text.substring(0, space);
 	    		var leftTime = text.substring(space + 1, text.length());
-	    		System.println("leftTime = " + leftTime);
+	    		//System.println("leftTime = " + leftTime);
 	    		space = leftTime.find(" ");	
 	    		var localTime = "";    		
 	    			
@@ -523,6 +528,60 @@ class Utils extends Application.AppBase {
 	function clearProperties()
 	{
 		Application.getApp().clearProperties();
+	}
+	
+	function getLabelStatusTide(key)
+	{
+		if (key.find("slack") != null)
+		{
+			return WatchUi.loadResource( Rez.Strings.Slack );
+		}
+		else
+		if (key.find("flood") != null)
+		{
+			return WatchUi.loadResource( Rez.Strings.Flood );
+		}
+		else
+		if (key.find("ebb") != null)
+		{
+			return WatchUi.loadResource( Rez.Strings.Ebb );
+		}
+		else
+		if (key.find("high") != null)
+		{
+			return WatchUi.loadResource( Rez.Strings.High );
+		}
+		else
+		if (key.find("low") != null)
+		{
+			return WatchUi.loadResource( Rez.Strings.Low );
+		}
+		else
+		if (key.equals("moon"))
+		{
+			return WatchUi.loadResource( Rez.Strings.Moon );
+		}
+		else
+		if (key.equals("sunrise"))
+		{
+			return WatchUi.loadResource( Rez.Strings.Sunrise );
+		}
+		else
+		if (key.equals("sunset"))
+		{
+			return WatchUi.loadResource( Rez.Strings.Sunset );
+		}
+		else
+		if (key.equals("moonrise"))
+		{
+			return WatchUi.loadResource( Rez.Strings.Moonrise );
+		}
+		else
+		if (key.equals("moonset"))
+		{
+			return WatchUi.loadResource( Rez.Strings.Moonset );
+		}
+		return "";
 	}
     
 }

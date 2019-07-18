@@ -3,10 +3,13 @@ using Toybox.Application;
 
 class LocationInfoView extends WatchUi.View {
 
-	hidden var extraRoom = 0.8;
+	hidden var smallCustomFont;
+	hidden var largeCustomFont;
 	
     function initialize() {
-        View.initialize();       
+        View.initialize();  
+        smallCustomFont = WatchUi.loadResource(Rez.Fonts.small_font);
+        largeCustomFont = WatchUi.loadResource(Rez.Fonts.large_font);     
     }
 
     // Load your resources here
@@ -16,9 +19,8 @@ class LocationInfoView extends WatchUi.View {
   
     // Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout  
-    
-       var smallCustomFont = WatchUi.loadResource(Rez.Fonts.small_font);
+        // Call the parent onUpdate function to redraw the layout 
+               
        var app = Application.getApp();
        var location = WatchUi.loadResource( Rez.Strings.Location );
        var lat = WatchUi.loadResource( Rez.Strings.Lati );
@@ -31,7 +33,6 @@ class LocationInfoView extends WatchUi.View {
        var distance2Line = 17; 
        
        // Location info
-       var largeCustomFont = WatchUi.loadResource(Rez.Fonts.large_font);
        var viewLocationInfo = View.findDrawableById("id_location_info");
        viewLocationInfo.setFont(largeCustomFont);
        viewLocationInfo.setLocation(xPosLocationInfo, yPosLocationInfo);     
@@ -40,7 +41,7 @@ class LocationInfoView extends WatchUi.View {
        var viewLocation = View.findDrawableById("id_name");
        viewLocation.setFont(smallCustomFont);      
        var name = app.getProperty("location");        
-       var newText = Utils.displayMultilineOnScreen(dc, location + ": " + name, smallCustomFont, extraRoom);
+       var newText = Utils.displayMultilineOnScreen(dc, location + ": " + name, smallCustomFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
        viewLocation.setText(newText);   
        viewLocation.setLocation(xPos, YPos);   
        

@@ -41,34 +41,38 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function tidesCurrentCallBack()
     {
     	System.println("count=" + count);
-    	if(count <= urlDic.size())
+    	if(count <= urlDic["url"].size())
     	{
     		var delegate = new WebResponseDelegate(1);
-    		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
+    		delegate.makeWebRequest(urlDic["url"][count], self.method(:onReceive));
     		setUpProgressBar(count);
     		count++;    		
     	}
     	else
     	{
-    		onStopTimer();
     		if(tmpDic.isEmpty())
 			{
-				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));				
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));
+				onStopTimer();				
 			}
 			else
 			{
-	    		var name = Utils.getProperty(Utils.LOCATION); 
-	       		var code = Utils.getProperty(Utils.CODE); 
-	       		var latitude = Utils.getProperty(Utils.LAT); 
-	       		var longitude = Utils.getProperty(Utils.LONG);       
-	            Utils.clearProperties();
-	            Utils.setTidesData(tmpDic);
-	            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
-	            Utils.setProperty(Utils.LOCATION, name); 
-	            Utils.setProperty(Utils.CODE, code); 
-	            Utils.setProperty(Utils.LAT, latitude); 
-	            Utils.setProperty(Utils.LONG, longitude);            
-	    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+				if(tmpDic.size() == urlDic["number"])
+				{
+					onStopTimer();
+		    		var name = Utils.getProperty(Utils.LOCATION); 
+		       		var code = Utils.getProperty(Utils.CODE); 
+		       		var latitude = Utils.getProperty(Utils.LAT); 
+		       		var longitude = Utils.getProperty(Utils.LONG);       
+		            Utils.clearProperties();
+		            Utils.setTidesData(tmpDic);
+		            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
+		            Utils.setProperty(Utils.LOCATION, name); 
+		            Utils.setProperty(Utils.CODE, code); 
+		            Utils.setProperty(Utils.LAT, latitude); 
+		            Utils.setProperty(Utils.LONG, longitude);            
+		    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+	    		}
     		}
     	}    
     }
@@ -129,6 +133,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 		}
 		else {
 			System.println("Response: " + responseCode);
+			onStopTimer();
 			if (responseCode == 404)
 			{
 				Utils.setProperty(Utils.CODE, Utils.getProperty(Utils.OLD_CODE));				
@@ -137,7 +142,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			else 
 			{
 				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.RequestFailed ));
-			}
+			}			
 		}
 	}	
 	

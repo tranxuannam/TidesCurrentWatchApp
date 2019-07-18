@@ -64,35 +64,39 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     function tideCurrentCallback()
     {
     	System.println("count=" + count);
-        if( count <= urlDic.size() )
+        if( count <= urlDic["url"].size() )
         {
         	var delegate = new WebResponseDelegate(1);
-    		delegate.makeWebRequest(urlDic[count], self.method(:onReceive));
+    		delegate.makeWebRequest(urlDic["url"][count], self.method(:onReceive));
     		setProgressBarConfirmDialog(count);
     		count++;            
         }     
         else
-        {
-            onStopTimer();
+        {            
             if(tmpDic.isEmpty())
 			{
-				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));				
+				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));
+				onStopTimer();				
 			}
 			else
 			{
-	            var name = Utils.getProperty(Utils.LOCATION); 
-	       		var code = Utils.getProperty(Utils.CODE); 
-	       		var latitude = Utils.getProperty(Utils.LAT); 
-	       		var longitude = Utils.getProperty(Utils.LONG);       
-	            Utils.clearProperties();
-	            Utils.setTidesData(tmpDic);
-	            Utils.setProperty(Utils.DISPLAYED_DATE, displayedDate);
-	            Utils.setProperty(Utils.LOCATION, name); 
-	            Utils.setProperty(Utils.CODE, code); 
-	            Utils.setProperty(Utils.LAT, latitude); 
-	            Utils.setProperty(Utils.LONG, longitude); 
-	            setProgressBarConfirmDialog(count);            
-	            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+				if(tmpDic.size() == urlDic["number"])
+				{
+					onStopTimer();
+		            var name = Utils.getProperty(Utils.LOCATION); 
+		       		var code = Utils.getProperty(Utils.CODE); 
+		       		var latitude = Utils.getProperty(Utils.LAT); 
+		       		var longitude = Utils.getProperty(Utils.LONG);       
+		            Utils.clearProperties();
+		            Utils.setTidesData(tmpDic);
+		            Utils.setProperty(Utils.DISPLAYED_DATE, displayedDate);
+		            Utils.setProperty(Utils.LOCATION, name); 
+		            Utils.setProperty(Utils.CODE, code); 
+		            Utils.setProperty(Utils.LAT, latitude); 
+		            Utils.setProperty(Utils.LONG, longitude); 
+		            setProgressBarConfirmDialog(count);            
+		            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+	            }
 	        }
         }        
     }   
