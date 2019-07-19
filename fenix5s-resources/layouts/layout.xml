@@ -14,5 +14,5 @@
     <label id="id_label12" x="50" y="169" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_label13" x="50" y="182" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
     <label id="id_date" x="25" y="76" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
-    <drawable id="id_line2" class="CustomLineRoundFace" />
+    <drawable id="id_line2" class="CustomLine" />
 </layout>

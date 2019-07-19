@@ -12,7 +12,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        
     function initialize() {
         View.initialize();
-        smallCustomFont = WatchUi.loadResource(Rez.Fonts.small_font);
+        smallCustomFont = Utils.loadMainFont();
         font12 = WatchUi.loadResource(Rez.Fonts.font_12);
     }
     
@@ -42,10 +42,21 @@ class TidesCurrentWatchAppView extends WatchUi.View {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
 		var cx = dc.getWidth() / 2;
-		var cy = dc.getHeight() / 3;		
+		var cy = dc.getHeight() / 2;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
 		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.AppSettingRequired ), customFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
-       	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER);
+       	var centerY = 0;
+       	
+		if(text.length() >= 20)
+		{
+			centerY = cy - text.length() / 2;
+		}
+		else
+		{		
+       		centerY = cy / 2;
+       	} 
+       	
+       	dc.drawText(cx, centerY, customFont, text, Graphics.TEXT_JUSTIFY_CENTER);
     }  
     
     function onDisplayMainView(dc, displayedDate) 

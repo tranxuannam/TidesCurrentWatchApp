@@ -7,15 +7,9 @@ class CustomLine extends Ui.Drawable {
 	
     function draw(dc) {
         // Draw the move bar here
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-        dc.setPenWidth(1);
-        //dc.drawLine(50, 34, 160, 34);
-        //dc.drawLine(50, 160, 160, 160);
-        
-        //dc.drawLine(20, 34, 200, 34);
-        //dc.drawLine(20, 160, 200, 160);
-        
-        dc.drawLine(50, 34, 170, 34);
-        dc.drawLine(50, 160, 170, 160);
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+        dc.setPenWidth(2);     
+        dc.drawLine(WatchUi.loadResource( Rez.Strings.XFirstLine ).toNumber(), WatchUi.loadResource( Rez.Strings.YFirstLine ).toNumber()
+        			, WatchUi.loadResource( Rez.Strings.XSecondLine ).toNumber(), WatchUi.loadResource( Rez.Strings.YSecondLine ).toNumber());
     }
 }

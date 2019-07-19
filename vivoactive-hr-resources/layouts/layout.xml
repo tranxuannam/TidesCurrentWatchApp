@@ -1,13 +1,17 @@
 <layout id="MainLayout" background="Graphics.COLOR_BLACK">
-	<label id="id_app_name" x="15" y="12" text="@Strings.AppName" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT"/>
-	<label id="id_date" x="25" y="32" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT"/>
-    <label id="id_label1" x="0" y="48" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label2" x="0" y="63" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label3" x="0" y="78" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label4" x="0" y="93" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label5" x="0" y="108" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label6" x="0" y="123" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label7" x="0" y="138" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_label8" x="0" y="153" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
-    <label id="id_currDate" x="15" y="170" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT"/>
+	<label id="id_date" x="dc.getWidth() / 2" y="5" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER"/>
+    <label id="id_label1" x="5" y="26-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label2" x="5" y="38-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label3" x="5" y="50-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label4" x="5" y="62-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label5" x="5" y="74-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label6" x="5" y="86-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label7" x="5" y="98-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label8" x="5" y="110-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label9" x="5" y="122-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label10" x="5" y="134-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label11" x="5" y="146-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label12" x="5" y="158-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_label13" x="5" y="170-2" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" />
+    <label id="id_currDate" x="5" y="190" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT"/>
 </layout>

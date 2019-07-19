@@ -1,13 +1,13 @@
 <strings>
-    <string id="Device">edge-face</string>    
+    <string id="Device">edge-820-face</string>    
     <string id="Xpos">4</string>
     <string id="Ypos">40</string>
     <string id="IsTime24Format">1</string>
     <string id="SplitLocalTime">1</string>
-    <string id="XTimeFormat">80</string>
-    <string id="YTimeFormat">220</string>
-    <string id="XLocalTime">100</string>
-    <string id="YLocalTime">220</string>
+    <string id="XTimeFormat">18</string>
+    <string id="YTimeFormat">30</string>
+    <string id="XLocalTime">12</string>
+    <string id="YLocalTime">50</string>
     <string id="XFirstLine">43</string>
     <string id="YFirstLine">30</string>
     <string id="XSecondLine">43</string>

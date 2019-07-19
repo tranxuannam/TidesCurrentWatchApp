@@ -8,7 +8,7 @@ class LocationInfoView extends WatchUi.View {
 	
     function initialize() {
         View.initialize();  
-        smallCustomFont = WatchUi.loadResource(Rez.Fonts.small_font);
+        smallCustomFont = Utils.loadMainFont();
         largeCustomFont = WatchUi.loadResource(Rez.Fonts.large_font);     
     }
 
@@ -28,14 +28,11 @@ class LocationInfoView extends WatchUi.View {
        var code = WatchUi.loadResource( Rez.Strings.Code );    
        var xPos = WatchUi.loadResource( Rez.Strings.Xpos ).toNumber();
        var YPos = WatchUi.loadResource( Rez.Strings.Ypos ).toNumber();
-       var xPosLocationInfo = WatchUi.loadResource( Rez.Strings.XposLocationInfo ).toNumber();
-       var yPosLocationInfo = WatchUi.loadResource( Rez.Strings.YposLocationInfo ).toNumber();
        var distance2Line = 17; 
        
        // Location info
        var viewLocationInfo = View.findDrawableById("id_location_info");
        viewLocationInfo.setFont(largeCustomFont);
-       viewLocationInfo.setLocation(xPosLocationInfo, yPosLocationInfo);     
        
        // Display location
        var viewLocation = View.findDrawableById("id_name");

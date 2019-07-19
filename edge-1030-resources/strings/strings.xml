@@ -4,14 +4,14 @@
     <string id="Ypos">40</string>
     <string id="IsTime24Format">1</string>
     <string id="SplitLocalTime">1</string>
-    <string id="XTimeFormat">80</string>
+    <string id="XTimeFormat">120</string>
     <string id="YTimeFormat">220</string>
-    <string id="XLocalTime">100</string>
+    <string id="XLocalTime">140</string>
     <string id="YLocalTime">220</string>
     <string id="XFirstLine">43</string>
     <string id="YFirstLine">30</string>
     <string id="XSecondLine">43</string>
     <string id="YSecondLine">210</string>
-    <string id="ExtraRoomDateTime">0.12</string>
+    <string id="ExtraRoomDateTime">0.1</string>
     <string id="ExtraRoom">0.8</string>
 </strings>

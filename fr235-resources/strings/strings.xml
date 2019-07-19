@@ -2,8 +2,6 @@
     <string id="Device">fr235</string>
     <string id="Xpos">29</string>
     <string id="Ypos">36</string>
-    <string id="XposLocationInfo">110</string>
-    <string id="YposLocationInfo">0</string>
     <string id="IsTime24Format">1</string>  
     <string id="SplitLocalTime">1</string>
     <string id="XTimeFormat">20</string>

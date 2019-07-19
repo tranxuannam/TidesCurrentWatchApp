@@ -9,9 +9,7 @@ var _message;
 var _counter = 0;
 
 class MiddleProcessView extends WatchUi.View {
-	
-	hidden var extraRoom = 0.8;
-	
+		
     function initialize(message) {
         View.initialize();
         _message = message;
@@ -26,16 +24,27 @@ class MiddleProcessView extends WatchUi.View {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
 		var cx = dc.getWidth() / 2;
-		var cy = dc.getHeight() / 3;		
+		var cy = dc.getHeight() / 2;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-		var text = Utils.displayMultilineOnScreen(dc, _message, customFont, extraRoom);
-       	dc.drawText(cx, cy, customFont, text, Graphics.TEXT_JUSTIFY_CENTER); 
+		var text = Utils.displayMultilineOnScreen(dc, _message, customFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());		
+		var centerY = 0;
+		
+		if(text.length() >= 20)
+		{
+			centerY = cy - text.length() / 2;
+		}
+		else
+		{		
+       		centerY = cy / 2;
+       	} 
+       	
+       	dc.drawText(cx, centerY, customFont, text, Graphics.TEXT_JUSTIFY_CENTER);
        		
    		if(_counter > 0)
    		{
 	       	dc.setPenWidth(3);
 		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-		   	dc.drawArc(cx, cy + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle*_counter);
+		   	dc.drawArc(cx, cy, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle * _counter);
 		   	_counter = 0;
 	   	}	 
     }   

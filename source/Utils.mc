@@ -16,6 +16,7 @@ class Utils extends Application.AppBase {
     static var NUMBER_RECORD_LESS_64K = 7;
     static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
     static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr", "d2-face"]; //64kb mem
+    static var SPECIAL_FONT_ON_DEIVICE = ["fr920xt", "vivoactive_hr"];
     static var LAT = "latitude";
     static var LONG = "longitude";
     static var LOCATION = "location";
@@ -582,6 +583,19 @@ class Utils extends Application.AppBase {
 			return WatchUi.loadResource( Rez.Strings.Moonset );
 		}
 		return "";
+	}
+	
+	static function loadMainFont()
+	{
+		var device = WatchUi.loadResource(Rez.Strings.Device);
+    	if (SPECIAL_FONT_ON_DEIVICE.toString().find(device) != null) 
+    	{
+    		return WatchUi.loadResource(Rez.Fonts.font_12);
+    	}
+    	else
+    	{
+    		return WatchUi.loadResource(Rez.Fonts.small_font);
+    	}
 	}
     
 }
