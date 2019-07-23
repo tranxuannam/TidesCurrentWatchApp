@@ -147,14 +147,14 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     {    	
     	dc.setPenWidth(1);
     	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
-    	dc.drawText(x, y, font, WatchUi.loadResource( Rez.Strings.TimeFormat ), Graphics.Graphics.TEXT_JUSTIFY_LEFT);
+    	dc.drawText(x, y, font, WatchUi.loadResource( Rez.Strings.TimeFormat ), Graphics.TEXT_JUSTIFY_LEFT);
 		dc.drawArc(x + 5, y + 7, 9, Graphics.ARC_COUNTER_CLOCKWISE, 0, 360);
     }  
     
     function onLocalTime(dc, font, x, y, message)
     {    	
     	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
-    	dc.drawText(x, y, font, message, Graphics.Graphics.TEXT_JUSTIFY_LEFT);
+    	dc.drawText(x, y, font, message, Graphics.TEXT_JUSTIFY_LEFT);
     } 
     
 }

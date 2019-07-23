@@ -44,7 +44,7 @@ class MiddleProcessView extends WatchUi.View {
    		{
 	       	dc.setPenWidth(3);
 		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-		   	dc.drawArc(cx, cy, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle * _counter);
+		   	dc.drawArc(cx, centerY + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle * _counter);
 		   	_counter = 0;
 	   	}	 
     }   

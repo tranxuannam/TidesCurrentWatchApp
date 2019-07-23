@@ -1,6 +1,6 @@
 <strings>
     <string id="Device">vivoactive</string>
-    <string id="Xpos">29</string>
+    <string id="Xpos">5</string>
     <string id="Ypos">30</string>
     <string id="IsTime24Format">1</string>  
     <string id="SplitLocalTime">1</string>

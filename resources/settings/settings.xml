@@ -1,11 +1,5 @@
 <settings>
-
-    <setting propertyKey="@Properties.appVersion" title="@Strings.AppName">
-        <settingConfig type="alphaNumeric" readonly="true" />
-    </setting>
-
     <setting propertyKey="@Properties.code" title="@Strings.Code" prompt="@Strings.Code">
         <settingConfig type="alphaNumeric" errorMessage="@Strings.Code" />
-    </setting>  
-
+    </setting>
 </settings>
