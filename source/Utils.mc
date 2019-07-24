@@ -56,7 +56,6 @@ class Utils extends Application.AppBase {
     {    	    	
     	var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT); 
     	var fMedium = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM); 
-		//return Lang.format( "$1$-$2$-$3$", [ today.year, month, day ] );
 		return {"year" => today.year, "month" => today.month.format("%02d"), "month_medium" => fMedium.month, "day" => today.day.format("%02d"), "day_of_week" => fMedium.day_of_week};		
     }
     
@@ -90,7 +89,6 @@ class Utils extends Application.AppBase {
     	var year = dateDic["year"].toNumber();
     	var month = dateDic["month"].toNumber();
     	var day = dateDic["day"].toNumber();
-    	//https://forums.garmin.com/forum/developers/connect-iq/122767-
 		var gMoment = Gregorian.moment({
             :year => year,
             :month => month,
@@ -99,14 +97,7 @@ class Utils extends Application.AppBase {
             :minute => 0,
             :second => 0
         });
-        if(isNext == true)
-        {
-        	gMoment = gMoment.add(addedNumDay);
-        }
-        else
-        {
-        	gMoment = gMoment.subtract(addedNumDay);
-        }
+        gMoment = gMoment.add(addedNumDay);
         var info = Gregorian.info(gMoment, Gregorian.FORMAT_SHORT);
         System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
             info.year.format("%4d"),
@@ -116,14 +107,17 @@ class Utils extends Application.AppBase {
             info.min.format("%02d"),
             info.sec.format("%02d")
         ]));
-        //var fMedium = Gregorian.info(gMoment, Gregorian.FORMAT_MEDIUM);
-        //return {"year" => info.year.format("%4d"), "month" => info.month.format("%02d"), "day" => info.day.format("%02d"), "day_of_week" => fMedium.day_of_week};
     	return Lang.format("$1$-$2$-$3$", [info.year.format("%4d"), info.month.format("%02d"), info.day.format("%02d")]);
     }
      
     static function addOneDay()
     {
     	return new Time.Duration(Gregorian.SECONDS_PER_DAY);
+    }
+    
+    static function subtractOneDay()
+    {
+    	return new Time.Duration(-Gregorian.SECONDS_PER_DAY);
     }
     
     static function convertDateToFullDate(dateString)
@@ -347,7 +341,6 @@ class Utils extends Application.AppBase {
 	}		
 	
 	static function displayMultilineOnScreen(dc, text, font, extraRoom){
-		//var extraRoom = 0.1; //0.8 735xt
 		var oneCharWidth = dc.getTextWidthInPixels("EtaoiNshrd", font)/10;
 		var charPerLine = extraRoom * dc.getWidth()/oneCharWidth;
 		return convertTextToMultiline(text, charPerLine);
@@ -424,7 +417,6 @@ class Utils extends Application.AppBase {
 	    	
 	    	if(am != null)
 	    	{
-	    		//System.println("string = " + text.substring(0, am - 1) + text.substring(am + 2, text.length()));
 	    		return splitLocalTime(text.substring(0, am - 1) + text.substring(am + 2, text.length()), true);
 	    	}
 	    	else
@@ -432,7 +424,7 @@ class Utils extends Application.AppBase {
 	    		var pm = text.find("PM");
 	    		if(pm != null)
 	    		{
-	    			var time = text.substring(0, pm - 1); //02:34
+	    			var time = text.substring(0, pm - 1);
 	    			var hour = time.find(":");
 	    			if(hour != null)
 	    			{
@@ -460,7 +452,6 @@ class Utils extends Application.AppBase {
 	    		var space = text.find(" ");
 	    		var time = text.substring(0, space);
 	    		var leftTime = text.substring(space + 1, text.length());
-	    		//System.println("leftTime = " + leftTime);
 	    		space = leftTime.find(" ");	
 	    		var localTime = "";    		
 	    			

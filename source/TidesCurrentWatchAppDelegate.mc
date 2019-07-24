@@ -45,7 +45,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
         if(displayedDate != null)
         {
 	        System.println("displayedDate = " + displayedDate);
-	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), true);	
+	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay());	
 	        System.println("newDate = " + nextDate);
 	        displayedDate = Utils.getProperty(nextDate);
 	        
@@ -73,7 +73,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
         if(displayedDate != null)
         {
 	        System.println("displayedDate = " + displayedDate);
-	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), false);	
+	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.subtractOneDay());	
 	        System.println("newDate = " + nextDate);
 	        displayedDate = Utils.getProperty(nextDate);
 	        
