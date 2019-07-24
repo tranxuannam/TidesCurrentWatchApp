@@ -68,8 +68,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         {
         	var delegate = new WebResponseDelegate(1);
     		delegate.makeWebRequest(urlDic["url"][count], self.method(:onReceive));
-    		setProgressBarConfirmDialog(count);
-    		count++;            
+    		timer.stop();    		            
         }     
         else
         {            
@@ -112,6 +111,9 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 			else
 			{
 				Utils.saveTidesDataToDictionary(data, tmpDic);
+				setProgressBarConfirmDialog(count);
+    			count++;
+    			timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
 			} 		
 		}
 		else {

@@ -44,9 +44,8 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     	if(count <= urlDic["url"].size())
     	{
     		var delegate = new WebResponseDelegate(1);
-    		delegate.makeWebRequest(urlDic["url"][count], self.method(:onReceive));
-    		setUpProgressBar(count);
-    		count++;    		
+    		delegate.makeWebRequest(urlDic["url"][count], self.method(:onReceive));    		
+    		timer.stop();  		
     	}
     	else
     	{
@@ -97,8 +96,8 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	}	
 	
 	// set up the response callback function
-    function onReceive(responseCode, data, param) {  
-		if (responseCode == 200) {
+    function onReceive(responseCode, data, param) {
+		if (responseCode == 200) {			
 			if(data.isEmpty())
 			{
 				onStopTimer();
@@ -107,6 +106,9 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			else
 			{
 				Utils.saveTidesDataToDictionary(data, tmpDic);
+				setUpProgressBar(count);
+    			count++;  
+				timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
 			}
 		}
 		else {
