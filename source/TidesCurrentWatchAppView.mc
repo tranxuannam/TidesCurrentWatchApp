@@ -71,7 +71,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
   	   dateView.setText(Utils.displayMultilineOnScreen(dc, displayDate, font12, WatchUi.loadResource( Rez.Strings.ExtraRoomDateTime ).toFloat()));
   	   dateView.setColor(Graphics.COLOR_LT_GRAY);
   	 
-  	   var currDateString = WatchUi.loadResource( Rez.Strings.CurrDate ); 	
   	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
   	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
   	   var currDateView = View.findDrawableById("id_currDate");	

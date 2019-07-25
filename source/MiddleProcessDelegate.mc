@@ -8,10 +8,11 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	
 	hidden var count = 1;	
 	hidden var urlDic;
-	hidden var tmpDic = {};
+	hidden var tmpDic = {};	
+	hidden var isStoped = true;
 	
     function initialize(action) {
-        BehaviorDelegate.initialize();        
+        BehaviorDelegate.initialize();
         onStopTimer();        
         if(action)
         {
@@ -22,8 +23,10 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function onMenu() {   
     }     	
  
-    function onBack() {      
+    function onBack() {  
+    	isStoped = false;    
 		onStopTimer();
+		setUpProgressBar(0);
         WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
         return true;
     }
@@ -69,7 +72,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 		            Utils.setProperty(Utils.LOCATION, name); 
 		            Utils.setProperty(Utils.CODE, code); 
 		            Utils.setProperty(Utils.LAT, latitude); 
-		            Utils.setProperty(Utils.LONG, longitude);            
+		            Utils.setProperty(Utils.LONG, longitude); 
 		    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 	    		}
     		}
@@ -106,9 +109,13 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			else
 			{
 				Utils.saveTidesDataToDictionary(data, tmpDic);
-				setUpProgressBar(count);
-    			count++;  
-				timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
+				
+				if(isStoped)
+				{
+					setUpProgressBar(count);
+	    			count++;  
+					timer.start(method(:tidesCurrentCallBack), Utils.TIME_REQUEST_API, true);
+				}
 			}
 		}
 		else {
@@ -151,8 +158,9 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	function onStopTimer()
 	{
 		if( timer != null )
-	    {	    	
+	    {	    
 	    	timer.stop();
+	    	timer = null;
 	    	count = 1;
 	    }
 	}

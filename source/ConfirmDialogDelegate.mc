@@ -12,9 +12,10 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	hidden var displayedDate;
 	hidden var pressedSelectButton = true;
 	hidden var tmpDic = {};
+	hidden var isStoped = true;
 	
     function initialize() {
-        BehaviorDelegate.initialize();        
+        BehaviorDelegate.initialize();
     }
 
     function onMenu() {  
@@ -41,7 +42,8 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
     	}
     }  
     
-    function onBack() {    
+    function onBack() {
+    	isStoped = false;    
 	    onStopTimer();
 	    setProgressBarToDefault();
 	    WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
@@ -56,7 +58,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         }
     	displayedDate = Utils.getProperty("displayedDate");	
     	location = Utils.getProperty(Utils.CODE);
-    	displayedDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay(), true);
+    	displayedDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay());
         urlDic = Utils.getUrls(location, displayedDate);
         timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
     }
@@ -93,7 +95,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 		            Utils.setProperty(Utils.CODE, code); 
 		            Utils.setProperty(Utils.LAT, latitude); 
 		            Utils.setProperty(Utils.LONG, longitude); 
-		            setProgressBarConfirmDialog(count);            
+		            setProgressBarConfirmDialog(count);
 		            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 	            }
 	        }
@@ -111,9 +113,13 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 			else
 			{
 				Utils.saveTidesDataToDictionary(data, tmpDic);
-				setProgressBarConfirmDialog(count);
-    			count++;
-    			timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
+				
+				if(isStoped)
+				{
+					setProgressBarConfirmDialog(count);
+    				count++;
+    				timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
+    			}
 			} 		
 		}
 		else {
@@ -126,8 +132,9 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	function onStopTimer()
 	{
 		if( timer != null )
-	    {	    	
+	    {    	
 	    	timer.stop();
+	    	timer = null;
 	    	count = 1;
 	    }
 	}

@@ -22,7 +22,10 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     }
     
     function onSettingsChanged() {	
-    	WatchUi.switchToView(new MiddleProcessView(WatchUi.loadResource( Rez.Strings.Processing )), new MiddleProcessDelegate(true), WatchUi.SLIDE_UP); 
+    	if( timer == null )
+	    {	    	
+	    	WatchUi.switchToView(new MiddleProcessView(WatchUi.loadResource( Rez.Strings.Processing )), new MiddleProcessDelegate(true), WatchUi.SLIDE_UP);
+	    }    	 
 	}	
 	
 }

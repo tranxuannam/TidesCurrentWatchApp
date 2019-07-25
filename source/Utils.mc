@@ -83,7 +83,7 @@ class Utils extends Application.AppBase {
     	return today.year.format("%4d");  
     }
     
-    static function getDisplayDate(dateString, addedNumDay, isNext)
+    static function getDisplayDate(dateString, addedNumDay)
     {	
     	var dateDic = convertDateToDictionary(dateString);
     	var year = dateDic["year"].toNumber();
