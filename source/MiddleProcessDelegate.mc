@@ -43,7 +43,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     
     function tidesCurrentCallBack()
     {
-    	System.println("count=" + count);
+    	//System.println("count=" + count);
     	if(count <= urlDic["url"].size())
     	{
     		var delegate = new WebResponseDelegate(1);
@@ -141,7 +141,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			Utils.setProperty(Utils.OLD_CODE, Utils.getProperty(Utils.CODE));
 		}
 		else {
-			System.println("Response: " + responseCode);
+			//System.println("Response: " + responseCode);
 			onStopTimer();
 			if (responseCode == 404)
 			{

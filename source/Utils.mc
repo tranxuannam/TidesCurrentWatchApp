@@ -99,14 +99,14 @@ class Utils extends Application.AppBase {
         });
         gMoment = gMoment.add(addedNumDay);
         var info = Gregorian.info(gMoment, Gregorian.FORMAT_SHORT);
-        System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
+        /*System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
             info.year.format("%4d"),
             info.month.format("%02d"),
             info.day.format("%02d"),
             info.hour.format("%02d"),
             info.min.format("%02d"),
             info.sec.format("%02d")
-        ]));
+        ]));*/
     	return Lang.format("$1$-$2$-$3$", [info.year.format("%4d"), info.month.format("%02d"), info.day.format("%02d")]);
     }
      
@@ -148,7 +148,6 @@ class Utils extends Application.AppBase {
     	var date;
     	
     	str = str.substring(1, str.length()-2);
-    	System.println("current date = " + str);
     	
     	while( isStop )
     	{
@@ -203,7 +202,6 @@ class Utils extends Application.AppBase {
     	var date;
     	
     	str = str.substring(0, str.length()-2);
-    	System.println(str);
     	
     	while( isStop )
     	{
@@ -217,13 +215,9 @@ class Utils extends Application.AppBase {
 	    		strSplit = str.substring(0, str.find("},"));
 	    		str = str.substring(str.find("},") + 2, str.length());
 	    	}
-	    	System.println(strSplit);
 	    	
 	    	date = strSplit.substring(0, strSplit.find(":{"));
 	    	strSplit = strSplit.substring(strSplit.find(":{") + 2, strSplit.length());  
-	    	System.println(date);
-	    	
-	    	System.println("strSplit = " + strSplit); 	
 	    	dic[date.substring(1, date.length() - 1)] = jsonElements(strSplit);   	
     	}    
     	return dic;
@@ -249,7 +243,6 @@ class Utils extends Application.AppBase {
 	    		var value = item.substring(item.find(":") + 1, item.length());  
 	    		dic[key.substring(1, key.length() - 1)] = value.substring(1, value.length() - 1);
 	    		str = str.substring(str.find(",") + 1, str.length());
-	    		System.println(str);
     		}
    		}
    		return dic;		
@@ -321,7 +314,6 @@ class Utils extends Application.AppBase {
    		{
    			app.setProperty(keys[i], {keys[i] => data[keys[i]]}.toString()); 
    		}
-   		System.println("TideDate = " + data); 	
 	}
 	
 	function saveTidesDataToDictionary(data, tmpDic)
@@ -337,7 +329,6 @@ class Utils extends Application.AppBase {
 	{
 		var app = Application.getApp(); 
 		app.setProperty("locationInfo", data.toString());     
-   		System.println("locationInfo = " + data); 		
 	}		
 	
 	static function displayMultilineOnScreen(dc, text, font, extraRoom){

@@ -42,7 +42,7 @@ class ConfirmDialogView extends WatchUi.View {
        	if(_counterConfirmDialog > 0)
    		{
 	       	dc.setPenWidth(3);
-		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
+		   	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
 		   	dc.drawArc(cx, centerY + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle * _counterConfirmDialog);
 	   	}	
     }  

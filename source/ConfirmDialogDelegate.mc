@@ -65,7 +65,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 
     function tideCurrentCallback()
     {
-    	System.println("count=" + count);
+    	//System.println("count=" + count);
         if( count <= urlDic["url"].size() )
         {
         	var delegate = new WebResponseDelegate(1);
@@ -123,7 +123,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 			} 		
 		}
 		else {
-			System.println("Response: " + responseCode);
+			//System.println("Response: " + responseCode);
 			setMessageFailed(WatchUi.loadResource( Rez.Strings.RequestFailed ));
 			onStopTimer();
 		}

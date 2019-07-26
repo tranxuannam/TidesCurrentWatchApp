@@ -44,9 +44,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
         var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);
         if(displayedDate != null)
         {
-	        System.println("displayedDate = " + displayedDate);
 	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay());	
-	        System.println("newDate = " + nextDate);
 	        displayedDate = Utils.getProperty(nextDate);
 	        
 	        if(displayedDate != null)
@@ -62,7 +60,6 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 				    new ConfirmDialogDelegate(),
 				    WatchUi.SLIDE_IMMEDIATE
 				);
-				System.println("Comfirmation called");
 	        }
         }
         return true;
@@ -72,9 +69,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
         var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);
         if(displayedDate != null)
         {
-	        System.println("displayedDate = " + displayedDate);
 	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.subtractOneDay());	
-	        System.println("newDate = " + nextDate);
 	        displayedDate = Utils.getProperty(nextDate);
 	        
 	        if(displayedDate != null)

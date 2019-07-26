@@ -43,7 +43,7 @@ class MiddleProcessView extends WatchUi.View {
    		if(_counter > 0)
    		{
 	       	dc.setPenWidth(3);
-		   	dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
+		   	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
 		   	dc.drawArc(cx, centerY + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle * _counter);
 		   	_counter = 0;
 	   	}	 
@@ -65,7 +65,6 @@ function setUpMessageFailed(message)
 
 function setUpProgressBar(counter)
 {
-	System.println("setProgressBar");	
    	_counter = counter;   	
 	WatchUi.requestUpdate();
 }

@@ -27,7 +27,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
          
         if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
         {
-        	System.println("onUpdate in TidesCurrentWatchAppView");
 			onDisplayMainView(dc, Utils.getProperty(Utils.DISPLAYED_DATE)); 
         } 
         else
