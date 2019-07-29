@@ -6,7 +6,7 @@ using Toybox.WatchUi;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 
-class Utils extends Application.AppBase {
+class Utils {
     
     static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
     static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
@@ -14,6 +14,8 @@ class Utils extends Application.AppBase {
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
     static var NUMBER_RECORD_LESS_64K = 7;
+    static var CHARS_PER_LINE = 20;
+    static var NUMBER_LINE_ON_SCREEN = 13;
     static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
     static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr", "d2-face"]; //64kb mem
     static var SPECIAL_FONT_ON_DEIVICE = ["fr920xt", "vivoactive_hr"];
@@ -26,10 +28,7 @@ class Utils extends Application.AppBase {
     static var NAME = "name";
     static var STATUS_TIDE_1 = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6", "moon", "sunrise", "sunset", "moonrise", "moonset"];       					
     static var STATUS_TIDE_2 = ["high1" , "low1" , "high2", "low2", "high3", "low3", "high4", "low4", "moon", "sunrise", "sunset", "moonrise", "moonset"];  
-    	
-    function initialize() {    	
-        AppBase.initialize();  
-    }   
+    	    
     
     static function getUrl(location, date)
     {
@@ -579,5 +578,15 @@ class Utils extends Application.AppBase {
     		return WatchUi.loadResource(Rez.Fonts.small_font);
     	}
 	}
+	
+	function loadFontSize12()
+	{
+		return WatchUi.loadResource(Rez.Fonts.font_12);
+	} 
+	
+	function loadLargeFont()
+	{
+		return WatchUi.loadResource(Rez.Fonts.large_font);
+	} 
     
 }

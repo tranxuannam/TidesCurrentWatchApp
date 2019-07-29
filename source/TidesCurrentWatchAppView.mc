@@ -13,7 +13,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     function initialize() {
         View.initialize();
         smallCustomFont = Utils.loadMainFont();
-        font12 = WatchUi.loadResource(Rez.Fonts.font_12);
+        font12 = Utils.loadFontSize12();
     }
     
     // Load your resources here
@@ -37,7 +37,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     
     function onDisplayMessageInitApp(dc)
     {
-    	var customFont = WatchUi.loadResource(Rez.Fonts.large_font);
+    	var customFont = Utils.loadLargeFont();
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
 		var cx = dc.getWidth() / 2;
@@ -46,9 +46,9 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.AppSettingRequired ), customFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
        	var centerY = 0;
        	
-		if(text.length() >= 20)
+		if(text.length() >= Utils.CHARS_PER_LINE)
 		{
-			centerY = cy - text.length() / 2;
+			centerY = cy - (Utils.countChars(text, "\n") + 1) * 10;
 		}
 		else
 		{		
@@ -99,11 +99,11 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     	{
     		if(keys[i].find("high") != null || keys[i].find("low") != null)
     		{
-    			return onShowTidesData(13, Utils.STATUS_TIDE_2, tidesDataDic, font);
+    			return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, Utils.STATUS_TIDE_2, tidesDataDic, font);
     		}
     		else
     		{
-    			return onShowTidesData(13, Utils.STATUS_TIDE_1, tidesDataDic, font);
+    			return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, Utils.STATUS_TIDE_1, tidesDataDic, font);
     		}
     	}
     }

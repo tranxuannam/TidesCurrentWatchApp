@@ -19,7 +19,7 @@ class ConfirmDialogView extends WatchUi.View {
         // Call the parent onUpdate function to redraw the layout        
         var urlDic = Utils.getUrls("", "")["url"];
         var progressAngle = Utils.ANGLE / urlDic.size();       
-		var customFont = WatchUi.loadResource(Rez.Fonts.large_font);      
+		var customFont = Utils.loadLargeFont();      
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
 		var cx = dc.getWidth() / 2;
@@ -28,9 +28,9 @@ class ConfirmDialogView extends WatchUi.View {
 		var text = Utils.displayMultilineOnScreen(dc, _messageConfirmDialog, customFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());       	
        	var centerY = 0;
        	
-		if(text.length() >= 20)
+		if(text.length() >= Utils.CHARS_PER_LINE)
 		{
-			centerY = cy - text.length() / 2;
+			centerY = cy - (Utils.countChars(text, "\n") + 1) * 10;
 		}
 		else
 		{		

@@ -12,11 +12,12 @@
             <iq:product id="edge1030"/>
             <iq:product id="edge1030bontrager"/>
             <iq:product id="edge520plus"/>
+            <iq:product id="edge530"/>
             <iq:product id="edge820"/>
+            <iq:product id="edge830"/>
             <iq:product id="edge_1000"/>
             <iq:product id="edge_520"/>
             <iq:product id="edgeexplore"/>
-            <iq:product id="epix"/>
             <iq:product id="fenix3"/>
             <iq:product id="fenix3_hr"/>
             <iq:product id="fenix5"/>
@@ -28,30 +29,35 @@
             <iq:product id="fenixchronos"/>
             <iq:product id="fr230"/>
             <iq:product id="fr235"/>
+            <iq:product id="fr245"/>
+            <iq:product id="fr245m"/>
             <iq:product id="fr630"/>
             <iq:product id="fr645"/>
             <iq:product id="fr645m"/>
             <iq:product id="fr735xt"/>
             <iq:product id="fr920xt"/>
             <iq:product id="fr935"/>
+            <iq:product id="fr945"/>
             <iq:product id="gpsmap66"/>
+            <iq:product id="marqathlete"/>
+            <iq:product id="marqaviator"/>
+            <iq:product id="marqcaptain"/>
+            <iq:product id="marqdriver"/>
+            <iq:product id="marqexpedition"/>
             <iq:product id="oregon7xx"/>
             <iq:product id="rino7xx"/>
             <iq:product id="vivoactive"/>
             <iq:product id="vivoactive3"/>
+            <iq:product id="vivoactive3d"/>
             <iq:product id="vivoactive3m"/>
+            <iq:product id="vivoactive3mlte"/>
             <iq:product id="vivoactive_hr"/>
         </iq:products>
         <iq:permissions>
-            <iq:uses-permission id="Ant"/>
-            <iq:uses-permission id="Background"/>
             <iq:uses-permission id="Communications"/>
-            <iq:uses-permission id="PersistedContent"/>
-            <iq:uses-permission id="Positioning"/>
         </iq:permissions>
         <iq:languages>
             <iq:language>eng</iq:language>
-            <iq:language>vie</iq:language>
         </iq:languages>
         <iq:barrels/>
     </iq:application>
