@@ -94,18 +94,17 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     
     function onSwitchTypeTideCurrent(tidesDataDic, font)
     {
-    	var keys = tidesDataDic.keys();    	
-    	for (var i = 0; i < keys.size(); i++)
-    	{
-    		if(keys[i].find("high") != null || keys[i].find("low") != null)
-    		{
-    			return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, Utils.STATUS_TIDE_2, tidesDataDic, font);
-    		}
-    		else
-    		{
-    			return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, Utils.STATUS_TIDE_1, tidesDataDic, font);
-    		}
-    	}
+    	var keys = tidesDataDic.keys();   
+    	var data;
+    	if(tidesDataDic.toString().find("high") != null || tidesDataDic.toString().find("low") != null)
+		{
+			data = Utils.STATUS_TIDE_2;
+		}
+		else
+		{
+			data = Utils.STATUS_TIDE_1;
+		}
+    	return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, data, tidesDataDic, font);
     }
     
     function onShowTidesData(row, statusTide, tidesDataDic, font)
@@ -113,7 +112,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var view;
        var i = 1;
        var data = {};
-       
        for (var j = 0; j < statusTide.size(); j++)
    	   {
    	   		if(i == row + 1 || tidesDataDic.keys().size() + 1 == i)

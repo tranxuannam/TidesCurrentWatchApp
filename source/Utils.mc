@@ -41,8 +41,6 @@ class Utils {
     	var device = WatchUi.loadResource(Rez.Strings.Device);
     	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
     	{    	
-    		//return {1=>url + "&begin=0&end=2", 2=>url + "&begin=2&end=2", 3=>url + "&begin=4&end=2", 4=>url + "&begin=6&end=1"};
-    		//return { "number" => NUMBER_RECORD_LESS_64K, "url" => {1=>url + "&begin=0&end=3", 2=>url + "&begin=3&end=2", 3=>url + "&begin=5&end=2"} };
     		return { "number" => NUMBER_RECORD_GREATER_64K, "url" => {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"} };
     	}
     	else

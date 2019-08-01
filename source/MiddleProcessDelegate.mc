@@ -63,14 +63,16 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 				{
 					onStopTimer();
 		    		var name = Utils.getProperty(Utils.LOCATION); 
-		       		var code = Utils.getProperty(Utils.CODE); 
+		       		var code = Utils.getProperty(Utils.CODE);
+		       		var oldCode = Utils.getProperty(Utils.OLD_CODE); 
 		       		var latitude = Utils.getProperty(Utils.LAT); 
 		       		var longitude = Utils.getProperty(Utils.LONG);       
 		            Utils.clearProperties();
 		            Utils.setTidesData(tmpDic);
 		            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
 		            Utils.setProperty(Utils.LOCATION, name); 
-		            Utils.setProperty(Utils.CODE, code); 
+		            Utils.setProperty(Utils.CODE, code);
+		            Utils.setProperty(Utils.OLD_CODE, oldCode); 
 		            Utils.setProperty(Utils.LAT, latitude); 
 		            Utils.setProperty(Utils.LONG, longitude); 
 		    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
@@ -81,7 +83,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     
     function getInfoLocation(code)
     {
-    	var delegate = new WebResponseDelegate(1);
+    	var delegate = new WebResponseDelegate(code);
     	delegate.makeWebRequest(Utils.INFO_LOCATION_ENDPOINT + code, self.method(:onReceiveLocationInfo));	
     }
 
@@ -119,7 +121,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			}
 		}
 		else {
-			System.println("Response: " + responseCode);
+			//System.println("Response: " + responseCode);
 			onStopTimer();
 			if (responseCode == 404)
 			{
@@ -133,12 +135,12 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	}	
 	
 	// set up the response onReceiveLocationInfo function
-    function onReceiveLocationInfo(responseCode, data, param) {   
+    function onReceiveLocationInfo(responseCode, data, code) {   
 		if (responseCode == 200) {
 			Utils.setProperty(Utils.LOCATION, data[Utils.NAME]);   
 			Utils.setProperty(Utils.LAT, data[Utils.LAT]);
 			Utils.setProperty(Utils.LONG, data[Utils.LONG]);	
-			Utils.setProperty(Utils.OLD_CODE, Utils.getProperty(Utils.CODE));
+			Utils.setProperty(Utils.OLD_CODE, code);
 		}
 		else {
 			//System.println("Response: " + responseCode);

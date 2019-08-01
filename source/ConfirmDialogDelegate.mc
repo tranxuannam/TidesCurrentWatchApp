@@ -86,13 +86,15 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 					onStopTimer();
 		            var name = Utils.getProperty(Utils.LOCATION); 
 		       		var code = Utils.getProperty(Utils.CODE); 
+		       		var oldCode = Utils.getProperty(Utils.OLD_CODE);
 		       		var latitude = Utils.getProperty(Utils.LAT); 
 		       		var longitude = Utils.getProperty(Utils.LONG);       
 		            Utils.clearProperties();
 		            Utils.setTidesData(tmpDic);
 		            Utils.setProperty(Utils.DISPLAYED_DATE, displayedDate);
 		            Utils.setProperty(Utils.LOCATION, name); 
-		            Utils.setProperty(Utils.CODE, code); 
+		            Utils.setProperty(Utils.CODE, code);
+		            Utils.setProperty(Utils.OLD_CODE, oldCode); 
 		            Utils.setProperty(Utils.LAT, latitude); 
 		            Utils.setProperty(Utils.LONG, longitude); 
 		            setProgressBarConfirmDialog(count);
