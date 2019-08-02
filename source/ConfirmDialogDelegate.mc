@@ -39,7 +39,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	    		loadNextTidesCurrent();
 	    		pressedSelectButton = false;
 	    	}  
-    	}
+    	}    	
     }  
     
     function onBack() {
@@ -70,7 +70,10 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         {
         	var delegate = new WebResponseDelegate(1);
     		delegate.makeWebRequest(urlDic["url"][count], self.method(:onReceive));
-    		timer.stop();    		            
+    		if( timer != null )
+    		{
+    			timer.stop();
+    		}    		            
         }     
         else
         {            

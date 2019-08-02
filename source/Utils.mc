@@ -492,7 +492,7 @@ class Utils {
 	
 	function checkPhoneConnected()
 	{
-		return System.getDeviceSettings().phoneConnected;
+		return System.getDeviceSettings().connectionAvailable;
 	}
 	
 	function setProperty(propName, propValue)
