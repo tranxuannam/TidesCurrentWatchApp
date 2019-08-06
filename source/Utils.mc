@@ -8,8 +8,8 @@ using Toybox.Time.Gregorian;
 
 class Utils {
     
-    static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
-    static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
+    static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
+    static var URL = "http://tidescurrents.com/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
@@ -37,14 +37,16 @@ class Utils {
     
     static function getUrls(location, date)
     {
-    	var url = getUrl(location, date);
+    	var url = getUrl(location, date);    	
     	var device = WatchUi.loadResource(Rez.Strings.Device);
     	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
     	{    	
+    		url = url + "&total=" + NUMBER_RECORD_GREATER_64K;
     		return { "number" => NUMBER_RECORD_GREATER_64K, "url" => {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"} };
     	}
     	else
     	{
+    		url = url + "&total=" + NUMBER_RECORD_GREATER_64K;
     		return { "number" => NUMBER_RECORD_GREATER_64K, "url" => {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"} };
     	}
     } 
@@ -490,9 +492,17 @@ class Utils {
     	}
     }
 	
-	function checkPhoneConnected()
+	static function checkPhoneConnected()
 	{
-		return System.getDeviceSettings().connectionAvailable;
+		var device = WatchUi.loadResource(Rez.Strings.Device);
+    	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null)
+    	{
+			return System.getDeviceSettings().phoneConnected;
+		}
+		else
+		{
+			return System.getDeviceSettings().connectionAvailable;
+		}
 	}
 	
 	function setProperty(propName, propValue)
