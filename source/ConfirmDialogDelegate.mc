@@ -65,7 +65,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 
     function tideCurrentCallback()
     {
-    	//System.println("count=" + count);
+    	System.println("count=" + count);
         if( count <= urlDic["url"].size() )
         {
         	var delegate = new WebResponseDelegate(1);
@@ -100,7 +100,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 		            Utils.setProperty(Utils.OLD_CODE, oldCode); 
 		            Utils.setProperty(Utils.LAT, latitude); 
 		            Utils.setProperty(Utils.LONG, longitude); 
-		            setProgressBarConfirmDialog(count);
+		            //setProgressBarConfirmDialog(count);
 		            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 	            }
 	        }
@@ -109,8 +109,9 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
    
     function onReceive(responseCode, data, param) 
     {   
+    	System.println("data=" + data);
 		if (responseCode == 200) {	
-			if(data.isEmpty())
+			if(data.size() == 0)
 			{
 				onStopTimer();
 				setMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));
@@ -128,7 +129,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 			} 		
 		}
 		else {
-			//System.println("Response: " + responseCode);
+			System.println("Response: " + responseCode);
 			setMessageFailed(WatchUi.loadResource( Rez.Strings.RequestFailed ));
 			onStopTimer();
 		}

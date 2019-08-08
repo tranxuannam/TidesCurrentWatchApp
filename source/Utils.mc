@@ -8,8 +8,8 @@ using Toybox.Time.Gregorian;
 
 class Utils {
     
-    static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
-    static var URL = "http://tidescurrents.com/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
+    static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
+    static var URL = "http://localhost/TidesCurrentWebsite/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;

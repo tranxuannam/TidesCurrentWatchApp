@@ -34,6 +34,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function loadTidesCurrentData()
     {
     	urlDic = Utils.getUrls(Utils.getProperty(Utils.CODE), Utils.getCurrentDate());
+    	//urlDic = Utils.getUrls(Utils.getProperty(Utils.CODE), "2019-12-22");
     	if(timer == null)
     	{    	
 	        timer = new Timer.Timer();
@@ -70,6 +71,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 		            Utils.clearProperties();
 		            Utils.setTidesData(tmpDic);
 		            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
+		            //Utils.setProperty(Utils.DISPLAYED_DATE, "2019-12-22");
 		            Utils.setProperty(Utils.LOCATION, name); 
 		            Utils.setProperty(Utils.CODE, code);
 		            Utils.setProperty(Utils.OLD_CODE, oldCode); 
@@ -103,7 +105,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	// set up the response callback function
     function onReceive(responseCode, data, param) {
 		if (responseCode == 200) {			
-			if(data.isEmpty())
+			if(data.size() == 0)
 			{
 				onStopTimer();
 				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.ServerError ));				
@@ -143,7 +145,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			Utils.setProperty(Utils.OLD_CODE, code);
 		}
 		else {
-			//System.println("Response: " + responseCode);
+			System.println("Response: " + responseCode);
 			onStopTimer();
 			if (responseCode == 404)
 			{

@@ -94,7 +94,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     
     function onSwitchTypeTideCurrent(tidesDataDic, font)
     {
-    	var keys = tidesDataDic.keys();   
+    	var keys = tidesDataDic.keys();  
     	var data;
     	if(tidesDataDic.toString().find("high") != null || tidesDataDic.toString().find("low") != null)
 		{
