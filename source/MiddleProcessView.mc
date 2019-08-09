@@ -45,15 +45,8 @@ class MiddleProcessView extends WatchUi.View {
 	       	dc.setPenWidth(3);
 		   	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
 		   	dc.drawArc(cx, centerY + 60, 25, Graphics.ARC_COUNTER_CLOCKWISE, 0, progressAngle * _counter);
-		   	_counter = 0;
 	   	}	 
     }   
-}
-
-function setUpProcessing()
-{
-	_message = WatchUi.loadResource( Rez.Strings.Processing );
-	WatchUi.requestUpdate();
 }
 
 function setUpMessageFailed(message)
@@ -64,7 +57,8 @@ function setUpMessageFailed(message)
 }
 
 function setUpProgressBar(counter)
-{
+{	
+	_message = WatchUi.loadResource( Rez.Strings.Processing );
    	_counter = counter;   	
 	WatchUi.requestUpdate();
 }

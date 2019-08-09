@@ -34,7 +34,6 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function loadTidesCurrentData()
     {
     	urlDic = Utils.getUrls(Utils.getProperty(Utils.CODE), Utils.getCurrentDate());
-    	//urlDic = Utils.getUrls(Utils.getProperty(Utils.CODE), "2019-12-22");
     	if(timer == null)
     	{    	
 	        timer = new Timer.Timer();
@@ -44,7 +43,6 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     
     function tidesCurrentCallBack()
     {
-    	//System.println("count=" + count);
     	if(count <= urlDic["url"].size())
     	{
     		var delegate = new WebResponseDelegate(1);
@@ -71,12 +69,11 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 		            Utils.clearProperties();
 		            Utils.setTidesData(tmpDic);
 		            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
-		            //Utils.setProperty(Utils.DISPLAYED_DATE, "2019-12-22");
 		            Utils.setProperty(Utils.LOCATION, name); 
 		            Utils.setProperty(Utils.CODE, code);
 		            Utils.setProperty(Utils.OLD_CODE, oldCode); 
 		            Utils.setProperty(Utils.LAT, latitude); 
-		            Utils.setProperty(Utils.LONG, longitude); 
+		            Utils.setProperty(Utils.LONG, longitude);
 		    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 	    		}
     		}
@@ -92,7 +89,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function onProcessingData() {	
     	if(Utils.checkPhoneConnected())
     	{
-			setUpProcessing(); 
+			setUpProgressBar(0); 
 			getInfoLocation(Utils.getProperty(Utils.CODE));
 			loadTidesCurrentData();
 		}
@@ -137,7 +134,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	}	
 	
 	// set up the response onReceiveLocationInfo function
-    function onReceiveLocationInfo(responseCode, data, code) {   
+    function onReceiveLocationInfo(responseCode, data, code) { 
 		if (responseCode == 200) {
 			Utils.setProperty(Utils.LOCATION, data[Utils.NAME]);   
 			Utils.setProperty(Utils.LAT, data[Utils.LAT]);
@@ -145,7 +142,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			Utils.setProperty(Utils.OLD_CODE, code);
 		}
 		else {
-			System.println("Response: " + responseCode);
+			//System.println("Response: " + responseCode);
 			onStopTimer();
 			if (responseCode == 404)
 			{

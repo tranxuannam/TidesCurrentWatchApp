@@ -10,13 +10,15 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
 
 	function initialize() {
     	AppBase.initialize();
-    	/*if(Utils.getProperty(Utils.OLD_CODE) != null)
+    	/*
+    	if(Utils.getProperty(Utils.OLD_CODE) != null)
        	{}
        	else
        	{   
        		Utils.setProperty(Utils.CODE, "WOI0RPDG");
             WatchUi.switchToView(new MiddleProcessView(WatchUi.loadResource( Rez.Strings.Processing )), new MiddleProcessDelegate(true), WatchUi.SLIDE_UP);
-       	}*/    	
+       	}
+       	*/    	
     }
 
     // onStart() is called on application start up
