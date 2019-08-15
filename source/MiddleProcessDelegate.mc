@@ -10,6 +10,10 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	hidden var urlDic;
 	hidden var tmpDic = {};	
 	hidden var isStoped = true;
+	hidden var location = "";
+	hidden var lat = "";
+	hidden var long = ""; 
+	hidden var oldCode = "";
 	
     function initialize(action) {
         BehaviorDelegate.initialize();
@@ -26,8 +30,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     function onBack() {  
     	isStoped = false;    
 		onStopTimer();
-		setUpProgressBar(0);
-        WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+        WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_IMMEDIATE);
         return true;
     }
     
@@ -61,20 +64,22 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 				if(tmpDic.size() == urlDic["number"])
 				{
 					onStopTimer();
-		    		var name = Utils.getProperty(Utils.LOCATION); 
-		       		var code = Utils.getProperty(Utils.CODE);
-		       		var oldCode = Utils.getProperty(Utils.OLD_CODE); 
-		       		var latitude = Utils.getProperty(Utils.LAT); 
-		       		var longitude = Utils.getProperty(Utils.LONG);       
-		            Utils.clearProperties();
-		            Utils.setTidesData(tmpDic);
-		            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
-		            Utils.setProperty(Utils.LOCATION, name); 
-		            Utils.setProperty(Utils.CODE, code);
-		            Utils.setProperty(Utils.OLD_CODE, oldCode); 
-		            Utils.setProperty(Utils.LAT, latitude); 
-		            Utils.setProperty(Utils.LONG, longitude);
-		    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+					
+					if(tmpDic.hasKey(Utils.getCurrentDate()))
+					{					
+			            Utils.clearProperties();
+			            Utils.setTidesData(tmpDic);
+			            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
+			            Utils.setProperty(Utils.LOCATION, location); 
+			            Utils.setProperty(Utils.OLD_CODE, oldCode); 
+			            Utils.setProperty(Utils.LAT, lat); 
+			            Utils.setProperty(Utils.LONG, long);
+			    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+		    		}
+		    		else
+		    		{
+		    			setUpMessageFailed(WatchUi.loadResource( Rez.Strings.NotSupported ));
+		    		}
 	    		}
     		}
     	}    
@@ -101,7 +106,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	
 	// set up the response callback function
     function onReceive(responseCode, data, param) {
-		if (responseCode == 200) {			
+		if (responseCode == 200) {	
 			if(data.size() == 0)
 			{
 				onStopTimer();
@@ -120,7 +125,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			}
 		}
 		else {
-			//System.println("Response: " + responseCode);
+			System.println("Response: " + responseCode);
 			onStopTimer();
 			if (responseCode == 404)
 			{
@@ -136,10 +141,10 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	// set up the response onReceiveLocationInfo function
     function onReceiveLocationInfo(responseCode, data, code) { 
 		if (responseCode == 200) {
-			Utils.setProperty(Utils.LOCATION, data[Utils.NAME]);   
-			Utils.setProperty(Utils.LAT, data[Utils.LAT]);
-			Utils.setProperty(Utils.LONG, data[Utils.LONG]);	
-			Utils.setProperty(Utils.OLD_CODE, code);
+			location = data[Utils.NAME];   
+			lat = data[Utils.LAT];
+			long = data[Utils.LONG];	
+			oldCode = code;
 		}
 		else {
 			//System.println("Response: " + responseCode);

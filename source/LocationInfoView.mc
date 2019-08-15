@@ -37,7 +37,7 @@ class LocationInfoView extends WatchUi.View {
        // Display location
        var viewLocation = View.findDrawableById("id_name");
        viewLocation.setFont(smallCustomFont);      
-       var name = app.getProperty("location");        
+       var name = app.getProperty(Utils.LOCATION);        
        var newText = Utils.displayMultilineOnScreen(dc, location + ": " + name, smallCustomFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
        viewLocation.setText(newText);   
        viewLocation.setLocation(xPos, YPos);   
@@ -50,21 +50,21 @@ class LocationInfoView extends WatchUi.View {
        var viewLat = View.findDrawableById("id_lat");
        viewLat.setLocation(xPos, nextLine);
        viewLat.setFont(smallCustomFont);
-       viewLat.setText(lat + ": " + app.getProperty("latitude"));
+       viewLat.setText(lat + ": " + app.getProperty(Utils.LAT));
        viewLat.setColor(Graphics.COLOR_DK_GREEN);
        
        // Display longitude
        var viewLong = View.findDrawableById("id_long");
        viewLong.setLocation(xPos, nextLine + distance2Line);
        viewLong.setFont(smallCustomFont);
-       viewLong.setText(long + ": " + app.getProperty("longitude"));
+       viewLong.setText(long + ": " + app.getProperty(Utils.LONG));
        viewLong.setColor(Graphics.COLOR_DK_GREEN);
        
        //Display code
        var viewCode = View.findDrawableById("id_code");
        viewCode.setLocation(xPos, nextLine + distance2Line*2);
        viewCode.setFont(smallCustomFont);
-       viewCode.setText(code + ": " + app.getProperty("code"));
+       viewCode.setText(code + ": " + app.getProperty(Utils.OLD_CODE));
        viewCode.setColor(Graphics.COLOR_DK_GREEN);
        
        View.onUpdate(dc);    
