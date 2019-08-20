@@ -6,6 +6,8 @@ using Toybox.Timer;
 
 class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 
+	var stopLoadingData = true;
+	
     function initialize() {
         BehaviorDelegate.initialize();
     }
@@ -57,7 +59,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 				var dialog = new ConfirmDialogView(WatchUi.loadResource( Rez.Strings.LoadNextData ), 0);
 				WatchUi.switchToView(
 				    dialog,
-				    new ConfirmDialogDelegate(),
+				    new ConfirmDialogDelegate(true),
 				    WatchUi.SLIDE_IMMEDIATE
 				);
 	        }
@@ -66,7 +68,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     } 
     
     function onNextPage() {    	
-        var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);
+        var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);        
         if(displayedDate != null)
         {
 	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.subtractOneDay());	
@@ -75,7 +77,25 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 	        if(displayedDate != null)
 	        {
 		        Utils.setProperty(Utils.DISPLAYED_DATE, nextDate);
+		        var limitDate = Utils.getDisplayDate(Utils.getCurrentDate(), Utils.subtractByDays(Utils.NUMBER_RECORD_GREATER_64K * 2)); // 4 weeks limited
+		        
+		        if(limitDate.equals(nextDate))
+		        {
+		        	stopLoadingData = false;
+		        }
 		        WatchUi.requestUpdate();
+	        }
+	        else
+	        {
+				if(stopLoadingData)
+	        	{
+	        		var dialog = new ConfirmDialogView(WatchUi.loadResource( Rez.Strings.LoadPreviousData ), 0);
+					WatchUi.switchToView(
+					    dialog,
+					    new ConfirmDialogDelegate(false),
+					    WatchUi.SLIDE_IMMEDIATE
+					);				
+				}
 	        }
         }
         return false;

@@ -36,7 +36,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     
     function loadTidesCurrentData()
     {
-    	urlDic = Utils.getUrls(Utils.getProperty(Utils.CODE), Utils.getCurrentDate());
+    	urlDic = Utils.getUrls(true, Utils.getProperty(Utils.CODE), Utils.getCurrentDate());
     	if(timer == null)
     	{    	
 	        timer = new Timer.Timer();

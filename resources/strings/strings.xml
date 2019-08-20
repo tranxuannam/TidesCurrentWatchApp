@@ -8,6 +8,7 @@
     <string id="AppSettingRequired">App settings required. Please input code!</string>
     <string id="Processing">Processing...</string>
     <string id="LoadNextData">Press select button to download next data. Press back button to cancel.</string>
+    <string id="LoadPreviousData">Press select button to download previous data. Press back button to cancel.</string>
     <string id="PhoneConnected">The connection is not ready. Lets make sure your device connected to Garmin Connect IQ or Internet.</string>
     <string id="RequestFailed">Connection failed. Lets make sure the device connected to Garmin Connect IQ or Internet. Please try again!</string>
     <string id="ServerError">Server error. Please try again!</string>

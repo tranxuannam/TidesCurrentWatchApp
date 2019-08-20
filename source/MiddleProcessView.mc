@@ -18,7 +18,7 @@ class MiddleProcessView extends WatchUi.View {
     // Update the view
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout   
-        var urlDic = Utils.getUrls("", "")["url"];
+        var urlDic = Utils.getUrls("", "", "")["url"];
         var progressAngle = Utils.ANGLE / urlDic.size();
         var customFont = Utils.loadLargeFont();
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);

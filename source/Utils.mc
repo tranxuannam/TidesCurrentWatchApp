@@ -8,8 +8,8 @@ using Toybox.Time.Gregorian;
 
 class Utils {
     
-    static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
-    static var URL = "http://tidescurrents.com/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
+    static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
+    static var URL = "http://localhost/TidesCurrentWebsite/api/tides/$1$/?code=$2$&date=$3$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
@@ -30,14 +30,21 @@ class Utils {
     static var STATUS_TIDE_2 = ["high1" , "low1" , "high2", "low2", "high3", "low3", "high4", "low4", "moon", "sunrise", "sunset", "moonrise", "moonset"];  
     	    
     
-    static function getUrl(location, date)
+    static function getUrl(status, location, date)
     {
-    	return Lang.format(URL, [location, date]);
+    	if(status)
+    	{
+    		return Lang.format(URL, ["get_tide_current_by_date", location, date]);
+    	}
+    	else
+    	{
+    		return Lang.format(URL, ["get_prev_tide_current_by_date", location, date]);
+    	}
     } 
     
-    static function getUrls(location, date)
+    static function getUrls(status, location, date)
     {
-    	var url = getUrl(location, date);    	
+    	var url = getUrl(status, location, date);    	
     	var device = WatchUi.loadResource(Rez.Strings.Device);
     	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
     	{    	
@@ -117,6 +124,11 @@ class Utils {
     static function subtractOneDay()
     {
     	return new Time.Duration(-Gregorian.SECONDS_PER_DAY);
+    }
+    
+    static function subtractByDays(days)
+    {
+    	return new Time.Duration(-(Gregorian.SECONDS_PER_DAY * days));
     }
     
     static function convertDateToFullDate(dateString)

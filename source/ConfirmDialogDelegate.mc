@@ -13,9 +13,11 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	hidden var pressedSelectButton = true;
 	hidden var tmpDic = {};
 	hidden var isStoped = true;
+	hidden var status;
 	
-    function initialize() {
+    function initialize(_status) {
         BehaviorDelegate.initialize();
+        status = _status;
     }
 
     function onMenu() {  
@@ -36,7 +38,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         	if( pressedSelectButton )
         	{
 	    		setProgressBarConfirmDialog(0);
-	    		loadNextTidesCurrent();
+	    		loadNextTidesCurrent(status);
 	    		pressedSelectButton = false;
 	    	}  
     	}    	
@@ -50,7 +52,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	    return true;
     }	
     
-    function loadNextTidesCurrent()
+    function loadNextTidesCurrent(status)
     {
         if( timer == null )
         {
@@ -58,8 +60,18 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         }
     	displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);	
     	location = Utils.getProperty(Utils.OLD_CODE);
-    	displayedDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay());
-        urlDic = Utils.getUrls(location, displayedDate);
+    	
+    	var nextDate;
+    	if(status)
+    	{
+    		nextDate = Utils.addOneDay();
+    	}
+    	else
+    	{
+    		nextDate = Utils.subtractOneDay();
+    	}
+    	displayedDate = Utils.getDisplayDate(displayedDate, nextDate);
+        urlDic = Utils.getUrls(status, location, displayedDate);
         timer.start( method(:tideCurrentCallback), Utils.TIME_REQUEST_API, true );
     }
 
@@ -87,7 +99,6 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 				if(tmpDic.size() == urlDic["number"])
 				{
 					onStopTimer();
-					
 					if(tmpDic.hasKey(displayedDate))
 					{
 			            var name = Utils.getProperty(Utils.LOCATION); 
