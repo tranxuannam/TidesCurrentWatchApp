@@ -56,7 +56,7 @@ function setUpMessageFailed(message)
 	WatchUi.requestUpdate();
 }
 
-function setUpProgressBar(counter, hasMessage)
+function setUpProgressBar(counter)
 {	
 	_message = WatchUi.loadResource( Rez.Strings.Processing );
    	_counter = counter;   	
