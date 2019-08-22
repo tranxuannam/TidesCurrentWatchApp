@@ -13,5 +13,7 @@
     <string id="XSecondLine">43</string>
     <string id="YSecondLine">220</string>
     <string id="ExtraRoomDateTime">0.12</string>
-    <string id="ExtraRoom">0.8</string>    
+    <string id="ExtraRoom">0.8</string>
+    <string id="ExtraRoomTitleMenu">0.8</string>
+    <string id="ExtraRoomSelectedMenu">0.9</string>    
 </strings>

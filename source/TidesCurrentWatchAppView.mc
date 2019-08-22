@@ -8,7 +8,7 @@ using Toybox.Time.Gregorian;
 class TidesCurrentWatchAppView extends WatchUi.View {
 	
 	hidden var smallCustomFont;
-    hidden var font12;
+	hidden var font12;
        
     function initialize() {
         View.initialize();
@@ -32,18 +32,42 @@ class TidesCurrentWatchAppView extends WatchUi.View {
         else
         {
 	        onDisplayMessageInitApp(dc);
+	        getInfoLocation("3YEEWQXO");
        	}
     } 
     
+    function getInfoLocation(code)
+    {
+    	var delegate = new WebResponseDelegate(code);
+    	delegate.makeWebRequest(Utils.INFO_LOCATION_ENDPOINT + code, self.method(:onReceiveLocationInfo));	
+    }
+    
+    function onReceiveLocationInfo(responseCode, data, code) { 
+		if (responseCode == 200) {
+			System.println("Find location nears you:" + data);
+			var largeCustomFont = Utils.loadLargeFont();
+			var fonts = { :small => font12, :large => largeCustomFont };
+			
+			var text = "1.6 miles northeast of, Marrowstone Point, Admiralty Inlet, Washington Current";			
+			
+			var alarmsMenu = [new DMenuItem (:one, text, null, null, fonts), new DMenuItem (:two, "0.5 mile NE of Little Gull Island, The Race, New York Current", null, null, fonts), new DMenuItem (:three, "Castle Hill, west of, East Passage (Depth 15ft), Narragansett Bay, Rhode Island Current", null, null, fonts)]; 
+	        var view = new DMenu (alarmsMenu, "Choose location or input the code.", largeCustomFont);
+			WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view)), WatchUi.SLIDE_IMMEDIATE);
+		}
+		else {
+			System.println("Response: " + responseCode);					
+		}
+	}
+    
     function onDisplayMessageInitApp(dc)
     {
-    	var customFont = Utils.loadLargeFont();
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.clear();		
 		var cx = dc.getWidth() / 2;
 		var cy = dc.getHeight() / 2;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.AppSettingRequired ), customFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
+		var largeCustomFont = Utils.loadLargeFont();
+		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.FindLocations ), largeCustomFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
        	var centerY = 0;
        	
 		if(text.length() >= Utils.CHARS_PER_LINE)
@@ -55,7 +79,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        		centerY = cy / 2;
        	} 
        	
-       	dc.drawText(cx, centerY, customFont, text, Graphics.TEXT_JUSTIFY_CENTER);
+       	dc.drawText(cx, centerY, largeCustomFont, text, Graphics.TEXT_JUSTIFY_CENTER);
     }  
     
     function onDisplayMainView(dc, displayedDate) 
@@ -63,7 +87,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var dateDic = Utils.convertDateToFullDate(displayedDate);
        var tidesData = Utils.getProperty(displayedDate);      
        var displayDate = Lang.format( "$1$ $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month"], dateDic["day"], dateDic["year"] ] );
-	   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate]; 
+	   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate];   	   
   	   
   	   var dateView = View.findDrawableById("id_date");	
   	   dateView.setFont(font12);

@@ -8,8 +8,8 @@ using Toybox.Time.Gregorian;
 
 class Utils {
     
-    static var INFO_LOCATION_ENDPOINT = "http://localhost/TidesCurrentWebsite/api/tides/get_info_location/?code=";
-    static var URL = "http://localhost/TidesCurrentWebsite/api/tides/$1$/?code=$2$&date=$3$";
+    static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
+    static var URL = "http://tidescurrents.com/api/tides/$1$/?code=$2$&date=$3$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
@@ -410,6 +410,21 @@ class Utils {
     		return text;
     	}
     }
+    
+    static function substringByWord(text, num)
+	{
+		var txt = text.substring(0, num);
+		var chars = txt.toCharArray();
+		
+		for(var i = txt.length() - 1; i >= 0; i--)
+		{
+			if(chars[i].toString().equals(" "))
+			{
+				return text.substring(0, i) + "...";
+			}
+		}
+		return text;
+	}
     
     static function convertTimeFormatBySettings(text)
     {
