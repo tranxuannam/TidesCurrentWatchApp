@@ -79,7 +79,7 @@ class DMenuItem
 		var h3 = dc.getHeight () / 3;
 		var lab = label.toString();
 		
-		lab = Utils.displayMultilineOnScreen(dc, Utils.substringByWord(lab, 60), SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
+		lab = Utils.displayMultilineOnScreen(dc, Utils.substringByWord(lab, Utils.CHARS_PER_LINE * 3), SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
 			
 		var labDims = dc.getTextDimensions (lab, SELECTED_LABEL_FONT);
 		var yL, yV, h;

@@ -32,14 +32,14 @@ class TidesCurrentWatchAppView extends WatchUi.View {
         else
         {
 	        onDisplayMessageInitApp(dc);
-	        getInfoLocation("3YEEWQXO");
+	        getInfoLocation(10.3333, 107.0667);
        	}
     } 
     
-    function getInfoLocation(code)
+    function getInfoLocation(lat, long)
     {
-    	var delegate = new WebResponseDelegate(code);
-    	delegate.makeWebRequest(Utils.INFO_LOCATION_ENDPOINT + code, self.method(:onReceiveLocationInfo));	
+    	var delegate = new WebResponseDelegate(null);
+    	delegate.makeWebRequest(Utils.getUrlNearLocation(lat, long), self.method(:onReceiveLocationInfo));	
     }
     
     function onReceiveLocationInfo(responseCode, data, code) { 
@@ -52,7 +52,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 			
 			var alarmsMenu = [new DMenuItem (:one, text, null, null, fonts), new DMenuItem (:two, "0.5 mile NE of Little Gull Island, The Race, New York Current", null, null, fonts), new DMenuItem (:three, "Castle Hill, west of, East Passage (Depth 15ft), Narragansett Bay, Rhode Island Current", null, null, fonts)]; 
 	        var view = new DMenu (alarmsMenu, "Choose location or input the code.", largeCustomFont);
-			WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view)), WatchUi.SLIDE_IMMEDIATE);
+			WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view, data)), WatchUi.SLIDE_IMMEDIATE);
 		}
 		else {
 			System.println("Response: " + responseCode);					

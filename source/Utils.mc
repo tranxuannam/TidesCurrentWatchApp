@@ -10,6 +10,7 @@ class Utils {
     
     static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
     static var URL = "http://tidescurrents.com/api/tides/$1$/?code=$2$&date=$3$";
+    static var URL_LOCATION_NEARS = "http://localhost/TidesCurrentWebsite/api/tides/get_near_locations/?lat=$1$&long=$2$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
@@ -56,6 +57,11 @@ class Utils {
     		url = url + "&total=" + NUMBER_RECORD_GREATER_64K;
     		return { "number" => NUMBER_RECORD_GREATER_64K, "url" => {1=>url + "&begin=0&end=5", 2=>url + "&begin=5&end=5", 3=>url + "&begin=10&end=4"} };
     	}
+    } 
+    
+    static function getUrlNearLocation(lat, long)
+    {
+    	return Lang.format(URL_LOCATION_NEARS, [lat, long]);
     } 
    
     static function getCurrentFullDate()
