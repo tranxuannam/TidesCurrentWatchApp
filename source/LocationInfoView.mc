@@ -7,9 +7,19 @@ class LocationInfoView extends WatchUi.View {
 	hidden var largeCustomFont;
 	
     function initialize() {
-        View.initialize();  
+        View.initialize(); 
+        
         smallCustomFont = Utils.loadMainFont();
-        largeCustomFont = Utils.loadLargeFont();     
+        var device = WatchUi.loadResource(Rez.Strings.Device);
+        
+        if (Utils.REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null) 
+        { 
+        	largeCustomFont = smallCustomFont;
+        }
+        else
+        {
+        	largeCustomFont = Utils.loadLargeFont();
+        }       
     }
 
     // Load your resources here

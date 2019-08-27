@@ -19,6 +19,9 @@ class LocationMenuDelegate extends Ui.MenuInputDelegate {
 
     function onMenuItem (item) 
 	{
- 		//WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_IMMEDIATE);
+		var index = item.id.substring(6, item.id.length());		
+		Utils.setProperty(Utils.CODE, data[index.toNumber()].get(Utils.CODE));
+		data = null;
+ 		WatchUi.switchToView(new MiddleProcessView(WatchUi.loadResource( Rez.Strings.Processing )), new MiddleProcessDelegate(true), WatchUi.SLIDE_IMMEDIATE);
     }
 }

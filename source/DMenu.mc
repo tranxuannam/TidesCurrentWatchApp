@@ -77,9 +77,13 @@ class DMenuItem
 	{
 		var width = dc.getWidth ();
 		var h3 = dc.getHeight () / 3;
-		var lab = label.toString();
+		var lab = label.toString();		
+		var totalChars = Utils.CHARS_PER_LINE * 3;
 		
-		lab = Utils.displayMultilineOnScreen(dc, Utils.substringByWord(lab, Utils.CHARS_PER_LINE * 3), SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
+		if (lab.length() > totalChars)
+		{
+			lab = Utils.displayMultilineOnScreen(dc, Utils.substringByWord(lab, Utils.CHARS_PER_LINE * 3), SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
+		}
 			
 		var labDims = dc.getTextDimensions (lab, SELECTED_LABEL_FONT);
 		var yL, yV, h;

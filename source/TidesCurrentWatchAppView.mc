@@ -4,16 +4,18 @@ using Toybox.System;
 using Toybox.Application;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
+using Toybox.Position;
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 	
 	hidden var smallCustomFont;
 	hidden var font12;
+	hidden var locations;
        
     function initialize() {
         View.initialize();
         smallCustomFont = Utils.loadMainFont();
-        font12 = Utils.loadFontSize12();
+        font12 = Utils.loadFontSize12();        
     }
     
     // Load your resources here
@@ -32,31 +34,39 @@ class TidesCurrentWatchAppView extends WatchUi.View {
         else
         {
 	        onDisplayMessageInitApp(dc);
-	        getInfoLocation(10.3333, 107.0667);
+	        Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
+	        //getSuggestLocation(10.3333, 107.0667);
+	        getSuggestLocation(locations[0], locations[1]);
        	}
     } 
     
-    function getInfoLocation(lat, long)
+    function getSuggestLocation(lat, long)
     {
     	var delegate = new WebResponseDelegate(null);
-    	delegate.makeWebRequest(Utils.getUrlNearLocation(lat, long), self.method(:onReceiveLocationInfo));	
+    	delegate.makeWebRequest(Utils.getUrlNearLocation(lat, long), self.method(:onReceiveLocations));	
     }
     
-    function onReceiveLocationInfo(responseCode, data, code) { 
+    function onReceiveLocations(responseCode, data, code) { 
 		if (responseCode == 200) {
-			System.println("Find location nears you:" + data);
 			var largeCustomFont = Utils.loadLargeFont();
-			var fonts = { :small => font12, :large => largeCustomFont };
+			var fonts = { :small => font12, :large => largeCustomFont };			
+			var dMenu = [];
 			
-			var text = "1.6 miles northeast of, Marrowstone Point, Admiralty Inlet, Washington Current";			
-			
-			var alarmsMenu = [new DMenuItem (:one, text, null, null, fonts), new DMenuItem (:two, "0.5 mile NE of Little Gull Island, The Race, New York Current", null, null, fonts), new DMenuItem (:three, "Castle Hill, west of, East Passage (Depth 15ft), Narragansett Bay, Rhode Island Current", null, null, fonts)]; 
-	        var view = new DMenu (alarmsMenu, "Choose location or input the code.", largeCustomFont);
+			for(var i = 0; i < data.size(); i++)
+			{
+				dMenu.add(new DMenuItem ("dmenu_" + i, data[i].get("name"), null, null, fonts));
+			}
+			 
+	        var view = new DMenu (dMenu, WatchUi.loadResource( Rez.Strings.SelectedLocations ), largeCustomFont);
 			WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view, data)), WatchUi.SLIDE_IMMEDIATE);
 		}
 		else {
 			System.println("Response: " + responseCode);					
 		}
+	}
+	
+	function onPosition(info) {
+	    locations = info.position.toDegrees();
 	}
     
     function onDisplayMessageInitApp(dc)
