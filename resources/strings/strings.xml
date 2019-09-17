@@ -43,6 +43,15 @@
     <string id="Moonset">Moonset</string>
     <string id="ExtraRoomDateTime">0</string>
     <string id="ExtraRoom">0</string>
+    <string id="ExtraRoomNotSelectedMenu">0</string>
     <string id="ExtraRoomTitleMenu">0</string>
     <string id="ExtraRoomSelectedMenu">0</string>
+    <string id="XDate">0</string>
+    <string id="YDate">0</string> 
+    <string id="XCurrDate">0</string>
+    <string id="YCurrDate">0</string> 
+    <string id="XData">0</string>
+    <string id="YData">0</string>
+    <string id="Distance2Line">0</string>
+    <string id="YLocationInfo">0</string>
 </strings>

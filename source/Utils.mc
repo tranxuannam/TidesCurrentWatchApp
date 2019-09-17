@@ -5,28 +5,22 @@ using Toybox.Lang;
 using Toybox.WatchUi;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
+using Toybox.Graphics;
 
 class Utils {
     
     static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
     static var URL = "http://tidescurrents.com/api/tides/$1$/?code=$2$&date=$3$";
-    static var URL_LOCATION_NEARS = "http://localhost/TidesCurrentWebsite/api/tides/get_near_locations/?lat=$1$&long=$2$";
+    static var URL_LOCATION_NEARS = "http://tidescurrents.com/api/tides/get_near_locations/?lat=$1$&long=$2$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
     static var NUMBER_RECORD_LESS_64K = 7;
     static var CHARS_PER_LINE = 20;
     static var NUMBER_LINE_ON_SCREEN = 13;
-    static var FIX_PREVIOUS_PAGE_PER_DEVICE = ["fr235", "semi-round"];
-    static var REQUEST_NUMBER_PER_DEVICE = ["fr235", "fenix3", "vivoactive", "vivoactive-hr", "d2-face"]; //64kb mem
-    static var SPECIAL_FONT_ON_DEIVICE = ["fr920xt", "vivoactive_hr"];
-    static var LAT = "latitude";
-    static var LONG = "longitude";
-    static var LOCATION = "location";
-    static var CODE = "code";
-    static var DISPLAYED_DATE = "displayedDate";
-    static var OLD_CODE = "oldCode";
-    static var NAME = "name";
+    static var FIX_PREVIOUS_PAGE_PER_DEVICE = "fr235,semi-round";
+    static var REQUEST_NUMBER_PER_DEVICE = "fr235,fenix3,vivoactive,vivoactive-hr,d2-face"; //64kb mem
+    static var SPECIAL_FONT_ON_DEIVICE = "fr920xt,vivoactive_hr";   
     static var STATUS_TIDE_1 = ["slack1", "flood1", "slack2", "ebb1", "slack3", "flood2", "slack4", "ebb2", "slack5", "flood3", "slack6", "moon", "sunrise", "sunset", "moonrise", "moonset"];       					
     static var STATUS_TIDE_2 = ["high1" , "low1" , "high2", "low2", "high3", "low3", "high4", "low4", "moon", "sunrise", "sunset", "moonrise", "moonset"];  
     	    
@@ -528,7 +522,7 @@ class Utils {
 	static function checkPhoneConnected()
 	{
 		var device = WatchUi.loadResource(Rez.Strings.Device);
-    	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null)
+    	if (REQUEST_NUMBER_PER_DEVICE.toString().find(device) != null || "semi-round,edge-face".find(device) != null)
     	{
 			return System.getDeviceSettings().phoneConnected;
 		}
@@ -607,27 +601,17 @@ class Utils {
 		return "";
 	}
 	
-	static function loadMainFont()
+	function loadSmallFont()
 	{
-		var device = WatchUi.loadResource(Rez.Strings.Device);
-    	if (SPECIAL_FONT_ON_DEIVICE.toString().find(device) != null) 
-    	{
-    		return WatchUi.loadResource(Rez.Fonts.font_12);
-    	}
-    	else
-    	{
-    		return WatchUi.loadResource(Rez.Fonts.small_font);
-    	}
-	}
+		return WatchUi.loadResource(Rez.Fonts.small_font);
+	} 	
 	
-	function loadFontSize12()
-	{
-		return WatchUi.loadResource(Rez.Fonts.font_12);
-	} 
-	
-	function loadLargeFont()
-	{
-		return WatchUi.loadResource(Rez.Fonts.large_font);
-	} 
+	function drawCustomLine(dc) {
+        // Draw the move bar here
+        dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+        dc.setPenWidth(2);     
+        dc.drawLine(WatchUi.loadResource( Rez.Strings.XFirstLine ).toNumber(), WatchUi.loadResource( Rez.Strings.YFirstLine ).toNumber()
+        			, WatchUi.loadResource( Rez.Strings.XSecondLine ).toNumber(), WatchUi.loadResource( Rez.Strings.YSecondLine ).toNumber());
+    }
     
 }

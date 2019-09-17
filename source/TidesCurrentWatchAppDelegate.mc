@@ -13,7 +13,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     }
   
     function onMenu() {
-    	if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
+    	if(Utils.getProperty("displayedDate") != null)
     	{
 	        var device = WatchUi.loadResource(Rez.Strings.Device);
 	        if (Utils.FIX_PREVIOUS_PAGE_PER_DEVICE.toString().find(device) != null)
@@ -34,16 +34,16 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
   
     function onSelect()
     {
-    	if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
+    	if(Utils.getProperty("displayedDate") != null)
     	{
-			var location = Utils.getProperty(Utils.LOCATION);
+			var location = Utils.getProperty("location");
 			WatchUi.switchToView(new LocationInfoView(), new LocationInfoDelegate(), WatchUi.SLIDE_UP);
     	}
     	return true;
     }
     
    	function onPreviousPage() {  
-        var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);
+        var displayedDate = Utils.getProperty("displayedDate");
         if(displayedDate != null)
         {
 	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.addOneDay());	
@@ -51,7 +51,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 	        
 	        if(displayedDate != null)
 	        {
-		        Utils.setProperty(Utils.DISPLAYED_DATE, nextDate);
+		        Utils.setProperty("displayedDate", nextDate);
 		        WatchUi.requestUpdate();
 	        }
 	        else
@@ -68,7 +68,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
     } 
     
     function onNextPage() {    	
-        var displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);        
+        var displayedDate = Utils.getProperty("displayedDate");        
         if(displayedDate != null)
         {
 	        var nextDate = Utils.getDisplayDate(displayedDate, Utils.subtractOneDay());	
@@ -76,7 +76,7 @@ class TidesCurrentWatchAppDelegate extends WatchUi.BehaviorDelegate {
 	        
 	        if(displayedDate != null)
 	        {
-		        Utils.setProperty(Utils.DISPLAYED_DATE, nextDate);
+		        Utils.setProperty("displayedDate", nextDate);
 		        var limitDate = Utils.getDisplayDate(Utils.getCurrentDate(), Utils.subtractByDays(Utils.NUMBER_RECORD_GREATER_64K * 2)); // 4 weeks limited
 		        
 		        if(limitDate.equals(nextDate))

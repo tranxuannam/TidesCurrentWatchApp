@@ -58,8 +58,8 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         {
             timer = new Timer.Timer();
         }
-    	displayedDate = Utils.getProperty(Utils.DISPLAYED_DATE);	
-    	location = Utils.getProperty(Utils.OLD_CODE);
+    	displayedDate = Utils.getProperty("displayedDate");	
+    	location = Utils.getProperty("oldCode");
     	
     	var nextDate;
     	if(status)
@@ -101,17 +101,18 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 					onStopTimer();
 					if(tmpDic.hasKey(displayedDate))
 					{
-			            var name = Utils.getProperty(Utils.LOCATION); 
-			       		var oldCode = Utils.getProperty(Utils.OLD_CODE);
-			       		var latitude = Utils.getProperty(Utils.LAT); 
-			       		var longitude = Utils.getProperty(Utils.LONG);       
-			            Utils.clearProperties();
-			            Utils.setTidesData(tmpDic);
-			            Utils.setProperty(Utils.DISPLAYED_DATE, displayedDate);
-			            Utils.setProperty(Utils.LOCATION, name); 
-			            Utils.setProperty(Utils.OLD_CODE, oldCode); 
-			            Utils.setProperty(Utils.LAT, latitude); 
-			            Utils.setProperty(Utils.LONG, longitude); 
+			            var name = Utils.getProperty("location"); 
+				   		var oldCode = Utils.getProperty("oldCode");
+				   		var latitude = Utils.getProperty("latitude"); 
+				   		var longitude = Utils.getProperty("longitude");       
+				        Utils.clearProperties();
+				        Utils.setTidesData(tmpDic);
+				        Utils.setProperty("displayedDate", displayedDate);
+				        Utils.setProperty("location", name); 
+				        Utils.setProperty("oldCode", oldCode); 
+				        Utils.setProperty("latitude", latitude); 
+				        Utils.setProperty("longitude", longitude);        
+			            tmpDic = null;
 			            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 		            }
 		            else

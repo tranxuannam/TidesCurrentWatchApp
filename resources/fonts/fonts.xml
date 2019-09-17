@@ -1,5 +1,3 @@
 <fonts>
-	<font id="small_font" filename="../fonts/n_sim_sun_14.fnt" />
-	<font id="large_font" filename="../fonts/n_sim_sun_bold_16.fnt" />
-	<font id="font_12" filename="../fonts/n_sim_sun_12.fnt" />
+	<font id="small_font" filename="../fonts/n_sim_sun_14.fnt" />-->
 </fonts>

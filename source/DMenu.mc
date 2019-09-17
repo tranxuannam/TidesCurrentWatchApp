@@ -66,7 +66,19 @@ class DMenuItem
 	{
 		var width = dc.getWidth ();
 		var h3 = dc.getHeight () / 3;
-		var lab = Utils.displayMultilineOnScreen(dc, label.toString(), LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
+		var lab = label.toString();
+		var totalChars = Utils.CHARS_PER_LINE * 3;
+		
+		var device = WatchUi.loadResource(Rez.Strings.Device);
+		if (device.find("edge") != null || device.find("rectangle") != null) {} else
+		{
+			if (lab.length() > totalChars)
+			{
+				lab = Utils.substringByWord(lab, totalChars);
+			}
+		}
+		
+		lab = Utils.displayMultilineOnScreen(dc, lab, LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomNotSelectedMenu ).toFloat());
 		var labDims = dc.getTextDimensions (lab, LABEL_FONT);
 		var yL = y + (h3 - labDims[1]) / 2;
 
@@ -78,15 +90,21 @@ class DMenuItem
 		var width = dc.getWidth ();
 		var h3 = dc.getHeight () / 3;
 		var lab = label.toString();		
-		var totalChars = Utils.CHARS_PER_LINE * 3;
+		var totalChars = Utils.CHARS_PER_LINE * 3 - 10;
 		
-		if (lab.length() > totalChars)
+		var device = WatchUi.loadResource(Rez.Strings.Device);
+		if (device.find("edge") != null || device.find("rectangle") != null) {} else 
 		{
-			lab = Utils.displayMultilineOnScreen(dc, Utils.substringByWord(lab, Utils.CHARS_PER_LINE * 3), SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
+			if (lab.length() > totalChars)
+			{
+				lab = Utils.substringByWord(lab, totalChars);
+			}
 		}
-			
+		lab = Utils.displayMultilineOnScreen(dc, lab, SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
+		System.println("lab: " + lab);			
 		var labDims = dc.getTextDimensions (lab, SELECTED_LABEL_FONT);
 		var yL, yV, h;
+		
 
 		if (value != null)
 		{

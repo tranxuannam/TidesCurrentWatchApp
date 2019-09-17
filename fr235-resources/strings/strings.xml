@@ -12,8 +12,17 @@
     <string id="YFirstLine">0</string>
     <string id="XSecondLine">43</string>
     <string id="YSecondLine">220</string>
-    <string id="ExtraRoomDateTime">0.12</string>
+    <string id="ExtraRoomDateTime">0.15</string>
     <string id="ExtraRoom">0.8</string>
     <string id="ExtraRoomTitleMenu">0.8</string>
-    <string id="ExtraRoomSelectedMenu">0.9</string>    
+    <string id="ExtraRoomNotSelectedMenu">0.9</string>
+    <string id="ExtraRoomSelectedMenu">0.9</string>  
+    <string id="XDate">25</string>
+    <string id="YDate">70</string> 
+    <string id="XCurrDate">0</string>
+    <string id="YCurrDate">0</string> 
+    <string id="XData">50</string>
+    <string id="YData">18</string>
+    <string id="Distance2Line">12</string> 
+    <string id="YLocationInfo">0</string>   
 </strings>

@@ -20,7 +20,7 @@ class LocationMenuDelegate extends Ui.MenuInputDelegate {
     function onMenuItem (item) 
 	{
 		var index = item.id.substring(6, item.id.length());		
-		Utils.setProperty(Utils.CODE, data[index.toNumber()].get(Utils.CODE));
+		Utils.setProperty("code", data[index.toNumber()].get("code"));
 		data = null;
  		WatchUi.switchToView(new MiddleProcessView(WatchUi.loadResource( Rez.Strings.Processing )), new MiddleProcessDelegate(true), WatchUi.SLIDE_IMMEDIATE);
     }

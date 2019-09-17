@@ -36,7 +36,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     
     function loadTidesCurrentData()
     {
-    	urlDic = Utils.getUrls(true, Utils.getProperty(Utils.CODE), Utils.getCurrentDate());
+    	urlDic = Utils.getUrls(true, Utils.getProperty("code"), Utils.getCurrentDate());
     	if(timer == null)
     	{    	
 	        timer = new Timer.Timer();
@@ -69,11 +69,12 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 					{					
 			            Utils.clearProperties();
 			            Utils.setTidesData(tmpDic);
-			            Utils.setProperty(Utils.DISPLAYED_DATE, Utils.getCurrentDate());
-			            Utils.setProperty(Utils.LOCATION, location); 
-			            Utils.setProperty(Utils.OLD_CODE, oldCode); 
-			            Utils.setProperty(Utils.LAT, lat); 
-			            Utils.setProperty(Utils.LONG, long);
+			            Utils.setProperty("displayedDate", Utils.getCurrentDate());
+			            Utils.setProperty("location", location); 
+			            Utils.setProperty("oldCode", oldCode); 
+			            Utils.setProperty("latitude", lat); 
+			            Utils.setProperty("longitude", long);
+			            tmpDic = null;
 			    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
 		    		}
 		    		else
@@ -95,7 +96,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     	if(Utils.checkPhoneConnected())
     	{
 			setUpProgressBar(0); 
-			getInfoLocation(Utils.getProperty(Utils.CODE));
+			getInfoLocation(Utils.getProperty("code"));
 			loadTidesCurrentData();
 		}
 		else
@@ -141,9 +142,9 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 	// set up the response onReceiveLocationInfo function
     function onReceiveLocationInfo(responseCode, data, code) { 
 		if (responseCode == 200) {
-			location = data[Utils.NAME];   
-			lat = data[Utils.LAT];
-			long = data[Utils.LONG];	
+			location = data["name"];   
+			lat = data["latitude"];
+			long = data["longitude"];	
 			oldCode = code;
 		}
 		else {
@@ -151,7 +152,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			onStopTimer();
 			if (responseCode == 404)
 			{
-				Utils.setProperty(Utils.CODE, Utils.getProperty(Utils.OLD_CODE));				
+				Utils.setProperty("code", Utils.getProperty("oldCode"));				
 				setUpMessageFailed(WatchUi.loadResource( Rez.Strings.InvalidCode ));
 			}
 			else 

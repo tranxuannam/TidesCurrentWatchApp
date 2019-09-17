@@ -5,38 +5,32 @@ using Toybox.Application;
 using Toybox.Time;
 using Toybox.Time.Gregorian;
 using Toybox.Position;
+using Toybox.Graphics;
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 	
-	hidden var smallCustomFont;
-	hidden var font12;
+	hidden var font;
 	hidden var locations;
+	hidden var posnInfo = null;
        
     function initialize() {
         View.initialize();
-        smallCustomFont = Utils.loadMainFont();
-        font12 = Utils.loadFontSize12();        
+        font = Utils.loadSmallFont();
     }
     
     // Load your resources here
     function onLayout(dc) {     
-        setLayout(Rez.Layouts.MainLayout(dc));       
     }
    
     // Update the view
-    function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout      
-         
-        if(Utils.getProperty(Utils.DISPLAYED_DATE) != null)
+    function onUpdate(dc) {         
+        if(Utils.getProperty("displayedDate") != null)
         {
-			onDisplayMainView(dc, Utils.getProperty(Utils.DISPLAYED_DATE)); 
+			onDisplayMainView(dc, Utils.getProperty("displayedDate")); 
         } 
         else
         {
 	        onDisplayMessageInitApp(dc);
-	        Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
-	        //getSuggestLocation(10.3333, 107.0667);
-	        getSuggestLocation(locations[0], locations[1]);
        	}
     } 
     
@@ -46,10 +40,28 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     	delegate.makeWebRequest(Utils.getUrlNearLocation(lat, long), self.method(:onReceiveLocations));	
     }
     
+    function setPosition(info) {
+    	System.println("setPosition");
+        posnInfo = info;
+        //getSuggestLocation(posnInfo.position.toDegrees()[0].toNumber(), posnInfo.position.toDegrees()[1].toNumber());
+        getSuggestLocation(47.2858, -122.5445);
+        posnInfo = null;
+    }
+    
     function onReceiveLocations(responseCode, data, code) { 
 		if (responseCode == 200) {
-			var largeCustomFont = Utils.loadLargeFont();
-			var fonts = { :small => font12, :large => largeCustomFont };			
+			var fonts;
+			
+			var device = WatchUi.loadResource(Rez.Strings.Device);
+			if (device.find("edge") != null || device.find("rectangle") != null)
+			{
+				fonts = { :small => Graphics.FONT_XTINY, :large => Graphics.FONT_TINY };
+			}
+			else
+			{
+				fonts = { :small => font, :large => Graphics.FONT_TINY };
+			}
+						
 			var dMenu = [];
 			
 			for(var i = 0; i < data.size(); i++)
@@ -57,7 +69,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 				dMenu.add(new DMenuItem ("dmenu_" + i, data[i].get("name"), null, null, fonts));
 			}
 			 
-	        var view = new DMenu (dMenu, WatchUi.loadResource( Rez.Strings.SelectedLocations ), largeCustomFont);
+	        var view = new DMenu (dMenu, WatchUi.loadResource( Rez.Strings.SelectedLocations ), fonts[:small]);
 			WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view, data)), WatchUi.SLIDE_IMMEDIATE);
 		}
 		else {
@@ -76,8 +88,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 		var cx = dc.getWidth() / 2;
 		var cy = dc.getHeight() / 2;		
 		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-		var largeCustomFont = Utils.loadLargeFont();
-		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.FindLocations ), largeCustomFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
+		var text = Utils.displayMultilineOnScreen(dc, WatchUi.loadResource( Rez.Strings.FindLocations ), font, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
        	var centerY = 0;
        	
 		if(text.length() >= Utils.CHARS_PER_LINE)
@@ -89,7 +100,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        		centerY = cy / 2;
        	} 
        	
-       	dc.drawText(cx, centerY, largeCustomFont, text, Graphics.TEXT_JUSTIFY_CENTER);
+       	dc.drawText(cx, centerY, font, text, Graphics.TEXT_JUSTIFY_CENTER);
     }  
     
     function onDisplayMainView(dc, displayedDate) 
@@ -97,36 +108,46 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var dateDic = Utils.convertDateToFullDate(displayedDate);
        var tidesData = Utils.getProperty(displayedDate);      
        var displayDate = Lang.format( "$1$ $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month"], dateDic["day"], dateDic["year"] ] );
-	   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate];   	   
+	   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate];      
   	   
-  	   var dateView = View.findDrawableById("id_date");	
-  	   dateView.setFont(font12);
-  	   dateView.setText(Utils.displayMultilineOnScreen(dc, displayDate, font12, WatchUi.loadResource( Rez.Strings.ExtraRoomDateTime ).toFloat()));
-  	   dateView.setColor(Graphics.COLOR_LT_GRAY);
-  	 
+  	   //Tide date
+  	   dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+	   dc.clear();		
+	   dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);  	   
+  	   dc.drawText(WatchUi.loadResource( Rez.Strings.XDate ).toNumber(), WatchUi.loadResource( Rez.Strings.YDate ).toNumber(), font, Utils.displayMultilineOnScreen(dc, displayDate, font, WatchUi.loadResource( Rez.Strings.ExtraRoomDateTime ).toFloat()), Graphics.TEXT_JUSTIFY_CENTER);
+  	   
+  	   //Write a line
+  	   Utils.drawCustomLine(dc);
+  	   
+  	   //Current date
   	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
   	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
-  	   var currDateView = View.findDrawableById("id_currDate");	
-  	   currDateView.setFont(font12);
-  	   currDateView.setText(currDateFormat);
-  	   currDateView.setColor(Graphics.COLOR_LT_GRAY);  
+  	   dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
   	   
-       var localTime = onSwitchTypeTideCurrent(tidesDataDic, smallCustomFont);
-            
-       View.onUpdate(dc);
+  	   var device = WatchUi.loadResource(Rez.Strings.Device);
+  	   if (device.find("vivoactive-hr") != null)
+  	   {
+  	   		dc.drawText(WatchUi.loadResource( Rez.Strings.XCurrDate ).toNumber(), WatchUi.loadResource( Rez.Strings.YCurrDate ).toNumber(), font, currDateFormat, Graphics.TEXT_JUSTIFY_LEFT);
+  	   } 
+  	   else
+  	   {
+  	   		dc.drawText(dc.getWidth() / 2, WatchUi.loadResource( Rez.Strings.YCurrDate ).toNumber(), font, currDateFormat, Graphics.TEXT_JUSTIFY_CENTER);
+  	   }	
+  	      
+       var localTime = onSwitchTypeTideCurrent(dc, tidesDataDic, font);            
        
        if(WatchUi.loadResource( Rez.Strings.IsTime24Format ).toNumber() == 1)
        {
-       		onDisPlayTime24HFormat(dc, font12, WatchUi.loadResource( Rez.Strings.XTimeFormat ).toNumber(), WatchUi.loadResource( Rez.Strings.YTimeFormat ).toNumber());
+       		onDisPlayTime24HFormat(dc, font, WatchUi.loadResource( Rez.Strings.XTimeFormat ).toNumber(), WatchUi.loadResource( Rez.Strings.YTimeFormat ).toNumber());
        }
        
        if(WatchUi.loadResource( Rez.Strings.SplitLocalTime ).toNumber() == 1)
        {
-       		onLocalTime(dc, font12, WatchUi.loadResource( Rez.Strings.XLocalTime ).toNumber(), WatchUi.loadResource( Rez.Strings.YLocalTime ).toNumber(), localTime);
+       		onLocalTime(dc, font, WatchUi.loadResource( Rez.Strings.XLocalTime ).toNumber(), WatchUi.loadResource( Rez.Strings.YLocalTime ).toNumber(), localTime);
        }       
     }  
     
-    function onSwitchTypeTideCurrent(tidesDataDic, font)
+    function onSwitchTypeTideCurrent(dc, tidesDataDic, font)
     {
     	var keys = tidesDataDic.keys();  
     	var data;
@@ -138,14 +159,18 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 		{
 			data = Utils.STATUS_TIDE_1;
 		}
-    	return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, data, tidesDataDic, font);
+    	return onShowTidesData(dc, Utils.NUMBER_LINE_ON_SCREEN, data, tidesDataDic, font);
     }
     
-    function onShowTidesData(row, statusTide, tidesDataDic, font)
+    function onShowTidesData(dc, row, statusTide, tidesDataDic, font)
     {
        var view;
        var i = 1;
-       var data = {};
+       var data = {};       
+       var step = 0;
+       
+       dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+       
        for (var j = 0; j < statusTide.size(); j++)
    	   {
    	   		if(i == row + 1 || tidesDataDic.keys().size() + 1 == i)
@@ -156,20 +181,12 @@ class TidesCurrentWatchAppView extends WatchUi.View {
    	   		var key = statusTide[j];
    	   		if(tidesDataDic.hasKey(key))
    	   		{
-	   	   		view = Utils.GetViewLabelOnLayout(i);	   	   		
-	   	   		view.setFont(font);
 	   	   		data = Utils.convertTimeFormatBySettings(Utils.displayFirstLine(tidesDataDic[key]));
-	   	   		view.setText(Utils.getLabelStatusTide(key) + ": " + data[1]);
+	   	   		dc.drawText(WatchUi.loadResource( Rez.Strings.XData ).toNumber(), WatchUi.loadResource( Rez.Strings.YData ).toNumber() + step, font, Utils.getLabelStatusTide(key) + ": " + data[1], Graphics.TEXT_JUSTIFY_LEFT);
+	   	   		step += WatchUi.loadResource( Rez.Strings.Distance2Line ).toNumber();
 	   	   		i++;  
    	   		}  	   		
-       }
-       
-       for (var l = i; l <= row; l++)
-   	   {
-   	   		view = Utils.GetViewLabelOnLayout(l);
-   	   		view.setText("");
-   	   }
-   	   
+       }      
        return data[0];
     }
     
@@ -177,8 +194,8 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     {    	
     	dc.setPenWidth(1);
     	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
-    	dc.drawText(x, y, font, WatchUi.loadResource( Rez.Strings.TimeFormat ), Graphics.TEXT_JUSTIFY_LEFT);
-		dc.drawArc(x + 5, y + 7, 9, Graphics.ARC_COUNTER_CLOCKWISE, 0, 360);
+    	dc.drawText(x - 2, y, font, WatchUi.loadResource( Rez.Strings.TimeFormat ), Graphics.TEXT_JUSTIFY_LEFT);
+		dc.drawArc(x + 4, y + 7, 10, Graphics.ARC_COUNTER_CLOCKWISE, 0, 360);
     }  
     
     function onLocalTime(dc, font, x, y, message)
