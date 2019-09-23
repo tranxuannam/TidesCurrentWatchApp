@@ -113,7 +113,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 				        Utils.setProperty("latitude", latitude); 
 				        Utils.setProperty("longitude", longitude);        
 			            tmpDic = null;
-			            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+			            WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_IMMEDIATE);
 		            }
 		            else
 		            {

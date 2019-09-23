@@ -10,21 +10,14 @@ var timer;
 class TidesCurrentWatchAppApp extends Application.AppBase {
 		
 	hidden var positionView;
-	hidden var device;
 	
 	function initialize() {
     	AppBase.initialize();
-    	device = WatchUi.loadResource(Rez.Strings.Device);
     }
 
     // onStart() is called on application start up
-    function onStart(state) {    	      	
-    	
-    	if (Utils.getProperty("displayedDate") == null)
-    	{
-    		System.println("onStart");
-    		Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
-    	}  
+    function onStart(state) { 
+    	startGpsLocation();
     }  
     
     //! onStop() is called when your application is exiting
@@ -33,6 +26,26 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	{
         	Position.enableLocationEvents(Position.LOCATION_DISABLE, method(:onPosition));
         }
+    }  
+    
+    function startGpsLocation() {    
+    	var code = Utils.getProperty("code");
+    	var displayedDate = Utils.getProperty("displayedDate");
+
+    	if(((code == null || code.equals("")) && displayedDate != null) || ((code == null || code.equals("")) && displayedDate == null))
+    	{
+    		Utils.setProperty("selectedDMenu", 1);
+	    	Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
+    	}
+    	else
+    	{
+    		var oldCode = Utils.getProperty("oldCode");
+
+    		if (oldCode == null || !code.equals(oldCode))
+    		{    			
+    			onSettingsChanged();		    	
+	    	}
+    	}
     }  
     
     function onPosition(info) {

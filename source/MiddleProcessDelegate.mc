@@ -28,10 +28,21 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     }     	
  
     function onBack() {  
-    	isStoped = false;    
-		onStopTimer();
-        WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_IMMEDIATE);
-        return true;
+    	var selectedDMenu = Utils.getProperty("selectedDMenu");
+    	if( selectedDMenu != 1)
+    	{
+	    	isStoped = false;    
+			onStopTimer();
+			Utils.setProperty("code", Utils.getProperty("oldCode"));
+	        WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_IMMEDIATE);
+	        return true;
+        }
+        else
+        {
+        	Utils.setProperty("code", null);
+        	Utils.setProperty("selectedDMenu", 0);
+        	return false;
+        }
     }
     
     function loadTidesCurrentData()
@@ -75,7 +86,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
 			            Utils.setProperty("latitude", lat); 
 			            Utils.setProperty("longitude", long);
 			            tmpDic = null;
-			    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_UP);
+			    		WatchUi.switchToView(new TidesCurrentWatchAppView(), new TidesCurrentWatchAppDelegate(), WatchUi.SLIDE_IMMEDIATE);
 		    		}
 		    		else
 		    		{

@@ -11,7 +11,6 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 	
 	hidden var font;
 	hidden var locations;
-	hidden var posnInfo = null;
        
     function initialize() {
         View.initialize();
@@ -41,11 +40,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     }
     
     function setPosition(info) {
-    	System.println("setPosition");
-        posnInfo = info;
-        //getSuggestLocation(posnInfo.position.toDegrees()[0].toNumber(), posnInfo.position.toDegrees()[1].toNumber());
-        getSuggestLocation(47.2858, -122.5445);
-        posnInfo = null;
+        getSuggestLocation(info.position.toDegrees()[0].toNumber(), info.position.toDegrees()[1].toNumber());
     }
     
     function onReceiveLocations(responseCode, data, code) { 
@@ -113,7 +108,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
   	   //Tide date
   	   dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 	   dc.clear();		
-	   dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);  	   
+	   dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);  	   
   	   dc.drawText(WatchUi.loadResource( Rez.Strings.XDate ).toNumber(), WatchUi.loadResource( Rez.Strings.YDate ).toNumber(), font, Utils.displayMultilineOnScreen(dc, displayDate, font, WatchUi.loadResource( Rez.Strings.ExtraRoomDateTime ).toFloat()), Graphics.TEXT_JUSTIFY_CENTER);
   	   
   	   //Write a line
@@ -193,14 +188,14 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     function onDisPlayTime24HFormat(dc, font, x, y)
     {    	
     	dc.setPenWidth(1);
-    	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
+    	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
     	dc.drawText(x - 2, y, font, WatchUi.loadResource( Rez.Strings.TimeFormat ), Graphics.TEXT_JUSTIFY_LEFT);
 		dc.drawArc(x + 4, y + 7, 10, Graphics.ARC_COUNTER_CLOCKWISE, 0, 360);
     }  
     
     function onLocalTime(dc, font, x, y, message)
     {    	
-    	dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
+    	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
     	dc.drawText(x, y, font, message, Graphics.TEXT_JUSTIFY_LEFT);
     } 
     

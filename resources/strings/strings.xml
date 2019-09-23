@@ -6,8 +6,8 @@
     <string id="Lati">Latitude</string>
     <string id="Longi">Longitude</string>
     <string id="AppSettingRequired">App settings required. Please input code!</string>
-    <string id="FindLocations">Finding the location nears you...</string>
-    <string id="SelectedLocations">Choose location or input the code</string>
+    <string id="FindLocations">GPS locating...\n [Or input your code from App settings]</string>
+    <string id="SelectedLocations">Choose location or input your code</string>
     <string id="Processing">Processing...</string>
     <string id="LoadNextData">Press the select button to download next data. Press the back button to cancel.</string>
     <string id="LoadPreviousData">Press the select button to download previous data. Press the back button to cancel.</string>

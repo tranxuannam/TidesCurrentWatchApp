@@ -101,7 +101,6 @@ class DMenuItem
 			}
 		}
 		lab = Utils.displayMultilineOnScreen(dc, lab, SELECTED_LABEL_FONT, WatchUi.loadResource( Rez.Strings.ExtraRoomSelectedMenu ).toFloat());
-		System.println("lab: " + lab);			
 		var labDims = dc.getTextDimensions (lab, SELECTED_LABEL_FONT);
 		var yL, yV, h;
 		
