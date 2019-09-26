@@ -22,10 +22,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     
     //! onStop() is called when your application is exiting
     function onStop(state) {
-    	if (Utils.getProperty("displayedDate") == null)
-    	{
-        	Position.enableLocationEvents(Position.LOCATION_DISABLE, method(:onPosition));
-        }
+    	stopGpsLocation();
     }  
     
     function startGpsLocation() {    
@@ -48,6 +45,10 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     	}
     }  
     
+    function stopGpsLocation() {
+    	Position.enableLocationEvents(Position.LOCATION_DISABLE, method(:onPosition));
+    }
+    
     function onPosition(info) {
         positionView.setPosition(info);
     }
@@ -60,7 +61,7 @@ class TidesCurrentWatchAppApp extends Application.AppBase {
     
     function onSettingsChanged() {	
     	if( timer == null )
-	    {	    	
+	    {	
 	    	WatchUi.switchToView(new MiddleProcessView(WatchUi.loadResource( Rez.Strings.Processing )), new MiddleProcessDelegate(true), WatchUi.SLIDE_IMMEDIATE);
 	    }    	 
 	}	

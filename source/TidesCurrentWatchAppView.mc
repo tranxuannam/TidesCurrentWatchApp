@@ -45,27 +45,30 @@ class TidesCurrentWatchAppView extends WatchUi.View {
     
     function onReceiveLocations(responseCode, data, code) { 
 		if (responseCode == 200) {
-			var fonts;
-			
-			var device = WatchUi.loadResource(Rez.Strings.Device);
-			if (device.find("edge") != null || device.find("rectangle") != null)
-			{
-				fonts = { :small => Graphics.FONT_XTINY, :large => Graphics.FONT_TINY };
+			if (Utils.getProperty("code") == null || Utils.getProperty("code").equals(""))
+	    	{
+				var fonts;			
+				var device = WatchUi.loadResource(Rez.Strings.Device);
+				
+				if (device.find("edge") != null || device.find("rectangle") != null)
+				{
+					fonts = { :small => Graphics.FONT_XTINY, :large => Graphics.FONT_TINY };
+				}
+				else
+				{
+					fonts = { :small => font, :large => Graphics.FONT_TINY };
+				}
+							
+				var dMenu = [];
+				
+				for(var i = 0; i < data.size(); i++)
+				{
+					dMenu.add(new DMenuItem ("dmenu_" + i, data[i].get("name"), null, null, fonts));
+				}
+				 
+		        var view = new DMenu (dMenu, WatchUi.loadResource( Rez.Strings.SelectedLocations ), fonts[:small]);
+				WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view, data)), WatchUi.SLIDE_IMMEDIATE);
 			}
-			else
-			{
-				fonts = { :small => font, :large => Graphics.FONT_TINY };
-			}
-						
-			var dMenu = [];
-			
-			for(var i = 0; i < data.size(); i++)
-			{
-				dMenu.add(new DMenuItem ("dmenu_" + i, data[i].get("name"), null, null, fonts));
-			}
-			 
-	        var view = new DMenu (dMenu, WatchUi.loadResource( Rez.Strings.SelectedLocations ), fonts[:small]);
-			WatchUi.switchToView(view, new DMenuDelegate (view, new LocationMenuDelegate (view, data)), WatchUi.SLIDE_IMMEDIATE);
 		}
 		else {
 			System.println("Response: " + responseCode);					
