@@ -1,18 +1,17 @@
-using Toybox.WatchUi;
-using Toybox.AntPlus;
-using Toybox.System;
-using Toybox.Application;
-using Toybox.Time;
-using Toybox.Time.Gregorian;
+import Toybox.WatchUi;
+import Toybox.AntPlus;
+import Toybox.System;
+import Toybox.Application;
+import Toybox.Time;
+import Toybox.Time.Gregorian;
+import Toybox.Lang;
 
 class TidesCurrentWatchAppView extends WatchUi.View {
 	
-	hidden var smallCustomFont;
     hidden var font12;
        
     function initialize() {
         View.initialize();
-        smallCustomFont = Utils.loadMainFont();
         font12 = Utils.loadFontSize12();
     }
     
@@ -65,19 +64,17 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        var displayDate = Lang.format( "$1$ $2$ $3$ $4$", [ dateDic["day_of_week"], dateDic["month"], dateDic["day"], dateDic["year"] ] );
 	   var tidesDataDic = Utils.convertStringToDictionary(tidesData)[displayedDate]; 
   	   
-  	   var dateView = View.findDrawableById("id_date");	
-  	   dateView.setFont(font12);
+  	   var dateView = View.findDrawableById("id_date") as Text;	
   	   dateView.setText(Utils.displayMultilineOnScreen(dc, displayDate, font12, WatchUi.loadResource( Rez.Strings.ExtraRoomDateTime ).toFloat()));
   	   dateView.setColor(Graphics.COLOR_LT_GRAY);
   	 
   	   var currDate = Utils.convertDateToFullDate(Utils.getCurrentDate());
   	   var currDateFormat = Lang.format( "$1$ $2$ $3$", [ currDate["month"], currDate["day"], currDate["year"] ] );
-  	   var currDateView = View.findDrawableById("id_currDate");	
-  	   currDateView.setFont(font12);
+  	   var currDateView = View.findDrawableById("id_currDate") as Text;	
   	   currDateView.setText(currDateFormat);
   	   currDateView.setColor(Graphics.COLOR_LT_GRAY);  
   	   
-       var localTime = onSwitchTypeTideCurrent(tidesDataDic, smallCustomFont);
+       var localTime = onSwitchTypeTideCurrent(tidesDataDic);
             
        View.onUpdate(dc);
        
@@ -92,7 +89,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        }       
     }  
     
-    function onSwitchTypeTideCurrent(tidesDataDic, font)
+    function onSwitchTypeTideCurrent(tidesDataDic)
     {
     	var keys = tidesDataDic.keys();  
     	var data;
@@ -104,10 +101,10 @@ class TidesCurrentWatchAppView extends WatchUi.View {
 		{
 			data = Utils.STATUS_TIDE_1;
 		}
-    	return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, data, tidesDataDic, font);
+    	return onShowTidesData(Utils.NUMBER_LINE_ON_SCREEN, data, tidesDataDic);
     }
     
-    function onShowTidesData(row, statusTide, tidesDataDic, font)
+    function onShowTidesData(row, statusTide as Array, tidesDataDic)
     {
        var view;
        var i = 1;
@@ -122,8 +119,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
    	   		var key = statusTide[j];
    	   		if(tidesDataDic.hasKey(key))
    	   		{
-	   	   		view = Utils.GetViewLabelOnLayout(i);	   	   		
-	   	   		view.setFont(font);
+	   	   		view = findDrawableById(Utils.GetViewLabelOnLayout(i)) as Text;	   	   		
 	   	   		data = Utils.convertTimeFormatBySettings(Utils.displayFirstLine(tidesDataDic[key]));
 	   	   		view.setText(Utils.getLabelStatusTide(key) + ": " + data[1]);
 	   	   		i++;  
@@ -132,7 +128,7 @@ class TidesCurrentWatchAppView extends WatchUi.View {
        
        for (var l = i; l <= row; l++)
    	   {
-   	   		view = Utils.GetViewLabelOnLayout(l);
+   	   		view = findDrawableById(Utils.GetViewLabelOnLayout(l)) as Text;
    	   		view.setText("");
    	   }
    	   

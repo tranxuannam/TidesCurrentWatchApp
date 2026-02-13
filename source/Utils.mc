@@ -8,8 +8,8 @@ using Toybox.Time.Gregorian;
 
 class Utils {
     
-    static var INFO_LOCATION_ENDPOINT = "http://tidescurrents.com/api/tides/get_info_location/?code=";
-    static var URL = "http://tidescurrents.com/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
+    static var INFO_LOCATION_ENDPOINT = "https://tidescurrents.local/api/tides/get_info_location/?code=";
+    static var URL = "https://tidescurrents.local/api/tides/get_tide_current_by_date/?code=$1$&date=$2$";
     static var TIME_REQUEST_API = 1000;
     static var ANGLE = 360;
     static var NUMBER_RECORD_GREATER_64K = 14;
@@ -97,7 +97,7 @@ class Utils {
             :second => 0
         });
         gMoment = gMoment.add(addedNumDay);
-        var info = Gregorian.info(gMoment, Gregorian.FORMAT_SHORT);
+        var info = Gregorian.info(gMoment, Time.FORMAT_SHORT);
         /*System.println(Lang.format("$1$-$2$-$3$T$4$:$5$:$6$", [
             info.year.format("%4d"),
             info.month.format("%02d"),
@@ -130,7 +130,7 @@ class Utils {
             :month => month,
             :day => day           
         });     
-        var info = Gregorian.info(gMoment, Gregorian.FORMAT_MEDIUM);  
+        var info = Gregorian.info(gMoment, Time.FORMAT_MEDIUM);  
         return {"year" => info.year.format("%4d"), "month" => info.month, "day" => info.day.format("%02d"), "day_of_week" => info.day_of_week};
     }
     
@@ -247,56 +247,51 @@ class Utils {
    		return dic;		
     }    
  
- 	function GetViewLabelOnLayout(index)
+ 	static function GetViewLabelOnLayout(index)
     {
     	switch (index)
    	   		{
    	   			case 1:
-   	   				return View.findDrawableById("id_label1");	
-   	   			break;
+   	   				return "id_label1";	
    	   			
    	   			case 2:
-   	   				return View.findDrawableById("id_label2");
-   	   			break;
+   	   				return "id_label2";
    	   			
    	   			case 3:
-   	   				return View.findDrawableById("id_label3");
-   	   			break;
+   	   				return "id_label3";
    	   			
    	   			case 4:
-   	   				return View.findDrawableById("id_label4");
-   	   			break;
+   	   				return "id_label4";
    	   			
    	   			case 5:
-   	   				return View.findDrawableById("id_label5");
-   	   			break;
+   	   				return "id_label5";
    	   			
    	   			case 6:
-   	   				return View.findDrawableById("id_label6");
-   	   			break;
+   	   				return "id_label6";
    	   			
    	   			case 7:
-   	   				return View.findDrawableById("id_label7");
-   	   			break;
+   	   				return "id_label7";
    	   			
    	   			case 8:
-   	   				return View.findDrawableById("id_label8");
+   	   				return "id_label8";
    	   				
    	   			case 9:
-   	   				return View.findDrawableById("id_label9");
+   	   				return "id_label9";
    	   				
    	   			case 10:
-   	   				return View.findDrawableById("id_label10");
+   	   				return "id_label10";
    	   				
    	   			case 11:
-   	   				return View.findDrawableById("id_label11");
+   	   				return "id_label11";
    	   				
    	   			case 12:
-   	   				return View.findDrawableById("id_label12");
+   	   				return "id_label12";
    	   				
    	   			case 13:
-   	   				return View.findDrawableById("id_label13");
-   	   			break;
+   	   				return "id_label13";
+
+				default:
+					return "";
    	   		}
     }   
     
@@ -305,7 +300,7 @@ class Utils {
     	return str.substring(0, 1).toUpper() + str.substring(1, str.length());
     }
     
-    function setTidesData(data)
+    static function setTidesData(data)
 	{
 		var app = Application.getApp();      
    		var keys = data.keys();
@@ -315,7 +310,7 @@ class Utils {
    		}
 	}
 	
-	function saveTidesDataToDictionary(data, tmpDic)
+	static function saveTidesDataToDictionary(data, tmpDic)
 	{
    		var keys = data.keys();
    		for(var i = 0; i< keys.size(); i++)
@@ -324,7 +319,7 @@ class Utils {
    		}
 	}
 	
-	function saveLocationInfo(data)
+	static function saveLocationInfo(data)
 	{
 		var app = Application.getApp(); 
 		app.setProperty("locationInfo", data.toString());     
@@ -371,7 +366,7 @@ class Utils {
 	    }
 	}
 	
-	function countChars(text, pattern)
+	static function countChars(text, pattern)
 	{
 		var arrChars = text.toCharArray();
 		var count = 0;
@@ -386,7 +381,7 @@ class Utils {
 		return count;
 	}	
 	
-	function displayFirstLine(text)
+	static function displayFirstLine(text)
     {
     	var specialCharNum = text.find("\n");
     	if(specialCharNum != null)
@@ -501,26 +496,27 @@ class Utils {
 		}
 		else
 		{
-			return System.getDeviceSettings().connectionAvailable;
+			// return System.getDeviceSettings().connectionAvailable;
+			return System.getDeviceSettings().phoneConnected;
 		}
 	}
 	
-	function setProperty(propName, propValue)
+	static function setProperty(propName, propValue)
 	{
 		return Application.getApp().setProperty(propName, propValue);
 	}
 	
-	function getProperty(propName)
+	static function getProperty(propName)
 	{
 		return Application.getApp().getProperty(propName);
 	}
 	
-	function clearProperties()
+	static function clearProperties()
 	{
 		Application.getApp().clearProperties();
 	}
 	
-	function getLabelStatusTide(key)
+	static function getLabelStatusTide(key)
 	{
 		if (key.find("slack") != null)
 		{
@@ -587,12 +583,12 @@ class Utils {
     	}
 	}
 	
-	function loadFontSize12()
+	static function loadFontSize12()
 	{
 		return WatchUi.loadResource(Rez.Fonts.font_12);
 	} 
 	
-	function loadLargeFont()
+	static function loadLargeFont()
 	{
 		return WatchUi.loadResource(Rez.Fonts.large_font);
 	} 

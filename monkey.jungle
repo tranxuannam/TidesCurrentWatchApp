@@ -22,3 +22,5 @@ edge_520.resourcePath = $(base.resourcePath);edge-resources
 edge1030.resourcePath = $(base.resourcePath);edge-1030-resources
 edge1030bontrager.resourcePath = $(base.resourcePath);edge-1030-resources
 rectangle.resourcePath = $(base.resourcePath);rectangle-resources
+venu2s.resourcePath = $(base.resourcePath);resource-venu
+venu441mm.resourcePath = $(base.resourcePath);resource-venu

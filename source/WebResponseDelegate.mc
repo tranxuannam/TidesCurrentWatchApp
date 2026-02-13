@@ -1,4 +1,5 @@
-using Toybox.Communications;
+import Toybox.Communications;
+import Toybox.Lang;
 
 class WebResponseDelegate
 {
@@ -9,7 +10,7 @@ class WebResponseDelegate
         self._params = params;
     }
 
-    function onWebResponse(code, data) {
+    function onWebResponse(code as Number, data as Dictionary or String or Null) as Void {
         _callback.invoke(code, data, self._params);
     }
 

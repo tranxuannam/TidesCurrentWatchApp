@@ -1,8 +1,9 @@
-using Toybox.WatchUi;
-using Toybox.Communications;
-using Toybox.Application;
-using Toybox.System;
-using Toybox.Timer;
+import Toybox.WatchUi;
+import Toybox.Communications;
+import Toybox.Application;
+import Toybox.System;
+import Toybox.Timer;
+import Toybox.Lang;
 
 class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 
@@ -18,15 +19,17 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
         BehaviorDelegate.initialize();
     }
 
-    function onMenu() {  
+    function onMenu() as Boolean {  
     	var device = WatchUi.loadResource(Rez.Strings.Device);
         if (Utils.FIX_PREVIOUS_PAGE_PER_DEVICE.toString().find(device) == null)
         {
     		onSelect();
     	}      
+
+		return true;
     }   
     
-    function onSelect() {  
+    function onSelect() as Boolean {  
     	if(!Utils.checkPhoneConnected())
         {
         	setMessageFailed(WatchUi.loadResource( Rez.Strings.PhoneConnected ));
@@ -40,6 +43,7 @@ class ConfirmDialogDelegate extends WatchUi.BehaviorDelegate {
 	    		pressedSelectButton = false;
 	    	}  
     	}    	
+		return true;
     }  
     
     function onBack() {

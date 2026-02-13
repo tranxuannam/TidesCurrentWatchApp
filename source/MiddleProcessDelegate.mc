@@ -25,6 +25,7 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onMenu() {   
+		return true;
     }     	
  
     function onBack() {  
@@ -89,7 +90,24 @@ class MiddleProcessDelegate extends WatchUi.BehaviorDelegate {
     {
     	var delegate = new WebResponseDelegate(code);
     	delegate.makeWebRequest(Utils.INFO_LOCATION_ENDPOINT + code, self.method(:onReceiveLocationInfo));	
+
+		// System.println("getInfoLocation");  
+        // sendrequest();
     }
+
+	// function sendrequest() {
+    //     System.println("GET");
+    //     var options = {
+    //         :method => Communications.HTTP_REQUEST_METHOD_GET,
+    //         :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+    //     };
+    //     Communications.makeWebRequest("https://jsonplaceholder.typicode.com/todos/1", null, options, method(:data_response));   	
+    // }
+
+    // function data_response(code, data) {
+    //     System.println("Should be exiting = " + code);  
+	// 	System.println("Should be exiting data = " + data);         
+    // }
 
     function onProcessingData() {	
     	if(Utils.checkPhoneConnected())

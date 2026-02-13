@@ -1,15 +1,13 @@
-using Toybox.WatchUi;
-using Toybox.Application;
+import Toybox.WatchUi;
+import Toybox.Application;
 
 class LocationInfoView extends WatchUi.View {
 
 	hidden var smallCustomFont;
-	hidden var largeCustomFont;
 	
     function initialize() {
         View.initialize();  
         smallCustomFont = Utils.loadMainFont();
-        largeCustomFont = Utils.loadLargeFont();     
     }
 
     // Load your resources here
@@ -30,13 +28,8 @@ class LocationInfoView extends WatchUi.View {
        var YPos = WatchUi.loadResource( Rez.Strings.Ypos ).toNumber();
        var distance2Line = 17; 
        
-       // Location info
-       var viewLocationInfo = View.findDrawableById("id_location_info");
-       viewLocationInfo.setFont(largeCustomFont);
-       
        // Display location
-       var viewLocation = View.findDrawableById("id_name");
-       viewLocation.setFont(smallCustomFont);      
+       var viewLocation = View.findDrawableById("id_name") as Text;
        var name = app.getProperty(Utils.LOCATION);        
        var newText = Utils.displayMultilineOnScreen(dc, location + ": " + name, smallCustomFont, WatchUi.loadResource( Rez.Strings.ExtraRoom ).toFloat());
        viewLocation.setText(newText);   
@@ -47,23 +40,20 @@ class LocationInfoView extends WatchUi.View {
        var nextLine = YPos + distance2Line*countLine;
        
        // Display latitude
-       var viewLat = View.findDrawableById("id_lat");
+       var viewLat = View.findDrawableById("id_lat") as Text;
        viewLat.setLocation(xPos, nextLine);
-       viewLat.setFont(smallCustomFont);
        viewLat.setText(lat + ": " + app.getProperty(Utils.LAT));
        viewLat.setColor(Graphics.COLOR_DK_GREEN);
        
        // Display longitude
-       var viewLong = View.findDrawableById("id_long");
+       var viewLong = View.findDrawableById("id_long") as Text;
        viewLong.setLocation(xPos, nextLine + distance2Line);
-       viewLong.setFont(smallCustomFont);
        viewLong.setText(long + ": " + app.getProperty(Utils.LONG));
        viewLong.setColor(Graphics.COLOR_DK_GREEN);
        
        //Display code
-       var viewCode = View.findDrawableById("id_code");
+       var viewCode = View.findDrawableById("id_code") as Text;
        viewCode.setLocation(xPos, nextLine + distance2Line*2);
-       viewCode.setFont(smallCustomFont);
        viewCode.setText(code + ": " + app.getProperty(Utils.OLD_CODE));
        viewCode.setColor(Graphics.COLOR_DK_GREEN);
        
