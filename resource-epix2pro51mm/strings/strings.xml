@@ -1,0 +1,17 @@
+<strings>
+    <string id="Device">round-venu-face</string>    
+    <string id="Xpos">90</string>
+    <string id="Ypos">60</string>
+    <string id="IsTime24Format">1</string>
+    <string id="SplitLocalTime">1</string>
+    <string id="XTimeFormat">210</string>
+    <string id="YTimeFormat">410</string>
+    <string id="XLocalTime">230</string>
+    <string id="YLocalTime">410</string>
+    <string id="XFirstLine">110</string>
+    <string id="YFirstLine">30</string>
+    <string id="XSecondLine">110</string>
+    <string id="YSecondLine">420</string>
+    <string id="ExtraRoomDateTime">0.15</string>
+    <string id="ExtraRoom">0.6</string>
+</strings>

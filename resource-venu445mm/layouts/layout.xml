@@ -1,0 +1,18 @@
+<layout id="MainLayout" background="Graphics.COLOR_BLACK">
+	<label id="id_currDate" x="dc.getWidth() / 2" y="8" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" font="@Fonts.small_font" />
+    <label id="id_label1" x="(dc.getWidth() / 2) - 75" y="27" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label2" x="(dc.getWidth() / 2) - 75" y="41" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label3" x="(dc.getWidth() / 2) - 75" y="55" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label4" x="(dc.getWidth() / 2) - 75" y="69" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label5" x="(dc.getWidth() / 2) - 75" y="83" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label6" x="(dc.getWidth() / 2) - 75" y="97" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label7" x="(dc.getWidth() / 2) - 75" y="111" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label8" x="(dc.getWidth() / 2) - 75" y="125" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label9" x="(dc.getWidth() / 2) - 75" y="139" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label10" x="(dc.getWidth() / 2) - 75" y="153" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label11" x="(dc.getWidth() / 2) - 75" y="167" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label12" x="(dc.getWidth() / 2) - 75" y="181" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_label13" x="(dc.getWidth() / 2) - 75" y="195" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_LEFT" font="@Fonts.font_12"/>
+    <label id="id_date" x="65" y="200" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" font="@Fonts.font_12"/>
+    <drawable id="id_line2" class="CustomLine" />
+</layout>
